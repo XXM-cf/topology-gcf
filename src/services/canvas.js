@@ -200,7 +200,6 @@ export const Tools = [
         name: 'image',
         icon: 'icon-teshujierimoshi',
         data: {
-          text: '自定义数据',
           rect: {
             width: 100,
             height: 100

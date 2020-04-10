@@ -1,8 +1,24 @@
 <template>
   <div>
     <!-- 选中为空 -->
-    <div v-if="!props.node && !props.line && !props.multi">
+    <div>
       <div class="title">欢迎使用le5le-topology！</div>
+      <div class="title">选择底图</div>
+      <div class="items">
+        <el-select
+          v-model="baseImg"
+          placeholder="选择底图"
+          @change="handleBaseImg"
+        >
+          <el-option
+            v-for="item in baseImgList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
+      </div>
       <div class="bottom">
         <div class="title">小提示</div>
         <ul class="group">
@@ -78,7 +94,19 @@
 <script >
 export default {
   data () {
-    return {}
+    return {
+      baseImg: '',
+      baseImgList: [
+        {
+          label: '酒店1层',
+          value: '/img/floor.png'
+        },
+        {
+          label: '演示底图',
+          value: '/img/yohuo.png'
+        }
+      ]
+    }
   },
   props: {
     props: {
@@ -87,6 +115,9 @@ export default {
     }
   },
   methods: {
+    handleBaseImg (val) {
+      this.$emit('setBaseImg', val)
+    },
     onChange (value) {
       this.$emit('change', this.props.node)
     }

@@ -4,7 +4,10 @@ import router from './router'
 import store from './store'
 Vue.config.productionTip = false
 import ElementUI from 'element-ui'
-Vue.use(ElementUI)
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI, {
+  size: 'small'
+})
 /* eslint-disable */
 new Vue({
   router,

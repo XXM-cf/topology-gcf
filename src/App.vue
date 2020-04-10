@@ -40,14 +40,14 @@
       >
         <el-menu-item>视图：{{scale}}%</el-menu-item>
         <el-menu-item
-          index="lock"
+          index="scale"
           @click="onState('scale', 1)"
         >还原</el-menu-item>
         <el-menu-item
-          index="lock"
-          @click="onState('scale', locked ? 0 : 1)"
+          index="locked"
+          @click="onState('locked', locked ? 0 : 1)"
         >{{ locked ? '解锁' : '锁定'}}</el-menu-item>
-        <el-submenu
+        <!-- <el-submenu
           index="state"
           title="默认连线类型"
         >
@@ -62,9 +62,9 @@
           >
             <i :class="`iconfont icon-${item}`"></i>
           </el-menu-item>
-        </el-submenu>
+        </el-submenu> -->
       </el-menu>
-      <el-menu
+      <!-- <el-menu
         mode="horizontal"
         background-color="#f8f8f8"
       >
@@ -84,8 +84,8 @@
             <i :class="`iconfont icon-from-${item}`"></i>
           </el-menu-item>
         </el-submenu>
-      </el-menu>
-      <el-menu
+      </el-menu> -->
+      <!-- <el-menu
         mode="horizontal"
         background-color="#f8f8f8"
       >
@@ -105,7 +105,7 @@
             <i :class="`iconfont icon-to-${item}`"></i>
           </el-menu-item>
         </el-submenu>
-      </el-menu>
+      </el-menu> -->
     </div>
 
     <!-- body部分 -->
@@ -191,18 +191,6 @@ export default {
             })
           }, 100)
           break
-        case 'lock':
-          console.log('12121212')
-          break
-        case 'about2':
-          this.about = true
-          break
-        case 'license':
-          this.license = true
-          break
-        case 'joinin':
-          this.joinin = true
-          break
         default:
           this.$store.commit('event/emit', {
             name: key
@@ -219,26 +207,7 @@ export default {
           value
         }
       })
-    },
-    async getUser () {
-      if (this.$cookies.get('token')) {
-        this.user = await this.$axios.$get('/api/user/profile')
-      }
-    },
-    onLogin () {
-      if (process.client) {
-        location.href = `https://account.le5le.com?cb=${encodeURIComponent(
-          location.href
-        )}`
-      }
-    },
-    onSignOut () {
-      this.$cookies.remove('token')
-      this.user = null
     }
-  },
-  mounted () {
-    // this.getUser()
   }
 }
 </script>

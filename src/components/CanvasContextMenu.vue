@@ -1,10 +1,16 @@
 <template>
   <div class="menus">
     <div>
-      <a :class="{disabled:!props.node && !props.nodes}" @click="onTop()">置顶</a>
+      <a
+        :class="{disabled:!props.node && !props.nodes}"
+        @click="onTop()"
+      >置顶</a>
     </div>
     <div>
-      <a :class="{disabled:!props.node && !props.nodes}" @click="onBottom()">置底</a>
+      <a
+        :class="{disabled:!props.node && !props.nodes}"
+        @click="onBottom()"
+      >置底</a>
     </div>
     <div class="line"></div>
     <div v-if="props.nodes">
@@ -24,11 +30,17 @@
     </div>
     <div class="line"></div>
     <div>
-      <a :class="{disabled:!props.node && !props.nodes && !props.line}" @click="onDel()">删除</a>
+      <a
+        :class="{disabled:!props.node && !props.nodes && !props.line}"
+        @click="onDel()"
+      >删除</a>
     </div>
     <div class="line"></div>
     <div>
-      <a @click="canvas.undo()" class="flex">
+      <a
+        @click="canvas.undo()"
+        class="flex"
+      >
         <span class="full">撤消</span>
         <span class="ml50">Ctrl + Z</span>
       </a>
@@ -41,26 +53,39 @@
     </div>
     <div class="line"></div>
     <div>
-      <a @click="canvas.cut()" class="flex">
+      <a
+        @click="canvas.cut()"
+        class="flex"
+      >
         <span class="full">剪切</span>
         <span class="ml50">Ctrl + X</span>
       </a>
     </div>
     <div>
-      <a @click="canvas.copy()" class="flex">
+      <a
+        @click="canvas.copy()"
+        class="flex"
+      >
         <span class="full">复制</span>
         <span class="ml50">Ctrl + C</span>
       </a>
     </div>
     <div>
-      <a @click="canvas.parse()" class="flex">
+      <a
+        @click="canvas.parse()"
+        class="flex"
+      >
         <span class="full">粘贴</span>
         <span class="ml50">Ctrl + V</span>
       </a>
     </div>
     <div class="line"></div>
     <div>
-      <a :class="{disabled:!props.node || !props.node.image}" @click="onCopyImage()" class="flex">
+      <a
+        :class="{disabled:!props.node || !props.node.image}"
+        @click="onCopyImage()"
+        class="flex"
+      >
         <span class="full">复制节点图片地址</span>
       </a>
     </div>
@@ -69,7 +94,7 @@
 
 <script >
 export default {
-  data() {
+  data () {
     return {}
   },
   props: {
@@ -83,7 +108,7 @@ export default {
     }
   },
   methods: {
-    onTop() {
+    onTop () {
       if (this.props.node) {
         this.canvas.top(this.props.node)
       }
@@ -97,7 +122,7 @@ export default {
       this.canvas.render()
     },
 
-    onBottom() {
+    onBottom () {
       if (this.props.node) {
         this.canvas.bottom(this.props.node)
       }
@@ -111,7 +136,7 @@ export default {
       this.canvas.render()
     },
 
-    onCombine(stand) {
+    onCombine (stand) {
       if (!this.props.nodes) {
         return
       }
@@ -119,7 +144,7 @@ export default {
       this.canvas.render()
     },
 
-    onUncombine() {
+    onUncombine () {
       if (!this.props.node) {
         return
       }
@@ -127,7 +152,7 @@ export default {
       this.canvas.render()
     },
 
-    onLock() {
+    onLock () {
       this.props.locked = !this.props.locked
       if (this.props.node) {
         this.props.node.locked = this.props.locked
@@ -145,7 +170,7 @@ export default {
       this.canvas.render(true)
     },
 
-    onDel() {
+    onDel () {
       this.canvas.delete()
     }
   }

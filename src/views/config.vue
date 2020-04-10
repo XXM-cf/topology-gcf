@@ -28,6 +28,7 @@
       <CanvasProps
         :props.sync="props"
         @change="onUpdateProps"
+        @setBaseImg="setBaseImg"
       />
     </div>
     <div
@@ -45,7 +46,7 @@
 
 <script>
 import { Topology } from 'topology-core'
-// import { Node } from 'topology-core/models/node'
+import { Node } from 'topology-core/models/node'
 // import { Line } from 'topology-core/models/line'
 import * as FileSaver from 'file-saver'
 
@@ -83,6 +84,9 @@ export default {
   computed: {
     event () {
       return this.$store.state.event.event
+    },
+    globalData () {
+      return this.$store.state.canvas.data
     }
   },
   watch: {
@@ -129,12 +133,36 @@ export default {
       console.log(node, 122121)
       event.dataTransfer.setData('Text', JSON.stringify(node.data))
     },
-
+    setBaseImg (val) {
+      const node = {
+        name: 'image',
+        rect: {
+          width: 1000,
+          height: 800,
+          x: 0,
+          y: 0
+        },
+        data: {
+          baseImg: true
+        },
+        image: val
+      }
+      let currBaseimgNode = this.canvas.data.pens.find(item => {
+        return item.data.baseImg
+      })
+      console.log('当前存在的底图', currBaseimgNode)
+      if (currBaseimgNode) { // 已存在底图，则删除重建
+        this.canvas.delete({
+          lines: [],
+          nodes: [currBaseimgNode]
+        })
+      }
+      this.canvas.addNode(new Node(node), true);
+    },
     onMessage (event, data) {
       // console.log('onMessage:', event, data)
       switch (event) {
         case 'node':
-          console.log('点击节点 --> node')
           this.props = {
             node: data,
             line: null,
@@ -142,9 +170,9 @@ export default {
             nodes: null,
             locked: data.locked
           }
+          console.log('点击节点 --> node', this.props)
           break
         case 'addNode':
-          console.log('添加节点-->addNode')
           this.props = {
             node: data,
             line: null,
@@ -152,6 +180,7 @@ export default {
             nodes: null,
             locked: data.locked
           }
+          console.warn('添加节点-->addNode', data)
           break
         case 'line':
         case 'addLine':
@@ -164,24 +193,22 @@ export default {
           }
           break
         case 'multi':
+          console.log(data, 1111)
           this.props = {
             node: null,
             line: null,
             multi: true,
-            nodes: data.nodes.length > 1 ? data.nodes : null,
+            nodes: data.length > 1 ? data : null,
             locked: this.getLocked(data)
           }
           break
         case 'space':
-          this.props = {
-            node: null,
-            line: null,
-            multi: false,
-            nodes: null,
-            locked: false
-          }
+          this.contextmenu.left = null // 清除右键菜单
           break
         case 'moveOut':
+          break
+        case 'delete':
+          console.log('删除')
           break
         case 'moveNodes':
         case 'resizeNodes':
@@ -317,7 +344,6 @@ export default {
     },
 
     handle_state (data) {
-      console.log('全局设置改变', data)
       this.canvas.data[data.key] = data.value
       this.$store.commit('canvas/setData', {
         scale: this.canvas.data.scale || 1,
@@ -326,6 +352,7 @@ export default {
         toArrowType: this.canvas.data.toArrowType,
         locked: this.canvas.data.locked
       })
+      this.canvas.render()
     },
 
     onContextMenu (event) {
@@ -353,6 +380,7 @@ export default {
   display: flex;
   width: 100%;
   height: 100%;
+  min-width: 1500px;
 
   .tools {
     flex-shrink: 0;
