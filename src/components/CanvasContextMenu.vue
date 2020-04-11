@@ -1,95 +1,47 @@
-<template>
-  <div class="menus">
-    <div>
-      <a
-        :class="{disabled:!props.node && !props.nodes}"
-        @click="onTop()"
-      >置顶</a>
-    </div>
-    <div>
-      <a
-        :class="{disabled:!props.node && !props.nodes}"
-        @click="onBottom()"
-      >置底</a>
-    </div>
-    <div class="line"></div>
-    <div v-if="props.nodes">
-      <a @click="onCombine()">组合</a>
-      <div>
-        <a @click="onCombine(true)">包含</a>
-      </div>
-    </div>
-    <div v-if="props.node && props.node.name === 'combine'">
-      <a @click="onUncombine()">取消组合/包含</a>
-    </div>
-    <div>
-      <a
-        :class="{disabled:!props.node && !props.nodes}"
-        @click="onLock()"
-      >{{ props.locked ? '解锁' : '锁定' }}</a>
-    </div>
-    <div class="line"></div>
-    <div>
-      <a
-        :class="{disabled:!props.node && !props.nodes && !props.line}"
-        @click="onDel()"
-      >删除</a>
-    </div>
-    <div class="line"></div>
-    <div>
-      <a
-        @click="canvas.undo()"
-        class="flex"
-      >
-        <span class="full">撤消</span>
-        <span class="ml50">Ctrl + Z</span>
-      </a>
-    </div>
-    <div>
-      <a @click="canvas.redo()">
-        恢复
-        <span class="ml50">Ctrl + Shift+ Z</span>
-      </a>
-    </div>
-    <div class="line"></div>
-    <div>
-      <a
-        @click="canvas.cut()"
-        class="flex"
-      >
-        <span class="full">剪切</span>
-        <span class="ml50">Ctrl + X</span>
-      </a>
-    </div>
-    <div>
-      <a
-        @click="canvas.copy()"
-        class="flex"
-      >
-        <span class="full">复制</span>
-        <span class="ml50">Ctrl + C</span>
-      </a>
-    </div>
-    <div>
-      <a
-        @click="canvas.parse()"
-        class="flex"
-      >
-        <span class="full">粘贴</span>
-        <span class="ml50">Ctrl + V</span>
-      </a>
-    </div>
-    <div class="line"></div>
-    <div>
-      <a
-        :class="{disabled:!props.node || !props.node.image}"
-        @click="onCopyImage()"
-        class="flex"
-      >
-        <span class="full">复制节点图片地址</span>
-      </a>
-    </div>
-  </div>
+<template lang="pug">
+    .menus
+      div
+        a(:class='{disabled:!props.node && !props.nodes}', @click='onTop()') 置顶
+      div
+        a(:class='{disabled:!props.node && !props.nodes}', @click='onBottom()') 置底
+      .line
+      div(v-if='props.nodes')
+        a(@click='onCombine()') 组合
+        div
+          a(@click='onCombine(true)') 包含
+      div(v-if="props.node && props.node.name === 'combine'")
+        a(@click='onUncombine()') 取消组合/包含
+      div
+        a(:class='{disabled:!props.node && !props.nodes}', @click='onLock()') {{ props.locked ? '解锁' : '锁定' }}
+      .line
+      div
+        a(:class='{disabled:!props.node && !props.nodes && !props.line}', @click='onDel()') 删除
+      .line
+      div
+        a.flex(@click='canvas.undo()')
+          span.full 撤消
+          span.ml50 Ctrl + Z
+      div
+        a(@click='canvas.redo()')
+          | 恢复
+          span.ml50 Ctrl + Shift+ Z
+      .line
+      div
+        a.flex(@click='canvas.cut()')
+          span.full 剪切
+          span.ml50 Ctrl + X
+      div
+        a.flex(@click='canvas.copy()')
+          span.full 复制
+          span.ml50 Ctrl + C
+      div
+        a.flex(@click='canvas.parse()')
+          span.full 粘贴
+          span.ml50 Ctrl + V
+      .line
+      div
+        a.flex(:class='{disabled:!props.node || !props.node.image}', @click='onCopyImage()')
+          span.full 复制节点图片地址
 </template>
 
 <script >

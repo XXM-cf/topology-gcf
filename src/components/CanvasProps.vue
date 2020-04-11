@@ -1,94 +1,45 @@
-<template>
-  <div>
-    <!-- 选中为空 -->
-    <div>
-      <div class="title">欢迎使用le5le-topology！</div>
-      <div class="title">选择底图</div>
-      <div class="items">
-        <el-select
-          v-model="baseImg"
-          placeholder="选择底图"
-          @change="handleBaseImg"
-        >
-          <el-option
-            v-for="item in baseImgList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          >
-          </el-option>
-        </el-select>
-      </div>
-      <div class="bottom">
-        <div class="title">小提示</div>
-        <ul class="group">
-          <li>方向键：控制节点移动5个像素</li>
-          <li>Ctrl + 方向键：控制节点移动1个像素</li>
-          <li>Ctrl + 鼠标移动：移动整个画布</li>
-          <li>Ctrl + 鼠标滚轮：缩放</li>
-          <li>添加或选中节点，右侧属性支持上传各种图片哦</li>
-        </ul>
-      </div>
-    </div>
-    <!-- 选中节点 -->
-    <div v-if="props.node">
-      <div class="title">位置和大小</div>
-      <div class="items">
-        <div class="flex grid">
-          <div>X（px）</div>
-          <div class="ml5">Y（px）</div>
-        </div>
-        <div class="flex grid">
-          <div>
-            <el-input-number
-              v-model="props.node.rect.x"
-              controls-position="right"
-              @change="onChange"
-            ></el-input-number>
-          </div>
-          <div class="ml5">
-            <el-input-number
-              v-model="props.node.rect.y"
-              controls-position="right"
-              @change="onChange"
-            ></el-input-number>
-          </div>
-        </div>
-      </div>
-      <div class="items">
-        <div class="flex grid">
-          <div>宽（px）</div>
-          <div class="ml5">高（px）</div>
-        </div>
-        <div class="flex grid">
-          <div>
-            <el-input-number
-              v-model="props.node.rect.width"
-              controls-position="right"
-              @change="onChange"
-            ></el-input-number>
-          </div>
-          <div class="ml5">
-            <el-input-number
-              v-model="props.node.rect.height"
-              controls-position="right"
-              @change="onChange"
-            ></el-input-number>
-          </div>
-        </div>
-      </div>
-      <div class="title">图片属性</div>
-      <div class="items">
-        <div class="flex grid">
-          <div>图片链接（px）</div>
-          <el-input
-            v-model="props.node.image"
-            @change="onChange"
-          ></el-input>
-        </div>
-      </div>
-    </div>
-  </div>
+<template lang="pug">
+.canvas-props
+  div
+    .title 欢迎使用le5le-topology！
+    .title 选择底图
+    .items
+      el-select(v-model='baseImg', placeholder='选择底图', @change='handleBaseImg')
+        el-option(v-for='item in baseImgList', :key='item.value', :label='item.label', :value='item.value')
+    .bottom
+      .title 小提示
+      ul.group
+        li 方向键：控制节点移动5个像素
+        li Ctrl + 方向键：控制节点移动1个像素
+        li Ctrl + 鼠标移动：移动整个画布
+        li Ctrl + 鼠标滚轮：缩放
+        li 添加或选中节点，右侧属性支持上传各种图片
+  div(v-if='props.node')
+    .title 位置和大小
+    .items
+      .flex.grid
+        div X（px）
+        .ml5 Y（px）
+      .flex.grid
+        div
+          el-input-number(v-model='props.node.rect.x', controls-position='right', @change='onChange')
+        .ml5
+          el-input-number(v-model='props.node.rect.y', controls-position='right', @change='onChange')
+    .items
+      .flex.grid
+        div 宽（px）
+        .ml5 高（px）
+      .flex.grid
+        div
+          el-input-number(v-model='props.node.rect.width', controls-position='right', @change='onChange')
+        .ml5
+          el-input-number(v-model='props.node.rect.height', controls-position='right', @change='onChange')
+    .title 图片属性
+    .items
+      .flex.grid
+        div 图片链接（px）
+        el-input(v-model='props.node.image', @change='onChange')
+
 </template>
 
 <script >

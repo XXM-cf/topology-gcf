@@ -1,118 +1,50 @@
-<template>
-  <div>
-    <!-- 顶部导航栏 -->
-    <div class="headers">
-      <el-menu
-        mode="horizontal"
-        @select="onMenu"
-        background-color="#f8f8f8"
-      >
+<template lang="pug">
+  div
+    .headers
+      el-menu(mode='horizontal', @select='onMenu', background-color='#f8f8f8')
+        el-submenu(index='file')
+          template(slot='title') 文件
+          el-menu-item(index='new') 新建文件
+          el-menu-item(index='open') 打开本地文件（新建）
+          el-menu-item(index='replace') 导入本地文件...
+          el-menu-item.separator
+          el-menu-item(index='save') 保存到本地
+          el-menu-item(index='savePng') 下载为PNG
+          el-menu-item(index='saveSvg') 下载为SVG
+        el-submenu(index='edit')
+          template(slot='title') 编辑
+          el-menu-item(index='undo') 撤消
+          el-menu-item(index='redo') 重做
+          el-menu-item.separator
+          el-menu-item(index='copy') 复制
+          el-menu-item(index='cut') 剪切
+          el-menu-item(index='parse') 粘贴
+      el-menu.full(mode='horizontal', background-color='#f8f8f8')
+      el-menu(mode='horizontal', background-color='#f8f8f8')
+        el-menu-item 视图：{{scale}}%
+        el-menu-item(index='scale', @click="onState('scale', 1)") 还原
+        el-menu-item(index='locked', @click="onState('locked', locked ? 0 : 1)") {{ locked ? '解锁' : '锁定'}}
+        el-submenu(index='state', title='默认连线类型')
+          template(slot='title')
+            i(:class='`iconfont icon-${lineName}`')
+          el-menu-item(v-for='(item, index) in lineNames', :key='index', :index='`line-${item}`', @click="onState('lineName', item)")
+            i(:class='`iconfont icon-${item}`')
 
-        <el-submenu index="file">
-          <template slot="title">文件</template>
-          <el-menu-item index="new">新建文件</el-menu-item>
-          <el-menu-item index="open">打开本地文件（新建）</el-menu-item>
-          <el-menu-item index="replace">导入本地文件...</el-menu-item>
-          <el-menu-item class="separator"></el-menu-item>
-          <el-menu-item index="save">保存到本地</el-menu-item>
-          <el-menu-item index="savePng">下载为PNG</el-menu-item>
-          <el-menu-item index="saveSvg">下载为SVG</el-menu-item>
-        </el-submenu>
-        <el-submenu index="edit">
-          <template slot="title">编辑</template>
-          <el-menu-item index="undo">撤消</el-menu-item>
-          <el-menu-item index="redo">重做</el-menu-item>
-          <el-menu-item class="separator"></el-menu-item>
-          <el-menu-item index="copy">复制</el-menu-item>
-          <el-menu-item index="cut">剪切</el-menu-item>
-          <el-menu-item index="parse">粘贴</el-menu-item>
-        </el-submenu>
+      el-menu(mode='horizontal', background-color='#f8f8f8')
+        el-submenu(index='state', title='默认起点箭头')
+          template(slot='title')
+            i(:class='`iconfont icon-from-${fromArrowType}`')
+          el-menu-item(v-for='(item, index) in arrowTypes', :key='index', :index='`fromArrow-${item}`', @click="onState('fromArrowType', item)")
+            i(:class='`iconfont icon-from-${item}`')
 
-      </el-menu>
-      <el-menu
-        mode="horizontal"
-        class="full"
-        background-color="#f8f8f8"
-      ></el-menu>
-      <el-menu
-        mode="horizontal"
-        background-color="#f8f8f8"
-      >
-        <el-menu-item>视图：{{scale}}%</el-menu-item>
-        <el-menu-item
-          index="scale"
-          @click="onState('scale', 1)"
-        >还原</el-menu-item>
-        <el-menu-item
-          index="locked"
-          @click="onState('locked', locked ? 0 : 1)"
-        >{{ locked ? '解锁' : '锁定'}}</el-menu-item>
-        <!-- <el-submenu
-          index="state"
-          title="默认连线类型"
-        >
-          <template slot="title">
-            <i :class="`iconfont icon-${lineName}`"></i>
-          </template>
-          <el-menu-item
-            v-for="(item, index) in lineNames"
-            :key="index"
-            :index="`line-${item}`"
-            @click="onState('lineName', item)"
-          >
-            <i :class="`iconfont icon-${item}`"></i>
-          </el-menu-item>
-        </el-submenu> -->
-      </el-menu>
-      <!-- <el-menu
-        mode="horizontal"
-        background-color="#f8f8f8"
-      >
-        <el-submenu
-          index="state"
-          title="默认起点箭头"
-        >
-          <template slot="title">
-            <i :class="`iconfont icon-from-${fromArrowType}`"></i>
-          </template>
-          <el-menu-item
-            v-for="(item, index) in arrowTypes"
-            :key="index"
-            :index="`fromArrow-${item}`"
-            @click="onState('fromArrowType', item)"
-          >
-            <i :class="`iconfont icon-from-${item}`"></i>
-          </el-menu-item>
-        </el-submenu>
-      </el-menu> -->
-      <!-- <el-menu
-        mode="horizontal"
-        background-color="#f8f8f8"
-      >
-        <el-submenu
-          index="state"
-          title="默认终点箭头"
-        >
-          <template slot="title">
-            <i :class="`iconfont icon-to-${toArrowType}`"></i>
-          </template>
-          <el-menu-item
-            v-for="(item, index) in arrowTypes"
-            :key="index"
-            :index="`toArrow-${item}`"
-            @click="onState('toArrowType', item)"
-          >
-            <i :class="`iconfont icon-to-${item}`"></i>
-          </el-menu-item>
-        </el-submenu>
-      </el-menu> -->
-    </div>
-
-    <!-- body部分 -->
-    <div class="body">
-      <Config></Config>
-    </div>
-  </div>
+      el-menu(mode='horizontal', background-color='#f8f8f8')
+        el-submenu(index='state', title='默认终点箭头')
+          template(slot='title')
+            i(:class='`iconfont icon-to-${toArrowType}`')
+          el-menu-item(v-for='(item, index) in arrowTypes', :key='index', :index='`toArrow-${item}`', @click="onState('toArrowType', item)")
+            i(:class='`iconfont icon-to-${item}`')
+    .body
+      config
 </template>
 
 <script >
