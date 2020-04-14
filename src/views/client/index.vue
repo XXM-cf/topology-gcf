@@ -7,8 +7,8 @@
 
     .canvas-container
       .tools
-        el-button(@click="handleAnimate") 触发动画
-        el-button(@click="handleStop") 停止动画
+        el-button(@click="handle_startAnimate('device001')") 触发动画
+        el-button(@click="handle_endAnimate('device001')") 停止动画
       #topology-canvas.full
 </template>
 
@@ -44,25 +44,25 @@ export default {
       }
 
     },
-    handleAnimate () {
-      let targetNode = this.canvas.data.pens.find(item => {
-        return item.animateFrames.length > 0 // 暂时用text标记，后续用业务属性ID绑定
+    findTargetNode (tag) { // 寻找目标节点，用来操作动画，样式切换等
+      console.log(this.canvas.data.pens)
+      let node = this.canvas.data.pens.find(item => {
+        return item.tags.join('') === tag // 关联tags
       })
-      if (targetNode) { // 目标节点，业务数据触发动画
-        if (targetNode.animateFrames.length) { // 存在动画，立即播放
-          targetNode.animateStart = Date.now()
-        }
+      console.log('当前执行节点', node)
+      return node
+    },
+    handle_startAnimate (tag) { // 开始动画
+      let targetNode = this.findTargetNode(tag)
+      if (targetNode && targetNode.animateFrames.length) { // 目标节点，业务数据触发动画
+        targetNode.animateStart = Date.now()
         this.canvas.animate()
       }
     },
-    handleStop () {
-      let targetNode = this.canvas.data.pens.find(item => {
-        return item.animateFrames.length > 0 // 暂时用text标记，后续用业务属性ID绑定
-      })
-      if (targetNode) { // 目标节点，业务数据触发动画
-        if (targetNode.animateFrames.length) { // 存在动画，立即播放
-          targetNode.animateStart = 0
-        }
+    handle_endAnimate (tag) { // 结束动画
+      let targetNode = this.findTargetNode(tag)
+      if (targetNode) {
+        targetNode.animateStart = 0
       }
     },
     open (data) {
@@ -82,7 +82,7 @@ export default {
               ) {
                 data.locked = 1
                 data.scale = 0.2
-                console.log('数据读取完毕', data)
+                console.log('json数据读取完毕', data)
                 this.canvas.open(data)
               }
             } catch (e) {

@@ -9,8 +9,6 @@
             i(v-else='', :class='`iconfont ${btn.icon}`')
     #topology-canvas.full(@contextmenu='onContextMenu($event)')
     .props
-      el-button(@click='handleClick')  触发动画
-      el-button(@click='handleStop')  停止动画
       CanvasProps(
         :props.sync='props'
         @change='onUpdateProps'
@@ -130,23 +128,6 @@ export default {
         })
       }
       this.canvas.addNode(new Node(node), true);
-    },
-    handleClick () { // 外部触发事件
-      let targetNode = this.canvas.data.pens.find(item => {
-        return item.animateFrames.length > 0 // 暂时用text标记，后续用业务属性ID绑定
-      })
-      if (targetNode) { // 目标节点，业务数据触发动画
-        if (targetNode.animateFrames.length) { // 存在动画，立即播放
-          targetNode.animateStart = Date.now()
-        }
-        this.canvas.animate()
-      }
-    },
-    handleStop () { // 外部触发事件
-      let targetNode = this.canvas.data.pens.find(item => {
-        return item.animateFrames.length > 0 // 暂时用text标记，后续用业务属性ID绑定
-      })
-      targetNode.animateStart = 0
     },
     onMessage (event, data) {
       // console.log('onMessage:', event, data)

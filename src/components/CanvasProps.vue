@@ -18,6 +18,16 @@
         li 添加或选中节点，右侧属性支持上传各种图片
 
   .props-container(v-if='props.node')
+    .group
+      .title 业务属性
+      .item.full-item
+        .label 绑定设备（点位）
+        el-select(v-model='props.node.tags', placeholder='关联设备', @change='onChange')
+          el-option(
+            v-for='item in deviceList',
+            :key='item.value',
+            :label='item.label',
+            :value='item.value')
 
     .group
       .title 位置和大小
@@ -185,7 +195,7 @@ export default {
           label: '炫耀'
         }
       ],
-
+      // ---------- 业务数据 ------------- //
       baseImgList: [
         {
           label: '酒店1层',
@@ -195,7 +205,17 @@ export default {
           label: '演示底图',
           value: '/img/yohuo.png'
         }
-      ]
+      ],
+      deviceList: [
+        {
+          label: '设备1',
+          value: 'device001'
+        },
+        {
+          label: '设备2',
+          value: 'device002'
+        }
+      ],
     }
   },
   props: {
