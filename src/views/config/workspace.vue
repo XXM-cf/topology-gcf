@@ -1,47 +1,22 @@
-<template>
-  <div class="page">
-    <div class="tools">
-      <div
-        v-for="(item, index) in tools"
-        :key="index"
-      >
-        <div class="title">{{ item.group }}</div>
-        <div class="buttons">
-          <a
-            v-for="(btn, i) in item.children"
-            :key="i"
-            :title="btn.name"
-            :draggable="btn.data"
-            @dragstart="onDrag($event, btn)"
-          >
-            <i :class="`iconfont ${btn.icon}`" />
-          </a>
-        </div>
-      </div>
-    </div>
-    <div
-      id="topology-canvas"
-      class="full"
-      @contextmenu="onContextMenu($event)"
-    />
-    <div class="props">
-      <CanvasProps
-        :props.sync="props"
-        @change="onUpdateProps"
-        @setBaseImg="setBaseImg"
-      />
-    </div>
-    <div
-      v-if="contextmenu.left"
-      class="context-menu"
-      :style="this.contextmenu"
-    >
-      <CanvasContextMenu
-        :canvas="canvas"
-        :props.sync="props"
-      />
-    </div>
-  </div>
+<template lang="pug">
+  .page
+    .tools
+      div(v-for='(item, index) in tools', :key='index')
+        .title {{ item.group }}
+        .buttons
+          a(v-for='(btn, i) in item.children', :key='i', :title='btn.name', :draggable='btn.data', @dragstart='onDrag($event, btn)')
+            img(v-if="btn.name === 'image'", :src='btn.data.image', style='wadth: 28px; height:28px;padding-top: 3px;')
+            i(v-else='', :class='`iconfont ${btn.icon}`')
+    #topology-canvas.full(@contextmenu='onContextMenu($event)')
+    .props
+      el-button(@click='handleClick')  触发动画
+      el-button(@click='handleStop')  停止动画
+      CanvasProps(
+        :props.sync='props'
+        @change='onUpdateProps'
+        @set-base-img='setBaseImg')
+    .context-menu(v-if='contextmenu.left', :style='this.contextmenu')
+      CanvasContextMenu(:canvas='canvas', :props.sync='props')
 </template>
 
 <script>
@@ -50,11 +25,11 @@ import { Node } from 'topology-core/models/node'
 // import { Line } from 'topology-core/models/line'
 import * as FileSaver from 'file-saver'
 
-import { Tools, canvasRegister } from '../services/canvas'
+import { Tools, canvasRegister } from '../../services/canvas'
 
-import CanvasProps from '../components/CanvasProps'
-import CanvasContextMenu from '../components/CanvasContextMenu'
-
+import CanvasProps from '../../components/CanvasProps'
+import CanvasContextMenu from '../../components/CanvasContextMenu'
+const fs = require('fs')
 export default {
   components: {
     CanvasProps,
@@ -114,7 +89,6 @@ export default {
   mounted () {
     this.canvasOptions.on = this.onMessage
     this.canvas = new Topology('topology-canvas', this.canvasOptions)
-    this.open()
   },
   methods: {
     async open () {
@@ -128,12 +102,11 @@ export default {
         this.canvas.open(data.data)
       }
     },
-
     onDrag (event, node) {
-      console.log(node, 122121)
       event.dataTransfer.setData('Text', JSON.stringify(node.data))
     },
     setBaseImg (val) {
+      console.log('jajaj')
       const node = {
         name: 'image',
         rect: {
@@ -150,7 +123,6 @@ export default {
       let currBaseimgNode = this.canvas.data.pens.find(item => {
         return item.data.baseImg
       })
-      console.log('当前存在的底图', currBaseimgNode)
       if (currBaseimgNode) { // 已存在底图，则删除重建
         this.canvas.delete({
           lines: [],
@@ -158,6 +130,23 @@ export default {
         })
       }
       this.canvas.addNode(new Node(node), true);
+    },
+    handleClick () { // 外部触发事件
+      let targetNode = this.canvas.data.pens.find(item => {
+        return item.animateFrames.length > 0 // 暂时用text标记，后续用业务属性ID绑定
+      })
+      if (targetNode) { // 目标节点，业务数据触发动画
+        if (targetNode.animateFrames.length) { // 存在动画，立即播放
+          targetNode.animateStart = Date.now()
+        }
+        this.canvas.animate()
+      }
+    },
+    handleStop () { // 外部触发事件
+      let targetNode = this.canvas.data.pens.find(item => {
+        return item.animateFrames.length > 0 // 暂时用text标记，后续用业务属性ID绑定
+      })
+      targetNode.animateStart = 0
     },
     onMessage (event, data) {
       // console.log('onMessage:', event, data)
@@ -294,10 +283,10 @@ export default {
             const text = e.target.result + ''
             try {
               const data = JSON.parse(text)
+              console.log('数据读取完毕', data)
               if (
                 data &&
-                Array.isArray(data.nodes) &&
-                Array.isArray(data.lines)
+                Array.isArray(data.pens)
               ) {
                 this.canvas.open(data)
               }
@@ -311,7 +300,7 @@ export default {
       input.click()
     },
 
-    handle_save (data) {
+    handle_save (data) { // 保存到本地
       FileSaver.saveAs(
         new Blob([JSON.stringify(this.canvas.data)], {
           type: 'text/plain;charset=utf-8'
@@ -379,7 +368,7 @@ export default {
 .page {
   display: flex;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 40px);
   min-width: 1500px;
 
   .tools {
@@ -432,7 +421,6 @@ export default {
   .props {
     flex-shrink: 0;
     width: 300px;
-    padding: 0.1rem 0;
     background-color: #f8f8f8;
     border-left: 1px solid #d9d9d9;
     overflow-y: auto;

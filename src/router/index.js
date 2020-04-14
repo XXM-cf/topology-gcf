@@ -6,7 +6,11 @@ Vue.use(Router)
 export const constantRoutes = [
   {
     path: '/config',
-    component: () => import('@/views/config')
+    component: () => import('@/views/config/index')
+  },
+  {
+    path: '/client',
+    component: () => import('@/views/client/index')
   }
 ]
 export default new Router({

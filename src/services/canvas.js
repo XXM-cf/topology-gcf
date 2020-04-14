@@ -198,6 +198,28 @@ export const Tools = [
     children: [
       {
         name: 'image',
+        data: {
+          rect: {
+            width: 100,
+            height: 100
+          },
+          name: 'image',
+          image: 'img/fj_base.png'
+        }
+      },
+      {
+        name: 'image',
+        data: {
+          rect: {
+            width: 100,
+            height: 100
+          },
+          name: 'image',
+          image: 'img/fengji.png'
+        }
+      },
+      {
+        name: 'image',
         icon: 'icon-teshujierimoshi',
         data: {
           rect: {
@@ -205,7 +227,7 @@ export const Tools = [
             height: 100
           },
           name: 'image',
-          image: 'img/yohuo.png'
+          image: 'img/fj_normal.png'
         }
       },
       {
@@ -214,7 +236,7 @@ export const Tools = [
         data: {
           text: '第二个自定义的',
           rect: {
-            width: 500,
+            width: 100,
             height: 100
           },
           name: 'image',
