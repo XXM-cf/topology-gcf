@@ -9,7 +9,8 @@
       .tools
         el-button(@click="handle_startAnimate('device001')") 触发动画
         el-button(@click="handle_endAnimate('device001')") 停止动画
-        el-button(@click="set_image('device001', 'img/fj_normal.png')") 修改图片
+        el-button(@click="set_image('device001', 'img/fj_normal.png')") 触发告警
+        el-button(@click="set_image('device001', 'img/fengji.png')") 停止告警
       #topology-canvas.full
 </template>
 
@@ -74,29 +75,30 @@ export default {
       }
       input.click()
     },
-    getNode (bid) { // 寻找目标节点，用来操作动画，样式切换等
-      let node = this.canvas.data.pens.find(item => {
-        console.log(item.data, bid)
-        return item.data.bid === bid // 关联bid
+    getNode (tag) { // 寻找目标节点，用来操作动画，样式切换等
+      let targetNode = this.canvas.data.pens.find(item => {
+        console.log(item.data, tag)
+        return item.tags.indexOf(tag) !== -1 // 关联tag
       })
-      console.log('当前执行节点', node)
-      return node
+      console.log('当前执行节点', targetNode)
+      return targetNode
     },
-    handle_startAnimate (bid) { // 开始动画
-      let targetNode = this.getNode(bid)
+    handle_startAnimate (tag) { // 开始动画
+      let targetNode = this.getNode(tag)
       if (targetNode && targetNode.animateFrames.length) { // 目标节点，业务数据触发动画
         targetNode.animateStart = Date.now()
         this.canvas.animate()
       }
     },
-    handle_endAnimate (bid) { // 结束动画
-      let targetNode = this.getNode(bid)
-      if (targetNode) {
+    handle_endAnimate (tag) { // 结束动画
+      let targetNode = this.getNode(tag)
+      if (targetNode && targetNode.animateFrames.length) { // 目标节点，业务数据触发动画
         targetNode.animateStart = 0
+        this.canvas.animate()
       }
     },
-    set_image (bid, url) { // 设置图片
-      let targetNode = this.getNode(bid)
+    set_image (tag, url) { // 设置图片
+      let targetNode = this.getNode(tag)
       if (targetNode) {
         targetNode.image = url
         this.canvas.render()
@@ -120,6 +122,12 @@ export default {
       width: 10%;
       height: 100%;
       background: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+      .el-button {
+        margin-bottom: 20px;
+      }
     }
 
     .full {

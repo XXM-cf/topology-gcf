@@ -197,7 +197,7 @@ export const Tools = [
     group: '自定义图标',
     children: [
       {
-        name: 'image-fj',
+        name: '排风机',
         data: {
           rect: {
             width: 100,
@@ -401,7 +401,7 @@ export const Tools = [
           text: '直线',
           rect: {
             width: 100,
-            height: 100
+            height: 100,
           },
           name: 'line'
         }

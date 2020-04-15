@@ -165,7 +165,6 @@ export default {
           break
         case 'line':
         case 'addLine':
-          console.warn('添加连线 -->addLine', data)
           this.props = {
             node: null,
             line: data,
@@ -173,7 +172,7 @@ export default {
             nodes: null,
             locked: data.locked
           }
-
+          console.warn('添加连线 -->addLine', data)
           break
         case 'multi':
           console.warn('多选节点 -->multi', data.length)

@@ -30,7 +30,7 @@
       .title 业务属性
       .item.full-item
         .label 绑定设备（点位）
-        el-select(v-model='props.node.data.bid', placeholder='关联设备', @change='onChange')
+        el-select(v-model='props.node.tags',multiple  placeholder='关联设备', @change='onChange')
           el-option(
             v-for='item in deviceList',
             :key='item.value',
@@ -231,18 +231,6 @@ export default {
     props: {
       type: Object,
       require: true
-    }
-  },
-  watch: {
-    props () {
-      if (this.props.node) {
-        if (!this.props.node.data || !this.props.node.bid) { // 如果不存在bid,默认赋值
-          this.props.node.data = {
-            ...this.props.node.data,
-            bid: ''
-          }
-        }
-      }
     }
   },
   methods: {
