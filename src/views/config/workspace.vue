@@ -4,8 +4,13 @@
       div(v-for='(item, index) in tools', :key='index')
         .title {{ item.group }}
         .buttons
-          a(v-for='(btn, i) in item.children', :key='i', :title='btn.name', :draggable='btn.data', @dragstart='onDrag($event, btn)')
-            img(v-if="btn.name === 'image'", :src='btn.data.image', style='wadth: 28px; height:28px;padding-top: 3px;')
+          a(
+            v-for='(btn, i) in item.children',
+            :key='i',
+            :title='btn.name',
+            :draggable='btn.data',
+            @dragstart='onDrag($event, btn)')
+            img(v-if="btn.data.name === 'image'", :src='btn.data.image', style='wadth: 28px; height:28px;padding-top: 3px;')
             i(v-else='', :class='`iconfont ${btn.icon}`')
     #topology-canvas.full(@contextmenu='onContextMenu($event)')
     .props
@@ -144,16 +149,23 @@ export default {
           break
         case 'addNode':
           this.props = {
-            node: data,
+            node: {
+              ...data,
+              data: {
+                ...data.data,
+                bid: '' // 默认添加bid属性
+              }
+            },
             line: null,
             multi: false,
             nodes: null,
             locked: data.locked
           }
-          console.warn('添加节点-->addNode', data)
+          console.warn('添加节点-->addNode', this.props.node)
           break
         case 'line':
         case 'addLine':
+          console.warn('添加连线 -->addLine', data)
           this.props = {
             node: null,
             line: data,
@@ -161,9 +173,10 @@ export default {
             nodes: null,
             locked: data.locked
           }
+
           break
         case 'multi':
-          console.log(data, 1111)
+          console.warn('多选节点 -->multi', data.length)
           this.props = {
             node: null,
             line: null,
@@ -178,7 +191,7 @@ export default {
         case 'moveOut':
           break
         case 'delete':
-          console.log('删除')
+          console.warn('删除节点 -->delete')
           break
         case 'moveNodes':
         case 'resizeNodes':
@@ -350,7 +363,7 @@ export default {
   display: flex;
   width: 100%;
   height: calc(100% - 40px);
-  min-width: 1500px;
+  min-width: 1200px;
 
   .tools {
     flex-shrink: 0;

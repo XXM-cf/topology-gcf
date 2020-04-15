@@ -1,7 +1,7 @@
 <template lang="pug">
 .canvas-props
   h3.tips 操作栏
-  div(v-if='!props.node')
+  div(v-if="!props.node && !props.line && !props.multi")
     .group
       .title 选择底图
       .container
@@ -17,12 +17,20 @@
         li Ctrl + 鼠标滚轮：缩放
         li 添加或选中节点，右侧属性支持上传各种图片
 
-  .props-container(v-if='props.node')
+  // 线条属性
+  .props-container(v-if="props.line")
+    .group
+        .title 线条属性
+        .item.full-item
+          .label 外观
+
+  // 节点属性
+  .props-container(v-if="props.node")
     .group
       .title 业务属性
       .item.full-item
         .label 绑定设备（点位）
-        el-select(v-model='props.node.tags', placeholder='关联设备', @change='onChange')
+        el-select(v-model='props.node.data.bid', placeholder='关联设备', @change='onChange')
           el-option(
             v-for='item in deviceList',
             :key='item.value',
@@ -45,6 +53,7 @@
         .item
           .label 高（px）
           el-input-number(v-model='props.node.rect.height', controls-position='right', @change='onChange')
+
     .group
       .title 图片属性
       .item.full-item
@@ -224,6 +233,18 @@ export default {
       require: true
     }
   },
+  watch: {
+    props () {
+      if (this.props.node) {
+        if (!this.props.node.data || !this.props.node.bid) { // 如果不存在bid,默认赋值
+          this.props.node.data = {
+            ...this.props.node.data,
+            bid: ''
+          }
+        }
+      }
+    }
+  },
   methods: {
     handleBaseImg (val) {
       this.$emit('set-base-img', val)
@@ -233,7 +254,6 @@ export default {
       if (this.props.node.animateType === 'custom') { // 自定义
         return;
       }
-
       this.props.node.animateFrames = [];
       const state = Node.cloneState(this.props.node);
       switch (this.props.node.animateType) {

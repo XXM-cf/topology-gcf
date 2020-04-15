@@ -2,13 +2,14 @@
   .client
     .headers
       el-menu(mode='horizontal', background-color='#f8f8f8' @select='onMenu')
-        el-menu-item(index='back' @clcik) 返回
-        el-menu-item(index='open' @click="open") 打开本地文件
+        el-menu-item(index='back') 返回
+        el-menu-item(index='open') 打开本地文件
 
     .canvas-container
       .tools
         el-button(@click="handle_startAnimate('device001')") 触发动画
         el-button(@click="handle_endAnimate('device001')") 停止动画
+        el-button(@click="set_image('device001', 'img/fj_normal.png')") 修改图片
       #topology-canvas.full
 </template>
 
@@ -37,35 +38,14 @@ export default {
           this.$router.push('/config')
           break
         case 'open':
-          this.open()
+          this.onOpen()
           break
         default:
           break
       }
 
     },
-    findTargetNode (tag) { // 寻找目标节点，用来操作动画，样式切换等
-      console.log(this.canvas.data.pens)
-      let node = this.canvas.data.pens.find(item => {
-        return item.tags.join('') === tag // 关联tags
-      })
-      console.log('当前执行节点', node)
-      return node
-    },
-    handle_startAnimate (tag) { // 开始动画
-      let targetNode = this.findTargetNode(tag)
-      if (targetNode && targetNode.animateFrames.length) { // 目标节点，业务数据触发动画
-        targetNode.animateStart = Date.now()
-        this.canvas.animate()
-      }
-    },
-    handle_endAnimate (tag) { // 结束动画
-      let targetNode = this.findTargetNode(tag)
-      if (targetNode) {
-        targetNode.animateStart = 0
-      }
-    },
-    open (data) {
+    onOpen (data) {
       const input = document.createElement('input')
       input.type = 'file'
       input.onchange = event => {
@@ -94,6 +74,35 @@ export default {
       }
       input.click()
     },
+    getNode (bid) { // 寻找目标节点，用来操作动画，样式切换等
+      let node = this.canvas.data.pens.find(item => {
+        console.log(item.data, bid)
+        return item.data.bid === bid // 关联bid
+      })
+      console.log('当前执行节点', node)
+      return node
+    },
+    handle_startAnimate (bid) { // 开始动画
+      let targetNode = this.getNode(bid)
+      if (targetNode && targetNode.animateFrames.length) { // 目标节点，业务数据触发动画
+        targetNode.animateStart = Date.now()
+        this.canvas.animate()
+      }
+    },
+    handle_endAnimate (bid) { // 结束动画
+      let targetNode = this.getNode(bid)
+      if (targetNode) {
+        targetNode.animateStart = 0
+      }
+    },
+    set_image (bid, url) { // 设置图片
+      let targetNode = this.getNode(bid)
+      if (targetNode) {
+        targetNode.image = url
+        this.canvas.render()
+      }
+    }
+
   }
 
 }

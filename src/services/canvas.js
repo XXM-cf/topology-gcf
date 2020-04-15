@@ -197,7 +197,7 @@ export const Tools = [
     group: '自定义图标',
     children: [
       {
-        name: 'image',
+        name: 'image-fj',
         data: {
           rect: {
             width: 100,
