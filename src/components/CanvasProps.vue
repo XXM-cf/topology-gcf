@@ -17,6 +17,16 @@
         li Ctrl + 鼠标滚轮：缩放
         li 添加或选中节点，右侧属性支持上传各种图片
 
+  // 多节点对齐
+  .props-container(v-if="props.multi")
+    .group
+        .title 节点对齐
+        .item.full-item
+          span(
+            v-for="item of nodesAlgin" :key="item"
+            style="padding-left: 20px;cursor: pointer")
+            i(:class="`iconfont icon-align-${ item }`"
+              @click="onNodesAlign(item)")
   // 线条属性
   .props-container(v-if="props.line")
     .group
@@ -204,6 +214,7 @@ export default {
           label: '炫耀'
         }
       ],
+      nodesAlgin: ['left', 'right', 'top', 'bottom', 'center', 'middle'],
       // ---------- 业务数据 ------------- //
       baseImgList: [
         {
@@ -319,6 +330,9 @@ export default {
       for (const item of this.props.node.animateFrames) {
         this.props.node.animateDuration += item.duration;
       }
+    },
+    onNodesAlign (align) {
+      this.$emit('align', align)
     },
     onChange (value) {
       this.$emit('change', this.props.node)

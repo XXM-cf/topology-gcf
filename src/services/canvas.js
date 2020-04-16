@@ -231,16 +231,21 @@ export const Tools = [
         }
       },
       {
-        name: 'image',
-        icon: 'icon-bukeshanchu',
+        name: '自定义图标',
+        icon: 'topology-wechat',
         data: {
-          text: '第二个自定义的',
           rect: {
             width: 100,
             height: 100
           },
-          name: 'image',
-          image: 'img/yohuo.png'
+          paddingLeft: 10,
+          paddingRight: 10,
+          paddingTop: 10,
+          paddingBottom: 10,
+          name: 'rectangle',
+          iconFamily: 'iconfont',
+          icon: '59295',
+          iconColor: '#6cf'
         }
       },
     ]
@@ -262,7 +267,8 @@ export const Tools = [
           paddingTop: 10,
           paddingBottom: 10,
           name: 'rectangle',
-          iconFamily: 'topology',
+          iconFamily: 'iconfont',
+          icon: '59295',
           iconColor: '#6cf'
         }
       },

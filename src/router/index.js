@@ -9,6 +9,10 @@ export const constantRoutes = [
     component: () => import('@/views/config/index')
   },
   {
+    path: '/',
+    component: () => import('@/views/config/index')
+  },
+  {
     path: '/client',
     component: () => import('@/views/client/index')
   }

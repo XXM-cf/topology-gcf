@@ -17,6 +17,7 @@
       CanvasProps(
         :props.sync='props'
         @change='onUpdateProps'
+        @align="onAlignNodes"
         @set-base-img='setBaseImg')
     .context-menu(v-if='contextmenu.left', :style='this.contextmenu')
       CanvasContextMenu(:canvas='canvas', :props.sync='props')
@@ -27,6 +28,8 @@ import { Topology } from 'topology-core'
 import { Node } from 'topology-core/models/node'
 // import { Line } from 'topology-core/models/line'
 import * as FileSaver from 'file-saver'
+import { alignNodes } from 'topology-layout';
+
 
 import { Tools, canvasRegister } from '../../services/canvas'
 
@@ -92,19 +95,9 @@ export default {
   mounted () {
     this.canvasOptions.on = this.onMessage
     this.canvas = new Topology('topology-canvas', this.canvasOptions)
+    console.log('当前canvas', this.canvas)
   },
   methods: {
-    async open () {
-      if (!this.$route.query.id) {
-        return
-      }
-      const data = await this.$axios.$get(
-        'http://topology.le5le.com/api/topology/' + this.$route.query.id
-      )
-      if (data && data.id) {
-        this.canvas.open(data.data)
-      }
-    },
     onDrag (event, node) {
       event.dataTransfer.setData('Text', JSON.stringify(node.data))
     },
@@ -249,7 +242,10 @@ export default {
 
       return locked
     },
-
+    onAlignNodes (align) {
+      alignNodes(this.canvas.activeLayer.pens, this.canvas.activeLayer.rect, align);
+      this.canvas.updateProps();
+    },
     onUpdateProps (node) {
       // 如果是node属性改变，需要传入node，重新计算node相关属性值
       // 如果是line属性改变，无需传参
