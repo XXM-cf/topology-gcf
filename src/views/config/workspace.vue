@@ -46,7 +46,9 @@ export default {
       tools: Tools,
       canvas: {},
       canvasOptions: {
-        rotateCursor: '/img/rotate.cur'
+        rotateCursor: '/img/rotate.cur',
+        color: '#f06',
+        activeColor: '#6cf'
       },
       props: {
         node: null,
@@ -64,7 +66,7 @@ export default {
   },
   computed: {
     event () {
-      return this.$store.state.event.event
+      return this.$store.state.canvas.event
     },
     globalData () {
       return this.$store.state.canvas.data
@@ -75,27 +77,14 @@ export default {
       if (this['handle_' + curVal.name]) {
         this['handle_' + curVal.name](curVal.data)
       }
-    },
-    $route (val) {
-      this.open()
     }
   },
   created () {
     canvasRegister()
-    if (process.client) {
-      document.onclick = event => {
-        this.contextmenu = {
-          left: null,
-          top: null,
-          bottom: null
-        }
-      }
-    }
   },
   mounted () {
     this.canvasOptions.on = this.onMessage
     this.canvas = new Topology('topology-canvas', this.canvasOptions)
-    console.log('当前canvas', this.canvas)
   },
   methods: {
     onDrag (event, node) {
@@ -165,7 +154,7 @@ export default {
             nodes: null,
             locked: data.locked
           }
-          console.warn('添加连线 -->addLine', data)
+          console.warn('添加连线 -->addLine')
           break
         case 'multi':
           console.warn('多选节点 -->multi', data.length)
@@ -330,6 +319,7 @@ export default {
         toArrowType: this.canvas.data.toArrowType,
         locked: this.canvas.data.locked
       })
+      console.log('全局状态', this.canvas.data)
       this.canvas.render()
     },
 

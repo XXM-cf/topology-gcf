@@ -4,15 +4,22 @@ const canvars = {
   state: {
     data: {
       scale: 1,
-      lineName: 'curve',
+      lineName: 'polyline',
       fromArrowType: '',
-      toArrowType: 'triangleSolid',
+      toArrowType: '',
       locked: 0
+    },
+    event: {
+      name: '',
+      data: null
     }
   },
   mutations: {
     setData (state, data) {
       state.data = data
+    },
+    setEvent (state, event) {
+      state.event = event
     }
   }
 }

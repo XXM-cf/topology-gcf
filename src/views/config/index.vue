@@ -19,8 +19,10 @@
           el-menu-item(index='copy') 复制
           el-menu-item(index='cut') 剪切
           el-menu-item(index='parse') 粘贴
+
       el-menu.full(mode='horizontal', background-color='#f8f8f8')
         el-menu-item(@click="handleView") 查看效果
+
       el-menu(mode='horizontal', background-color='#f8f8f8')
         el-menu-item 视图：{{scale}}%
         el-menu-item(index='scale', @click="onState('scale', 1)") 还原
@@ -91,18 +93,6 @@ export default {
     },
     locked () {
       return this.$store.state.canvas.data.locked
-    },
-    error () {
-      return this.$store.state.notice.error
-    }
-  },
-  watch: {
-    error (curVal) {
-      this.$notify({
-        title: '错误',
-        type: 'error',
-        message: curVal.text
-      })
     }
   },
   methods: {
@@ -121,15 +111,14 @@ export default {
           this.$router.push('/config')
           break
         case 'open':
-          this.$router.push('/config')
           setTimeout(() => {
-            this.$store.commit('event/emit', {
+            this.$store.commit('canvas/setEvent', {
               name: key
             })
           }, 100)
           break
         default:
-          this.$store.commit('event/emit', {
+          this.$store.commit('canvas/setEvent', {
             name: key
           })
           break
@@ -137,7 +126,7 @@ export default {
 
     },
     onState (key, value) {
-      this.$store.commit('event/emit', {
+      this.$store.commit('canvas/setEvent', {
         name: 'state',
         data: {
           key,

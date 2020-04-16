@@ -229,25 +229,7 @@ export const Tools = [
           name: 'image',
           image: 'img/fj_normal.png'
         }
-      },
-      {
-        name: '自定义图标',
-        icon: 'topology-wechat',
-        data: {
-          rect: {
-            width: 100,
-            height: 100
-          },
-          paddingLeft: 10,
-          paddingRight: 10,
-          paddingTop: 10,
-          paddingBottom: 10,
-          name: 'rectangle',
-          iconFamily: 'iconfont',
-          icon: '59295',
-          iconColor: '#6cf'
-        }
-      },
+      }
     ]
   },
   {
@@ -267,9 +249,6 @@ export const Tools = [
           paddingTop: 10,
           paddingBottom: 10,
           name: 'rectangle',
-          iconFamily: 'iconfont',
-          icon: '59295',
-          iconColor: '#6cf'
         }
       },
       {

@@ -1,13 +1,14 @@
 <template lang="pug">
 .canvas-props
   h3.tips 操作栏
+  .group
+    .title 选择底图
+    .container
+      .items.full-item
+        el-select(v-model='baseImg', placeholder='选择底图', @change='handleBaseImg')
+          el-option(v-for='item in baseImgList', :key='item.value', :label='item.label', :value='item.value')
   div(v-if="!props.node && !props.line && !props.multi")
-    .group
-      .title 选择底图
-      .container
-        .items.full-item
-          el-select(v-model='baseImg', placeholder='选择底图', @change='handleBaseImg')
-            el-option(v-for='item in baseImgList', :key='item.value', :label='item.label', :value='item.value')
+
     .bottom
       .title 小提示
       ul.group
@@ -111,11 +112,14 @@
               :key="item.value"
               :label="item.label"
               :value="item.value")
+        .item.full-item
+          .label 文字内容
+          el-input(type="textarea" v-model="props.node.text" @change='onChange')
 
     .group
       .title 预设动画
       .container
-        .item
+        .item.full-item
           .label 动画效果
           el-select(v-model="props.node.animateType" @change='onChangeAnimate')
             el-option(
@@ -343,13 +347,14 @@ export default {
 
 <style lang="scss">
 .props-container {
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 .bottom {
   position: absolute;
   bottom: 0.1rem;
   .title {
-    padding: 0.05rem 0.15rem;
+    padding: 0 10px;
     border-bottom: 1px solid #ccc;
   }
 }
@@ -363,20 +368,20 @@ export default {
   .title {
     color: #0d1a26;
     font-weight: 600;
-    padding: 0.05rem 0.15rem;
+    padding: 0 10px;
     border-bottom: 1px solid #ccc;
   }
   .container {
-    padding: 10px;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
   }
   .item {
-    width: 45%;
+    padding: 5px 10px;
+    width: 50%;
   }
   .full-item {
-    padding: 10px;
+    padding: 5px 10px;
     width: 100%;
     .el-select,
     .el-input {
