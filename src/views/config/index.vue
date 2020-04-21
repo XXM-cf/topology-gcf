@@ -27,25 +27,33 @@
         el-menu-item 视图：{{scale}}%
         el-menu-item(index='scale', @click="onState('scale', 1)") 还原
         el-menu-item(index='locked', @click="onState('locked', locked ? 0 : 1)") {{ locked ? '解锁' : '锁定'}}
-        el-submenu(index='state', title='默认连线类型')
+
+        el-submenu(index='lineName', title='默认连线类型')
           template(slot='title')
             i(:class='`iconfont icon-${lineName}`')
           el-menu-item(v-for='(item, index) in lineNames', :key='index', :index='`line-${item}`', @click="onState('lineName', item)")
             i(:class='`iconfont icon-${item}`')
 
       el-menu(mode='horizontal', background-color='#f8f8f8')
-        el-submenu(index='state', title='默认起点箭头')
+        el-submenu(index='fromArrowType', title='默认起点箭头')
           template(slot='title')
             i(:class='`iconfont icon-from-${fromArrowType}`')
-          el-menu-item(v-for='(item, index) in arrowTypes', :key='index', :index='`fromArrow-${item}`', @click="onState('fromArrowType', item)")
+          el-menu-item(v-for='(item, index) in arrowTypes', :key='index', :index='`fromArrowType-${item}`', @click="onState('fromArrowType', item)")
             i(:class='`iconfont icon-from-${item}`')
 
       el-menu(mode='horizontal', background-color='#f8f8f8')
-        el-submenu(index='state', title='默认终点箭头')
+        el-submenu(index='toArrowType', title='默认终点箭头')
           template(slot='title')
             i(:class='`iconfont icon-to-${toArrowType}`')
-          el-menu-item(v-for='(item, index) in arrowTypes', :key='index', :index='`toArrow-${item}`', @click="onState('toArrowType', item)")
+          el-menu-item(v-for='(item, index) in arrowTypes', :key='index', :index='`toArrowType-${item}`', @click="onState('toArrowType', item)")
             i(:class='`iconfont icon-to-${item}`')
+
+      el-menu(mode='horizontal', background-color='#f8f8f8')
+        el-submenu(index='lineStyle', title='连线样式')
+          template(slot='title')
+            span {{ lineStyle.label }}
+          el-menu-item(v-for='(item, index) in lineStyleOptions', :key='item.value', @click="onState('lineStyle', item.value)")
+            span {{ item.label }}
     workspace
 </template>
 
@@ -59,9 +67,10 @@ export default {
   },
   data () {
     return {
-      about: false,
-      license: false,
-      joinin: false,
+      lineStyleOptions: [
+        { label: '默认', value: 'default' },
+        { label: '水管', value: 'pipe' },
+      ],
       lineNames: ['curve', 'polyline', 'line'],
       arrowTypes: [
         '',
@@ -75,7 +84,6 @@ export default {
         'lineUp',
         'lineDown'
       ],
-      user: null
     }
   },
   computed: {
@@ -93,6 +101,11 @@ export default {
     },
     locked () {
       return this.$store.state.canvas.data.locked
+    },
+    lineStyle () {
+      let lineStyle = this.$store.state.canvas.data.lineStyle
+      let obj = this.lineStyleOptions.find(item => item.value === lineStyle)
+      return obj || {}
     }
   },
   methods: {

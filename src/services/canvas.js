@@ -38,41 +38,6 @@ import {
   flowCommentAnchors
 } from 'topology-flow-diagram'
 
-import {
-  activityFinal,
-  activityFinalIconRect,
-  activityFinalTextRect,
-  swimlaneV,
-  swimlaneVIconRect,
-  swimlaneVTextRect,
-  swimlaneH,
-  swimlaneHIconRect,
-  swimlaneHTextRect,
-  fork,
-  forkHAnchors,
-  forkIconRect,
-  forkTextRect,
-  forkVAnchors
-} from 'topology-activity-diagram'
-import {
-  simpleClass,
-  simpleClassIconRect,
-  simpleClassTextRect,
-  interfaceClass,
-  interfaceClassIconRect,
-  interfaceClassTextRect
-} from 'topology-class-diagram'
-import {
-  lifeline,
-  lifelineAnchors,
-  lifelineIconRect,
-  lifelineTextRect,
-  sequenceFocus,
-  sequenceFocusAnchors,
-  sequenceFocusIconRect,
-  sequenceFocusTextRect
-} from 'topology-sequence-diagram'
-
 export function canvasRegister () {
   registerNode(
     'flowData',
@@ -133,65 +98,7 @@ export function canvasRegister () {
   )
   registerNode('flowParallel', flowParallel, flowParallelAnchors, null, null)
   registerNode('flowComment', flowComment, flowCommentAnchors, null, null)
-
-  // activity
-  registerNode(
-    'activityFinal',
-    activityFinal,
-    null,
-    activityFinalIconRect,
-    activityFinalTextRect
-  )
-  registerNode(
-    'swimlaneV',
-    swimlaneV,
-    null,
-    swimlaneVIconRect,
-    swimlaneVTextRect
-  )
-  registerNode(
-    'swimlaneH',
-    swimlaneH,
-    null,
-    swimlaneHIconRect,
-    swimlaneHTextRect
-  )
-  registerNode('forkH', fork, forkHAnchors, forkIconRect, forkTextRect)
-  registerNode('forkV', fork, forkVAnchors, forkIconRect, forkTextRect)
-
-  // class
-  registerNode(
-    'simpleClass',
-    simpleClass,
-    null,
-    simpleClassIconRect,
-    simpleClassTextRect
-  )
-  registerNode(
-    'interfaceClass',
-    interfaceClass,
-    null,
-    interfaceClassIconRect,
-    interfaceClassTextRect
-  )
-
-  // sequence
-  registerNode(
-    'lifeline',
-    lifeline,
-    lifelineAnchors,
-    lifelineIconRect,
-    lifelineTextRect
-  )
-  registerNode(
-    'sequenceFocus',
-    sequenceFocus,
-    sequenceFocusAnchors,
-    sequenceFocusIconRect,
-    sequenceFocusTextRect
-  )
 }
-
 export const Tools = [
   {
     group: '自定义图标',
@@ -239,7 +146,6 @@ export const Tools = [
         name: 'rectangle',
         icon: 'icon-rect',
         data: {
-          text: 'whatfuck',
           rect: {
             width: 100,
             height: 100

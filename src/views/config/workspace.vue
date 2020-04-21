@@ -10,15 +10,21 @@
             :title='btn.name',
             :draggable='btn.data',
             @dragstart='onDrag($event, btn)')
-            img(v-if="btn.data.name === 'image'", :src='btn.data.image', style='wadth: 28px; height:28px;padding-top: 3px;')
+            img(
+              v-if="btn.data.name === 'image'",
+              :src='btn.data.image',
+              style='wadth: 28px; height:28px;padding-top: 3px;')
             i(v-else='', :class='`iconfont ${btn.icon}`')
     #topology-canvas.full(@contextmenu='onContextMenu($event)')
+
     .props
       CanvasProps(
         :props.sync='props'
         @change='onUpdateProps'
+        @animateChange='onAnimateChange'
         @align="onAlignNodes"
         @set-base-img='setBaseImg')
+
     .context-menu(v-if='contextmenu.left', :style='this.contextmenu')
       CanvasContextMenu(:canvas='canvas', :props.sync='props')
 </template>
@@ -35,7 +41,7 @@ import { Tools, canvasRegister } from '../../services/canvas'
 
 import CanvasProps from '../../components/CanvasProps'
 import CanvasContextMenu from '../../components/CanvasContextMenu'
-const fs = require('fs')
+
 export default {
   components: {
     CanvasProps,
@@ -47,8 +53,7 @@ export default {
       canvas: {},
       canvasOptions: {
         rotateCursor: '/img/rotate.cur',
-        color: '#f06',
-        activeColor: '#6cf'
+        disableScale: true
       },
       props: {
         node: null,
@@ -83,15 +88,25 @@ export default {
     canvasRegister()
   },
   mounted () {
-    this.canvasOptions.on = this.onMessage
-    this.canvas = new Topology('topology-canvas', this.canvasOptions)
+    this.init()
   },
   methods: {
+    init () {
+      this.canvasOptions.on = this.onMessage
+      this.canvas = new Topology('topology-canvas', this.canvasOptions)
+      this.canvas.data = {
+        ...this.canvas.data,
+        lineName: this.globalData.lineName,
+        fromArrowType: this.globalData.fromArrowType,
+        toArrowType: this.globalData.toArrowType,
+        scale: this.globalData.scale,
+        locked: this.globalData.locked
+      }
+    },
     onDrag (event, node) {
       event.dataTransfer.setData('Text', JSON.stringify(node.data))
     },
     setBaseImg (val) {
-      console.log('jajaj')
       const node = {
         name: 'image',
         rect: {
@@ -116,6 +131,22 @@ export default {
       }
       this.canvas.addNode(new Node(node), true);
     },
+    changeLine (val) { // 改变连线样式，绘制水管
+      if (this.globalData.lineStyle === 'pipe') {
+        this.canvas.data.pens.map(item => {
+          if (item.id === val) {
+            item.strokeStyle = '#6cf'
+            item.lineWidth = 15
+            item.borderWidth = 5
+            item.borderColor = '#dcdc'
+            this.canvas.updateProps()
+            return
+          }
+        })
+      } else {
+        return
+      }
+    },
     onMessage (event, data) {
       // console.log('onMessage:', event, data)
       switch (event) {
@@ -127,7 +158,7 @@ export default {
             nodes: null,
             locked: data.locked
           }
-          console.log('点击节点 --> node', this.props)
+          console.log('点击节点 --> node', data)
           break
         case 'addNode':
           this.props = {
@@ -147,6 +178,7 @@ export default {
           break
         case 'line':
         case 'addLine':
+
           this.props = {
             node: null,
             line: data,
@@ -154,7 +186,8 @@ export default {
             nodes: null,
             locked: data.locked
           }
-          console.warn('添加连线 -->addLine')
+          this.changeLine(data.id)
+          console.warn('添加或点击连线 -->addLine', data)
           break
         case 'multi':
           console.warn('多选节点 -->multi', data.length)
@@ -173,6 +206,7 @@ export default {
           break
         case 'delete':
           console.warn('删除节点 -->delete')
+          this.canvas.render()
           break
         case 'moveNodes':
         case 'resizeNodes':
@@ -203,7 +237,8 @@ export default {
               lineName: this.canvas.data.lineName,
               fromArrowType: this.canvas.data.fromArrowType,
               toArrowType: this.canvas.data.toArrowType,
-              locked: this.canvas.data.locked
+              locked: this.canvas.data.locked,
+              lineStyle: this.canvas.data.lineStyle
             })
           }
           break
@@ -233,14 +268,17 @@ export default {
     },
     onAlignNodes (align) {
       alignNodes(this.canvas.activeLayer.pens, this.canvas.activeLayer.rect, align);
-      this.canvas.updateProps();
+      this.canvas.updateProps()
+      this.canvas.cache()
     },
     onUpdateProps (node) {
       // 如果是node属性改变，需要传入node，重新计算node相关属性值
       // 如果是line属性改变，无需传参
       this.canvas.updateProps(node)
     },
-
+    onAnimateChange (line) {
+      this.canvas.animate();
+    },
     handle_new (data) {
       this.canvas.open({ nodes: [], lines: [] })
     },
@@ -306,7 +344,7 @@ export default {
       this.canvas.cut()
     },
 
-    handle_parse (data) {
+    handle_paste (data) {
       this.canvas.parse()
     },
 
@@ -317,9 +355,10 @@ export default {
         lineName: this.canvas.data.lineName,
         fromArrowType: this.canvas.data.fromArrowType,
         toArrowType: this.canvas.data.toArrowType,
-        locked: this.canvas.data.locked
+        locked: this.canvas.data.locked,
+        lineStyle: this.canvas.data.lineStyle
       })
-      console.log('全局状态', this.canvas.data)
+      this.canvas.updateProps()
       this.canvas.render()
     },
 
@@ -348,7 +387,6 @@ export default {
   display: flex;
   width: 100%;
   height: calc(100% - 40px);
-  min-width: 1200px;
 
   .tools {
     flex-shrink: 0;

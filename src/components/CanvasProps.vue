@@ -2,13 +2,14 @@
 .canvas-props
   h3.tips 操作栏
   .group
-    .title 选择底图
+    .title 基础配置
     .container
       .items.full-item
+        .label 选择底图
         el-select(v-model='baseImg', placeholder='选择底图', @change='handleBaseImg')
           el-option(v-for='item in baseImgList', :key='item.value', :label='item.label', :value='item.value')
-  div(v-if="!props.node && !props.line && !props.multi")
 
+  div(v-if="!props.node && !props.line && !props.multi")
     .bottom
       .title 小提示
       ul.group
@@ -31,9 +32,89 @@
   // 线条属性
   .props-container(v-if="props.line")
     .group
-        .title 线条属性
+      .title 位置和大小
+      .container
+        .item
+          .label 起点X（px)
+          el-input-number(v-model='props.line.from.x', controls-position='right', @change='onChange')
+        .item
+          .label 起点Y （px）
+          el-input-number(v-model='props.line.from.y', controls-position='right', @change='onChange')
+        .item
+          .label 终点X（px)
+          el-input-number(v-model='props.line.to.x', controls-position='right', @change='onChange')
+        .item
+          .label 终点Y （px）
+          el-input-number(v-model='props.line.to.y', controls-position='right', @change='onChange')
+
+    .group
+      .title 线条属性
+      .container
+        .item
+          .label 连线类型
+          el-select(v-model='props.line.name', placeholder='选择连线类型', @change='onChange')
+            el-option(v-for='item in lineTypeOptions', :key='item.value', :label='item.label', :value='item.value')
+              span {{ item.label }}
+              svg(xmlns="http://www.w3.org/2000/svg" version="1.1" style="width: 100px")
+                  g(fill="none" stroke="black" stroke-width="1")
+                    path(d="M0 9 l100 0" v-if="item.value === 'line'")
+                    path(d="M0 9 a100,50 0 0,1 85,0" v-if="item.value === 'curve'")
+                    path(d="M0 4 l40 0 l0 12 l40 0" v-if="item.value === 'polyline'")
+        .item
+          .label 连线样式
+          el-select(v-model='props.line.dash', placeholder='选择连线类型', @change='onChange')
+            el-option(v-for='index in 4', :key='index', :label='index', :value='index -1')
+              svg(xmlns="http://www.w3.org/2000/svg" version="1.1" style="width: 100px")
+                  g(fill="none" stroke="black" stroke-width="1")
+                    path(d="M0 9 l85 0" v-if="index ===  1")
+                    path(stroke-dasharray="5,5" d="M0 9 l85 0" v-if="index === 2")
+                    path(stroke-dasharray="10,10" d="M0 9 l85 0" v-if="index === 3")
+                    path(stroke-dasharray="10,10,2,10" d="M0 9 l85 0" v-if="index === 4")
+        .item
+          .label 连线颜色
+          el-color-picker(v-model="props.line.strokeStyle" @change='onChange')
+        .item
+          .label 连线宽度（px）
+          el-input-number(v-model="props.line.lineWidth" @change='onChange')
+        .item
+          .label 边框颜色
+          el-color-picker(v-model="props.line.borderColor" @change='onChange')
+        .item
+          .label 边框宽度（px）
+          el-input-number(v-model="props.line.borderWidth" @change='onChange')
         .item.full-item
-          .label 外观
+          .label 透明度（0-1）
+          el-input-number(:min="0" :max="1" v-model="props.line.globalAlpha" @change='onChange')
+
+    .group
+      .title 预设动画
+      .container
+        .item.full-item
+          .label 动画效果
+          el-select(v-model="props.line.animateType" @change='onChangeLineAnimate')
+            el-option(
+              v-for="item in lineAnimateOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value")
+        .item
+          .label 动画效果
+          el-color-picker(v-model="props.line.animateColor" @change='onChangeLineAnimate')
+        .item
+          .label 圆点大小（px）
+          el-input-number(v-model="props.line.animateDotSize" @change='onChangeLineAnimate')
+        .item
+          .label 动画速度
+          el-input-number(
+            :min="1" :max="5"
+            v-model="props.line.animateSpan"
+            @change='onChangeLineAnimate')
+        .item
+          .label 循环次数
+          el-input-number(
+            v-model="props.line.animateCycle"
+            placeholder="<1表示无限循环"
+            @change='onChangeLineAnimate')
 
   // 节点属性
   .props-container(v-if="props.node")
@@ -138,6 +219,7 @@ export default {
   data () {
     return {
       baseImg: '',
+      lineType: '',
       fontWeightOptions: [
         {
           value: 'normal',
@@ -218,8 +300,14 @@ export default {
           label: '炫耀'
         }
       ],
+      lineTypeOptions: [
+        { label: '直线', value: 'line' },
+        { label: '曲线', value: 'curve' },
+        { label: '线段', value: 'polyline' }
+      ],
       nodesAlgin: ['left', 'right', 'top', 'bottom', 'center', 'middle'],
       // ---------- 业务数据 ------------- //
+
       baseImgList: [
         {
           label: '酒店1层',
@@ -252,8 +340,17 @@ export default {
     handleBaseImg (val) {
       this.$emit('set-base-img', val)
     },
+    onChangeLineAnimate () { // 线条动画
+      this.props.line.animateStart = 0;
+      this.$emit('animateChange')
+      setTimeout(() => {
+        this.props.line.animateStart = Date.now();
+        this.$emit('animateChange')
+      }, 100);
+    },
 
-    onChangeAnimate () { // 动画效果
+
+    onChangeAnimate () { // 节点动画效果
       if (this.props.node.animateType === 'custom') { // 自定义
         return;
       }
@@ -268,13 +365,13 @@ export default {
             state
           });
           this.props.node.animateFrames.push({
-            duration: 10,
+            duration: 0,
             linear: true,
             state: Node.cloneState(this.props.node)
           });
           break;
         case 'reverseRotate': // 逆时针旋转
-          state.rotate = 360;
+          state.rotate = -360;
           this.props.node.animateFrames.push({
             duration: 1000,
             linear: true,
@@ -328,6 +425,8 @@ export default {
           break;
       }
       this.onAnimateDuration()
+      this.props.node.animateStart = Date.now()
+      this.$emit('animateChange')
     },
     onAnimateDuration () {
       this.props.node.animateDuration = 0;

@@ -7,7 +7,8 @@ const canvars = {
       lineName: 'polyline',
       fromArrowType: '',
       toArrowType: '',
-      locked: 0
+      locked: 0,
+      lineStyle: 'pipe'
     },
     event: {
       name: '',
