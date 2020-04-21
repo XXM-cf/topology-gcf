@@ -53,7 +53,7 @@ export default {
       canvas: {},
       canvasOptions: {
         rotateCursor: '/img/rotate.cur',
-        disableScale: true
+        // disableScale: true
       },
       props: {
         node: null,
@@ -237,7 +237,7 @@ export default {
               fromArrowType: this.canvas.data.fromArrowType,
               toArrowType: this.canvas.data.toArrowType,
               locked: this.canvas.data.locked,
-              lineStyle: this.canvas.data.lineStyle
+              lineStyle: this.globalData.lineStyle || 'pipe'
             })
           }
           break
@@ -348,16 +348,19 @@ export default {
     },
 
     handle_state (data) {
-      this.canvas.data[data.key] = data.value
+      if (data.key === 'scale') {
+        this.canvas.scaleTo(1)
+      } else {
+        this.canvas.data[data.key] = data.value
+      }
       this.$store.commit('canvas/setData', {
         scale: this.canvas.data.scale || 1,
         lineName: this.canvas.data.lineName,
         fromArrowType: this.canvas.data.fromArrowType,
         toArrowType: this.canvas.data.toArrowType,
         locked: this.canvas.data.locked,
-        lineStyle: this.canvas.data.lineStyle
+        lineStyle: this.canvas.data.lineStyle || 'pipe'
       })
-      this.canvas.updateProps()
       this.canvas.render()
     },
 
