@@ -4,10 +4,28 @@
   .group
     .title 基础配置
     .container
-      .items.full-item
+      .item.full-item
         .label 选择底图
         el-select(v-model='baseImg', placeholder='选择底图', @change='handleBaseImg')
           el-option(v-for='item in baseImgList', :key='item.value', :label='item.label', :value='item.value')
+      .item
+        .label 画布宽度（px）
+        el-input-number(v-model="canvasOptions.width" @change='onChangeOptions')
+      .item
+        .label 画布高度（px）
+        el-input-number(v-model="canvasOptions.height" @change='onChangeOptions')
+      .item
+        .label 禁用滚轮缩放
+        el-switch(v-model="canvasOptions.disableScale" @change='onChangeOptions')
+      //- .item
+      //-   .label 选中颜色
+      //-   el-color-picker(v-model="canvasOptions.bkColor" @change='onChangeOptions')
+      //- .item
+      //-   .label 线条/边框颜色
+      //-   el-color-picker(v-model="canvasOptions.color" @change='onChangeOptions')
+      //- .item
+      //-   .label 活动层颜色
+      //-   el-color-picker(v-model="canvasOptions.hoverColor" @change='onChangeOptions')
 
   div(v-if="!props.node && !props.line && !props.multi")
     .bottom
@@ -22,15 +40,26 @@
   // 多节点对齐
   .props-container(v-if="props.multi")
     .group
-        .title 节点对齐
-        .item.full-item
-          span(
-            v-for="item of nodesAlgin" :key="item"
-            style="padding-left: 20px;cursor: pointer")
-            i(:class="`iconfont icon-align-${ item }`"
-              @click="onNodesAlign(item)")
+      .title 节点对齐
+      .item.full-item
+        span(
+          v-for="item of nodesAlgin" :key="item"
+          style="padding-left: 20px;cursor: pointer")
+          i(:class="`iconfont icon-align-${ item }`"
+            @click="onNodesAlign(item)")
+
   // 线条属性
   .props-container(v-if="props.line")
+    .group
+      .title 业务属性
+      .item.full-item
+        .label 关联业务（点位）
+        el-select(v-model='props.line.tags',multiple  placeholder='关联设备', @change='onChange')
+          el-option(
+            v-for='item in deviceList',
+            :key='item.value',
+            :label='item.label',
+            :value='item.value')
     .group
       .title 位置和大小
       .container
@@ -121,7 +150,7 @@
     .group
       .title 业务属性
       .item.full-item
-        .label 绑定设备（点位）
+        .label 关联业务（点位）
         el-select(v-model='props.node.tags',multiple  placeholder='关联设备', @change='onChange')
           el-option(
             v-for='item in deviceList',
@@ -208,6 +237,27 @@
               :key="item.value"
               :label="item.label"
               :value="item.value")
+    .group
+      .title 媒体资源
+      .container
+        .item.full-item
+          .label 音频URL
+          el-input(v-model="props.node.audio" @change='onChange')
+        .item.full-item
+          .label 视频URL
+          el-input(v-model="props.node.video" @change='onChange')
+        .item.full-item
+          .label 联动视频地址
+          el-select(v-model="props.node.video" @change='onChange')
+            el-option(
+              v-for="item in videoList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value")
+        .item.full-item
+          .label 网页URL
+          el-input(v-model="props.node.iframe" @change='onChange')
+
 
 
 </template>
@@ -219,7 +269,13 @@ export default {
   data () {
     return {
       baseImg: '',
-      lineType: '',
+      canvasOptions: {
+        width: this.options.width,
+        height: this.options.height,
+        disableScale: this.options.disableScale
+      },
+
+      // 属性枚举值
       fontWeightOptions: [
         {
           value: 'normal',
@@ -328,9 +384,23 @@ export default {
           value: 'device002'
         }
       ],
+      videoList: [
+        {
+          label: '火灾联动',
+          value: 'https://media.w3.org/2010/05/sintel/trailer.mp4'
+        },
+        {
+          label: '动物世界',
+          value: 'http://vjs.zencdn.net/v/oceans.mp4'
+        }
+      ]
     }
   },
   props: {
+    options: {
+      type: Object,
+      require: true
+    },
     props: {
       type: Object,
       require: true
@@ -338,7 +408,7 @@ export default {
   },
   methods: {
     handleBaseImg (val) {
-      this.$emit('set-base-img', val)
+      this.$emit('changeBaseImg', val)
     },
     onChangeLineAnimate () { // 线条动画
       this.props.line.animateStart = 0;
@@ -439,6 +509,9 @@ export default {
     },
     onChange (value) {
       this.$emit('change', this.props.node)
+    },
+    onChangeOptions () {
+      this.$emit('changeOptions', this.canvasOptions)
     }
   }
 }
@@ -468,6 +541,8 @@ export default {
     color: #0d1a26;
     font-weight: 600;
     padding: 0 10px;
+    font-size: 14px;
+    margin-top: 10px;
     border-bottom: 1px solid #ccc;
   }
   .container {

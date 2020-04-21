@@ -19,11 +19,13 @@
 
     .props
       CanvasProps(
+        :options="canvasOptions"
         :props.sync='props'
         @change='onUpdateProps'
         @animateChange='onAnimateChange'
         @align="onAlignNodes"
-        @set-base-img='setBaseImg')
+        @changeOptions="onChangeOptions"
+        @changeBaseImg='onSetBaseImg')
 
     .context-menu(v-if='contextmenu.left', :style='this.contextmenu')
       CanvasContextMenu(:canvas='canvas', :props.sync='props')
@@ -53,7 +55,9 @@ export default {
       canvas: {},
       canvasOptions: {
         rotateCursor: '/img/rotate.cur',
-        // disableScale: true
+        width: 1000,
+        height: 800,
+        disableScale: true
       },
       props: {
         node: null,
@@ -96,17 +100,15 @@ export default {
       this.canvas = new Topology('topology-canvas', this.canvasOptions)
       this.canvas.data = {
         ...this.canvas.data,
-        lineName: this.globalData.lineName,
-        fromArrowType: this.globalData.fromArrowType,
-        toArrowType: this.globalData.toArrowType,
-        scale: this.globalData.scale,
-        locked: this.globalData.locked
+        ...this.globalData,
       }
+      console.log(this.canvas)
+      this.canvas.render()
     },
     onDrag (event, node) {
       event.dataTransfer.setData('Text', JSON.stringify(node.data))
     },
-    setBaseImg (val) {
+    onSetBaseImg (val) {
       const node = {
         name: 'image',
         rect: {
@@ -130,20 +132,25 @@ export default {
       }
       this.canvas.render()
     },
+    onChangeOptions (obj) { // 修改基础配置
+      this.canvas.options = {
+        ...this.canvas.options,
+        ...obj
+      }
+      console.log('修改基础配置', this.canvas)
+      this.canvas.render()
+    },
     changeLine (val) { // 改变连线样式，绘制水管
       if (this.globalData.lineStyle === 'pipe') {
-        this.canvas.data.pens.map(item => {
-          if (item.id === val) {
-            item.strokeStyle = '#6cf'
-            item.lineWidth = 15
-            item.borderWidth = 5
-            item.borderColor = '#dcdc'
-            this.canvas.updateProps()
-            return
-          }
+        let targetLine = this.canvas.data.pens.find(item => {
+          return item.id === val
         })
-      } else {
-        return
+        if (targetLine) {
+          targetLine.strokeStyle = '#6cf'
+          targetLine.lineWidth = 15
+          targetLine.borderWidth = 5
+          targetLine.borderColor = '#dcdc'
+        }
       }
     },
     onMessage (event, data) {
@@ -273,7 +280,11 @@ export default {
     onUpdateProps (node) {
       // 如果是node属性改变，需要传入node，重新计算node相关属性值
       // 如果是line属性改变，无需传参
-      this.canvas.updateProps(node)
+      if (node) {
+        this.canvas.updateProps(node)
+      } else {
+        this.canvas.render()
+      }
     },
     onAnimateChange (line) {
       this.canvas.animate();

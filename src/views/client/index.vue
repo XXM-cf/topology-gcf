@@ -32,7 +32,6 @@ export default {
     this.canvas = new Topology('topology-canvas', this.canvasOptions)
   },
   methods: {
-
     onMenu (key, keyPath) {
       if (!key || key.indexOf('/') === 0) {
         return
@@ -67,7 +66,7 @@ export default {
                 data.locked = 1
                 console.log('json数据读取完毕', data)
                 this.canvas.open(data)
-                this.resizeCanvas()
+                // this.resizeCanvas()
               }
             } catch (e) {
               return false
@@ -86,9 +85,9 @@ export default {
       let widthNum = parseFloat((contianerWidth / canvasRect.width).toFixed(2))
       let heightNum = parseFloat((contianerHeight / canvasRect.height).toFixed(2))
       this.canvas.scaleTo(Math.min(widthNum, heightNum))
-      let newRanvasRect = this.canvas.getRect() // 画布大小
-      console.log('缩放后画布', newRanvasRect)
-      this.canvas.translate(-newRanvasRect.x, -newRanvasRect.y) // 取相反数平移
+      let newCanvasRect = this.canvas.getRect() // 画布大小
+      console.log('缩放后画布', newCanvasRect)
+      this.canvas.translate(-newCanvasRect.x, -newCanvasRect.y) // 取相反数平移
       this.canvas.render()
     },
     getNode (tag) { // 寻找目标节点，用来操作动画，样式切换等
@@ -128,7 +127,6 @@ export default {
         this.canvas.animate()
       }
     },
-
     set_image (tag, url) { // 设置图片
       let targetNode = this.getNode(tag)
       if (targetNode) {
@@ -167,7 +165,6 @@ export default {
       height: 100%;
       position: relative;
       overflow: hidden;
-      background: #333;
     }
   }
 }
