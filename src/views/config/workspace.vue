@@ -123,13 +123,12 @@ export default {
       let currBaseimgNode = this.canvas.data.pens.find(item => {
         return item.data.baseImg
       })
-      if (currBaseimgNode) { // 已存在底图，则删除重建
-        this.canvas.delete({
-          lines: [],
-          nodes: [currBaseimgNode]
-        })
+      if (currBaseimgNode) { // 已存在底图，则替换地图
+        currBaseimgNode.image = val
+      } else {
+        this.canvas.addNode(new Node(node), true) // 新建
       }
-      this.canvas.addNode(new Node(node), true);
+      this.canvas.render()
     },
     changeLine (val) { // 改变连线样式，绘制水管
       if (this.globalData.lineStyle === 'pipe') {
