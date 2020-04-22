@@ -9,14 +9,15 @@
         el-select(v-model='baseImg', placeholder='选择底图', @change='handleBaseImg')
           el-option(v-for='item in baseImgList', :key='item.value', :label='item.label', :value='item.value')
       .item
-        .label 画布宽度（px）
-        el-input-number(v-model="canvasOptions.width" @change='onChangeOptions')
-      .item
-        .label 画布高度（px）
-        el-input-number(v-model="canvasOptions.height" @change='onChangeOptions')
-      .item
         .label 禁用滚轮缩放
         el-switch(v-model="canvasOptions.disableScale" @change='onChangeOptions')
+
+      //- .item
+      //-   .label 画布宽度（px）
+      //-   el-input-number(v-model="canvasOptions.width" @change='onChangeOptions')
+      //- .item
+      //-   .label 画布高度（px）
+      //-   el-input-number(v-model="canvasOptions.height" @change='onChangeOptions')
       //- .item
       //-   .label 选中颜色
       //-   el-color-picker(v-model="canvasOptions.bkColor" @change='onChangeOptions')

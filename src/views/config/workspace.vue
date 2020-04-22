@@ -1,20 +1,27 @@
 <template lang="pug">
   .page
     .tools
-      div(v-for='(item, index) in tools', :key='index')
-        .title {{ item.group }}
-        .buttons
-          a(
-            v-for='(btn, i) in item.children',
-            :key='i',
-            :title='btn.name',
-            :draggable='btn.data',
-            @dragstart='onDrag($event, btn)')
-            img(
-              v-if="btn.data.name === 'image'",
-              :src='btn.data.image',
-              style='wadth: 28px; height:28px;padding-top: 3px;')
-            i(v-else='', :class='`iconfont ${btn.icon}`')
+      el-collapse(v-model="activeNames")
+        el-collapse-item(
+          v-for='(item, index) in tools', :key='index'
+          :title="item.group"  Consistency :name="item.group")
+          .buttons
+            a(
+              v-for='(btn, i) in item.children',
+              :key='i',
+              :title='btn.name',
+              :class="{'imgContent' : btn.data.name === 'image'}"
+              :draggable='btn.data',
+              @dragstart='onDrag($event, btn)')
+              .content
+                img(
+                  v-if="btn.data.name === 'image'",
+                  :src='btn.data.image')
+                i(v-else='', :class='`iconfont ${btn.icon}`')
+                .name {{ btn.name }}
+
+
+
     #topology-canvas.full(@contextmenu='onContextMenu($event)')
 
     .props
@@ -51,12 +58,11 @@ export default {
   },
   data () {
     return {
+      activeNames: ['自定义图标'],
       tools: Tools,
       canvas: {},
       canvasOptions: {
         rotateCursor: '/img/rotate.cur',
-        width: 1000,
-        height: 800,
         disableScale: true
       },
       props: {
@@ -137,13 +143,12 @@ export default {
         ...this.canvas.options,
         ...obj
       }
-      console.log('修改基础配置', this.canvas)
       this.canvas.render()
     },
-    changeLine (val) { // 改变连线样式，绘制水管
+    changeLine (id) { // 改变连线样式，绘制水管
       if (this.globalData.lineStyle === 'pipe') {
         let targetLine = this.canvas.data.pens.find(item => {
-          return item.id === val
+          return item.id === id
         })
         if (targetLine) {
           targetLine.strokeStyle = '#6cf'
@@ -408,13 +413,12 @@ export default {
     border-right: 1px solid #d9d9d9;
     overflow-y: auto;
 
-    .title {
+    .el-collapse-item__header {
       color: #0d1a26;
       font-weight: 600;
       font-size: 0.12rem;
       line-height: 1;
       padding: 0.05rem 0.1rem;
-      margin-top: 0.08rem;
       border-bottom: 1px solid #ddd;
 
       &:first-child {
@@ -426,15 +430,40 @@ export default {
       padding: 0.1rem 0;
       a {
         display: inline-block;
-        color: #314659;
-        line-height: 1;
-        width: 0.4rem;
-        height: 0.4rem;
         text-align: center;
+        width: 60px;
+        height: 60px;
         text-decoration: none !important;
+        cursor: pointer;
+        .content {
+          height: 100%;
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          img {
+            width: 50px;
+            height: 50px;
+            padding-top: 4px;
+          }
+          .name {
+            font-size: 10px;
+            color: #333;
+            margin-top: -10px;
+          }
+        }
 
         .iconfont {
-          font-size: 0.24rem;
+          font-size: 30px;
+          padding-bottom: 0;
+        }
+      }
+      .imgContent {
+        width: 90px;
+        height: 90px;
+        .name {
+          margin-top: 0 !important;
         }
       }
     }

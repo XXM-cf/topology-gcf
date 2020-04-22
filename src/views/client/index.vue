@@ -13,6 +13,7 @@
         el-button(@click="handle_endAnimate('device001')") 停止节点动画
         el-button(@click="set_image('device001', 'img/fj_normal.png')") 触发告警
         el-button(@click="set_image('device001', 'img/fengji.png')") 停止告警
+        el-button(@click="resizeCanvas()") 缩放适配
       #topology-canvas.full(ref="myCanvas" style="width:100%; height:100%")
 </template>
 
@@ -66,7 +67,7 @@ export default {
                 data.locked = 1
                 console.log('json数据读取完毕', data)
                 this.canvas.open(data)
-                // this.resizeCanvas()
+                this.resizeCanvas()
               }
             } catch (e) {
               return false

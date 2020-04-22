@@ -99,51 +99,14 @@ export function canvasRegister () {
   registerNode('flowParallel', flowParallel, flowParallelAnchors, null, null)
   registerNode('flowComment', flowComment, flowCommentAnchors, null, null)
 }
+import water from './water'
 export const Tools = [
-  {
-    group: '自定义图标',
-    children: [
-      {
-        name: '排风机',
-        data: {
-          rect: {
-            width: 100,
-            height: 100
-          },
-          name: 'image',
-          image: 'img/fj_base.png'
-        }
-      },
-      {
-        name: 'image',
-        data: {
-          rect: {
-            width: 100,
-            height: 100
-          },
-          name: 'image',
-          image: 'img/fengji.png'
-        }
-      },
-      {
-        name: 'image',
-        icon: 'icon-teshujierimoshi',
-        data: {
-          rect: {
-            width: 100,
-            height: 100
-          },
-          name: 'image',
-          image: 'img/fj_normal.png'
-        }
-      }
-    ]
-  },
+  water,
   {
     group: '基本形状',
     children: [
       {
-        name: 'rectangle',
+        name: '矩形',
         icon: 'icon-rect',
         data: {
           rect: {
@@ -158,7 +121,7 @@ export const Tools = [
         }
       },
       {
-        name: 'rectangle',
+        name: '圆角矩形',
         icon: 'icon-rectangle',
         data: {
           text: '圆角矩形',
@@ -175,7 +138,7 @@ export const Tools = [
         }
       },
       {
-        name: 'circle',
+        name: '圆',
         icon: 'icon-circle',
         data: {
           text: '圆',
@@ -188,7 +151,7 @@ export const Tools = [
         }
       },
       {
-        name: 'triangle',
+        name: '三角形',
         icon: 'icon-triangle',
         data: {
           text: '三角形',
@@ -200,7 +163,7 @@ export const Tools = [
         }
       },
       {
-        name: 'diamond',
+        name: '菱形',
         icon: 'icon-diamond',
         data: {
           text: '菱形',
@@ -212,7 +175,7 @@ export const Tools = [
         }
       },
       {
-        name: 'pentagon',
+        name: '五边形',
         icon: 'icon-pentagon',
         data: {
           text: '五边形',
@@ -224,7 +187,7 @@ export const Tools = [
         }
       },
       {
-        name: 'hexagon',
+        name: '六边形',
         icon: 'icon-hexagon',
         data: {
           text: '六边形',
@@ -238,7 +201,7 @@ export const Tools = [
         }
       },
       {
-        name: 'pentagram',
+        name: '五角星',
         icon: 'icon-pentagram',
         data: {
           text: '五角星',
@@ -250,7 +213,7 @@ export const Tools = [
         }
       },
       {
-        name: 'leftArrow',
+        name: '左箭头',
         icon: 'icon-arrow-left',
         data: {
           text: '左箭头',
@@ -262,7 +225,7 @@ export const Tools = [
         }
       },
       {
-        name: 'rightArrow',
+        name: '右箭头',
         icon: 'icon-arrow-right',
         data: {
           text: '右箭头',
@@ -274,7 +237,7 @@ export const Tools = [
         }
       },
       {
-        name: 'twowayArrow',
+        name: '双向箭头',
         icon: 'icon-twoway-arrow',
         data: {
           text: '双向箭头',
@@ -286,7 +249,7 @@ export const Tools = [
         }
       },
       {
-        name: 'line',
+        name: '直线',
         icon: 'icon-line',
         data: {
           text: '直线',
@@ -298,7 +261,7 @@ export const Tools = [
         }
       },
       {
-        name: 'cloud',
+        name: '云',
         icon: 'icon-cloud',
         data: {
           text: '云',
@@ -310,7 +273,7 @@ export const Tools = [
         }
       },
       {
-        name: 'message',
+        name: '消息框',
         icon: 'icon-msg',
         data: {
           text: '消息框',
@@ -326,10 +289,9 @@ export const Tools = [
         }
       },
       {
-        name: 'file',
+        name: '文档',
         icon: 'icon-file',
         data: {
-          text: '文档',
           rect: {
             width: 80,
             height: 100
@@ -342,10 +304,10 @@ export const Tools = [
         }
       },
       {
-        name: 'text',
+        name: '文字',
         icon: 'icon-text',
         data: {
-          text: 'le5le-topology / 乐吾乐',
+          text: '示例文字',
           rect: {
             width: 160,
             height: 30
@@ -353,32 +315,7 @@ export const Tools = [
           name: 'text'
         }
       },
-      {
-        name: 'image',
-        icon: 'icon-image',
-        data: {
-          text: 'lallalallla.；安排',
-          rect: {
-            width: 100,
-            height: 100
-          },
-          name: 'image',
-          image: '/img/logo.png'
-        }
-      },
-      {
-        name: 'image',
-        icon: 'icon-teshujierimoshi',
-        data: {
-          text: 'lallalallla.；安排',
-          rect: {
-            width: 100,
-            height: 100
-          },
-          name: 'image',
-          image: '/img/yohuo.png'
-        }
-      },
+
       {
         name: 'cube',
         icon: 'icon-cube',
@@ -389,24 +326,13 @@ export const Tools = [
           },
           is3D: true,
           z: 10,
-          zRotate: 15,
-          fillStyle: '#ddd',
+          zRotate: 10,
+          fillStyle: '#dcdcdc',
           name: 'cube',
           icon: '\ue63c',
           iconFamily: 'topology',
           iconColor: '#777',
           iconSize: 30
-        }
-      },
-      {
-        name: 'people',
-        icon: 'icon-people',
-        data: {
-          rect: {
-            width: 70,
-            height: 100
-          },
-          name: 'people'
         }
       },
       {
@@ -422,10 +348,21 @@ export const Tools = [
           paddingRight: 10,
           paddingTop: 10,
           paddingBottom: 10,
-          // strokeStyle: 'transparent',
           name: 'div'
         }
-      }
+      },
+      {
+        name: '图片',
+        icon: 'icon-image',
+        data: {
+          rect: {
+            width: 100,
+            height: 100
+          },
+          name: 'image',
+          image: '/img/logo.png'
+        }
+      },
     ]
   }
 ]
