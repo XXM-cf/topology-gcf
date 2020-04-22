@@ -7,6 +7,7 @@
 
     .canvas-container
       .tools
+        h3 操作指令
         el-button(@click="startAllAnimate()") 触发所有动画
         el-button(@click="endAllAnimate()") 结束所有动画
         el-button(@click="handle_startAnimate('device001')") 触发节点动画
@@ -151,13 +152,16 @@ export default {
     border: 1px solid #dcdcdc;
     .tools {
       width: 10%;
+      min-width: 140px;
       height: 100%;
       background: #f5f5f5;
       display: flex;
       flex-direction: column;
+      text-align: center;
       padding: 10px;
       .el-button {
-        margin-bottom: 20px;
+        margin-bottom: 15px;
+        margin-left: 0;
       }
     }
 

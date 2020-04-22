@@ -5,12 +5,10 @@
         el-submenu(index='file')
           template(slot='title') 文件
           el-menu-item(index='new') 新建文件
-          el-menu-item(index='open') 打开本地文件（新建）
-          el-menu-item(index='replace') 导入本地文件...
+          el-menu-item(index='replace') 导入本地文件
           el-menu-item.separator
           el-menu-item(index='save') 保存到本地
           el-menu-item(index='savePng') 下载为PNG
-          el-menu-item(index='saveSvg') 下载为SVG
         el-submenu(index='edit')
           template(slot='title') 编辑
           el-menu-item(index='undo') 撤消

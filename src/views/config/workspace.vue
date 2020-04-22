@@ -108,7 +108,6 @@ export default {
         ...this.canvas.data,
         ...this.globalData,
       }
-      console.log(this.canvas)
       this.canvas.render()
     },
     onDrag (event, node) {
@@ -294,6 +293,9 @@ export default {
     onAnimateChange (line) {
       this.canvas.animate();
     },
+
+
+    // 菜单事件
     handle_new (data) {
       this.canvas.open({ nodes: [], lines: [] })
     },
@@ -315,11 +317,13 @@ export default {
             try {
               const data = JSON.parse(text)
               console.log('数据读取完毕', data)
+
               if (
                 data &&
                 Array.isArray(data.pens)
               ) {
                 this.canvas.open(data)
+                this.canvas.render()
               }
             } catch (e) {
               return false
