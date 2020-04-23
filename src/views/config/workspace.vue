@@ -26,6 +26,7 @@
 
     .props
       CanvasProps(
+        :canvas='canvas'
         :options="canvasOptions"
         :props.sync='props'
         @change='onUpdateProps'
@@ -33,7 +34,6 @@
         @align="onAlignNodes"
         @changeOptions="onChangeOptions"
         @changeBaseImg='onSetBaseImg')
-
     .context-menu(v-if='contextmenu.left', :style='this.contextmenu')
       CanvasContextMenu(:canvas='canvas', :props.sync='props')
 </template>
@@ -41,7 +41,8 @@
 <script>
 import { Topology } from 'topology-core'
 import { Node } from 'topology-core/models/node'
-// import { Line } from 'topology-core/models/line'
+import { Line } from 'topology-core/models/line'
+import { Point } from 'topology-core/models/point'
 import * as FileSaver from 'file-saver'
 import { alignNodes } from 'topology-layout';
 

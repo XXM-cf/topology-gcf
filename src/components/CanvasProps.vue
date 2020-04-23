@@ -2,6 +2,12 @@
 .canvas-props
   h3.tips 操作栏
   .group
+    .title 快捷操作
+    .container
+      .item.full-item
+       el-button(@click="onAddPipeLine") 绘制水管
+
+  .group
     .title 基础配置
     .container
       .item.full-item
@@ -265,7 +271,8 @@
 
 <script >
 import { Node } from 'topology-core/models/node'
-
+import { Line } from 'topology-core/models/line'
+import { Point } from 'topology-core/models/point'
 export default {
   data () {
     return {
@@ -398,6 +405,10 @@ export default {
     }
   },
   props: {
+    canvas: {
+      type: Object,
+      require: true
+    },
     options: {
       type: Object,
       require: true
@@ -513,6 +524,26 @@ export default {
     },
     onChangeOptions () {
       this.$emit('changeOptions', this.canvasOptions)
+    },
+    onAddPipeLine () {
+      this.canvas.addLine(
+        new Line({
+          name: 'line',
+          fromArrow: '',
+          toArrow: '',
+          from: new Point(100, 100),
+          to: new Point(300, 100),
+          controlPoints: [
+            new Point(200, 100),
+            new Point(200, 300),
+          ],
+          strokeStyle: '#6cf',
+          lineWidth: 15,
+          borderWidth: 5,
+          borderColor: '#dcdc'
+        })
+      )
+      this.canvas.render()
     }
   }
 }

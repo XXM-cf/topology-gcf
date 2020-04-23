@@ -8,7 +8,7 @@ const canvars = {
       fromArrowType: '',
       toArrowType: '',
       locked: 0,
-      lineStyle: 'pipe'
+      lineStyle: 'default'
     },
     event: {
       name: '',

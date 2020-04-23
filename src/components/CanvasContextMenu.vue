@@ -1,6 +1,8 @@
 <template lang="pug">
     .menus
       div
+        a(@click='onAddLine()') 绘制水管
+      div
         a(:class='{disabled:!props.node && !props.nodes}', @click='onTop()') 置顶
       div
         a(:class='{disabled:!props.node && !props.nodes}', @click='onBottom()') 置底
@@ -60,6 +62,7 @@ export default {
     }
   },
   methods: {
+
     onTop () {
       if (this.props.node) {
         this.canvas.top(this.props.node)

@@ -100,8 +100,10 @@ export function canvasRegister () {
   registerNode('flowComment', flowComment, flowCommentAnchors, null, null)
 }
 import water from './water'
+import electricity from './electricity'
 export const Tools = [
   water,
+  electricity,
   {
     group: '基本形状',
     children: [
