@@ -169,6 +169,7 @@ export default {
             locked: data.locked
           }
           console.log('点击节点 --> node', data)
+          console.log('this.canvas', this.canvas)
           break
         case 'addNode':
           this.props = {

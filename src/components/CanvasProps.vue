@@ -368,11 +368,11 @@ export default {
       baseImgList: [
         {
           label: '酒店1层',
-          value: '/img/floor.png'
+          value: require('../assets/images/baseImg/floor.png')
         },
         {
           label: '演示底图',
-          value: '/img/yohuo.png'
+          value: require('../assets/images/baseImg/yohuo.png')
         }
       ],
       deviceList: [

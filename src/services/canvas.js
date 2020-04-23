@@ -362,7 +362,7 @@ export const Tools = [
           name: 'image',
           image: '/img/logo.png'
         }
-      },
+      }
     ]
   }
 ]

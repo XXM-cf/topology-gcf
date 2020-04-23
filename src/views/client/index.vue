@@ -20,7 +20,6 @@
 
 <script>
 import { Topology } from 'topology-core'
-import lodash from 'lodash'
 export default {
   data () {
     return {
