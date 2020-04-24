@@ -183,6 +183,31 @@
           el-input-number(v-model='props.node.rect.height', controls-position='right', @change='onChange')
 
     .group
+      .title 边框属性
+      .container
+        .item
+          .label 边框样式
+          el-select(v-model='props.node.dash', placeholder='选择连线类型', @change='onChange')
+            el-option(v-for='index in 4', :key='index', :label='index', :value='index -1')
+              svg(xmlns="http://www.w3.org/2000/svg" version="1.1" style="width: 100px")
+                  g(fill="none" stroke="black" stroke-width="1")
+                    path(d="M0 9 l85 0" v-if="index ===  1")
+                    path(stroke-dasharray="5,5" d="M0 9 l85 0" v-if="index === 2")
+                    path(stroke-dasharray="10,10" d="M0 9 l85 0" v-if="index === 3")
+                    path(stroke-dasharray="10,10,2,10" d="M0 9 l85 0" v-if="index === 4")
+        .item
+          .label 边框颜色
+          el-color-picker(v-model="props.node.strokeStyle" show-alpha @change='onChange')
+        .item
+          .label 边框宽度（px）
+          el-input-number(v-model="props.node.lineWidth" @change='onChange')
+        .item
+          .label 背景颜色
+          el-color-picker(v-model="props.node.fillStyle" @change='onChange')
+        .item
+          .label 透明度（0-1）
+          el-input-number(v-model="props.node.globalAlpha" @change='onChange')
+    .group
       .title 图片属性
       .item.full-item
         .label 图片链接（px）
@@ -593,6 +618,10 @@ export default {
     .el-input {
       width: 100%;
     }
+  }
+  .el-color-picker__trigger,
+  .el-color-picker {
+    width: 100%;
   }
 }
 </style>

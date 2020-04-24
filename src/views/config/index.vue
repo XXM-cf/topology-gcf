@@ -57,7 +57,6 @@
 
 <script >
 import workspace from './workspace'
-import '../../assets/css/base.scss'
 
 export default {
   components: {

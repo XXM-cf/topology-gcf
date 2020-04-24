@@ -108,6 +108,23 @@ export const Tools = [
     group: '基本形状',
     children: [
       {
+        name: '自定义图标',
+        icon: 'icon-rect',
+        data: {
+          rect: {
+            width: 50,
+            height: 50
+          },
+          borderColor: 'rgba(0,0,0,0)',  // 去除边框
+          strokeStyle: 'rgba(0,0,0,0)',
+          icon: '\uecd5',
+          iconFamily: 'iconfont',
+          iconSize: 30,
+          name: 'circle',
+        }
+      },
+
+      {
         name: '矩形',
         icon: 'icon-rect',
         data: {
