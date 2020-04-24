@@ -214,6 +214,16 @@
         el-input(v-model='props.node.image', @change='onChange')
 
     .group
+      .title 字体图标属性
+      .container
+        .item
+          .label 图标大小（px）
+          el-input-number(:min="6" :max="100" v-model='props.node.iconSize', @change='onChange')
+        .item
+          .label 图标颜色
+          el-color-picker(v-model="props.node.iconColor" show-alpha @change='onChange')
+
+    .group
       .title 文字属性
       .container
         .item
@@ -382,7 +392,7 @@ export default {
         },
         {
           value: 'heart',
-          label: '心跳'
+          label: '告警'
         },
         {
           value: 'show',
@@ -495,11 +505,13 @@ export default {
           state.rect.ex += 5;
           state.rect.y -= 5;
           state.rect.ey += 5;
-          state.rect.width += 5;
+          state.rect.width += 10;
           state.rect.height += 10;
-          state.strokeStyle = '#237804';
+          state.strokeStyle = '#f06';
+          state.borderWidth = 10;
+          state.globalAlpha -= 0.5
           this.props.node.animateFrames.push({
-            duration: 100,
+            duration: 200,
             linear: true,
             state
           });
