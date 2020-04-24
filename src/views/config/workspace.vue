@@ -17,7 +17,9 @@
                 img(
                   v-if="btn.data.name === 'image'",
                   :src='btn.data.image')
+                i(v-else-if='btn.data.iconClass', :class='`iconfont ${btn.data.iconClass}`')
                 i(v-else='', :class='`iconfont ${btn.icon}`')
+                //- i(class="iconfont icon-shidu")
                 .name {{ btn.name }}
 
 
@@ -115,7 +117,7 @@ export default {
       event.dataTransfer.setData('Text', JSON.stringify(node.data))
     },
     onSetBaseImg (val) {
-      const node = {
+      const node = new Node({
         name: 'image',
         rect: {
           width: 1000,
@@ -127,14 +129,15 @@ export default {
           baseImg: true
         },
         image: val
-      }
+      })
       let currBaseimgNode = this.canvas.data.pens.find(item => {
         return item.data.baseImg
       })
       if (currBaseimgNode) { // 已存在底图，则替换地图
         currBaseimgNode.image = val
       } else {
-        this.canvas.addNode(new Node(node), true) // 新建
+        this.canvas.addNode(node, true) // 新建
+        this.canvas.bottom(node) // 手动置底
       }
       this.canvas.render()
     },

@@ -108,13 +108,13 @@
                     path(stroke-dasharray="10,10,2,10" d="M0 9 l85 0" v-if="index === 4")
         .item
           .label 连线颜色
-          el-color-picker(v-model="props.line.strokeStyle" @change='onChange')
+          el-color-picker(v-model="props.line.strokeStyle" show-alpha @change='onChange')
         .item
           .label 连线宽度（px）
           el-input-number(v-model="props.line.lineWidth" @change='onChange')
         .item
           .label 边框颜色
-          el-color-picker(v-model="props.line.borderColor" @change='onChange')
+          el-color-picker(v-model="props.line.borderColor" show-alpha @change='onChange')
         .item
           .label 边框宽度（px）
           el-input-number(v-model="props.line.borderWidth" @change='onChange')
@@ -135,7 +135,7 @@
               :value="item.value")
         .item
           .label 动画效果
-          el-color-picker(v-model="props.line.animateColor" @change='onChangeLineAnimate')
+          el-color-picker(v-model="props.line.animateColor" show-alpha @change='onChangeLineAnimate')
         .item
           .label 圆点大小（px）
           el-input-number(v-model="props.line.animateDotSize" @change='onChangeLineAnimate')
@@ -200,10 +200,10 @@
           el-color-picker(v-model="props.node.strokeStyle" show-alpha @change='onChange')
         .item
           .label 边框宽度（px）
-          el-input-number(v-model="props.node.lineWidth" @change='onChange')
+          el-input-number(v-model="props.node.lineWidth" show-alpha @change='onChange')
         .item
           .label 背景颜色
-          el-color-picker(v-model="props.node.fillStyle" @change='onChange')
+          el-color-picker(v-model="props.node.fillStyle" show-alpha @change='onChange')
         .item
           .label 透明度（0-1）
           el-input-number(v-model="props.node.globalAlpha" @change='onChange')
@@ -218,7 +218,7 @@
       .container
         .item
           .label 颜色
-          el-color-picker(v-model="props.node.font.color" @change='onChange')
+          el-color-picker(v-model="props.node.font.color" show-alpha @change='onChange')
         .item
           .label 大小（px）
           el-input-number(v-model="props.node.font.fontSize" @change='onChange')
