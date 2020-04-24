@@ -164,6 +164,9 @@ export default {
     onMessage (event, data) {
       // console.log('onMessage:', event, data)
       switch (event) {
+        case 'dblclick':
+          console.log('双击')
+          break;
         case 'node':
           this.props = {
             node: data,

@@ -61,7 +61,13 @@
       .title 业务属性
       .item.full-item
         .label 关联业务（点位）
-        el-select(v-model='props.line.tags',multiple  placeholder='关联设备', @change='onChange')
+        el-select(
+          v-model='props.line.tags'
+          multiple
+          allow-create
+          default-first-option
+          placeholder='关联设备'
+          @change='onChange')
           el-option(
             v-for='item in deviceList',
             :key='item.value',
@@ -158,7 +164,13 @@
       .title 业务属性
       .item.full-item
         .label 关联业务（点位）
-        el-select(v-model='props.node.tags',multiple  placeholder='关联设备', @change='onChange')
+        el-select(
+          v-model='props.node.tags',
+          multiple
+          allow-create
+          default-first-option
+          placeholder='关联设备'
+          @change='onChange')
           el-option(
             v-for='item in deviceList',
             :key='item.value',

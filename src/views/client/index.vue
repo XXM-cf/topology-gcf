@@ -12,10 +12,17 @@
         el-button(@click="endAllAnimate()") 结束所有动画
         el-button(@click="handle_startAnimate('device001')") 触发节点动画
         el-button(@click="handle_endAnimate('device001')") 停止节点动画
-        el-button(@click="set_image('device001', 'img/fj_normal.png')") 触发告警
-        el-button(@click="set_image('device001', 'img/fengji.png')") 停止告警
+        el-button(@click="handke_changeImg('device001', 'img/fj_normal.png')") 触发告警
+        el-button(@click="handke_changeImg('device001', 'img/fengji.png')") 停止告警
         el-button(@click="resizeCanvas()") 缩放适配
       #topology-canvas.full(ref="myCanvas" style="width:100%; height:100%")
+    .business-container
+      el-dialog(
+        :visible.sync="isShowDetail"
+        title="点击获取设备实时状态"
+        )
+        pre {{ nodeDetail }}
+
 </template>
 
 <script>
@@ -23,13 +30,17 @@ import { Topology } from 'topology-core'
 export default {
   data () {
     return {
+      isShowDetail: false,
+      nodeDetail: {},
       canvasOptions: {
-        lock: 1
+        lock: 1,
+        activeColor: 'rgba(0,0,0,0)'
       },
       canvas: {}
     }
   },
   mounted () {
+    this.canvasOptions.on = this.onMessage
     this.canvas = new Topology('topology-canvas', this.canvasOptions)
   },
   methods: {
@@ -78,6 +89,18 @@ export default {
       }
       input.click()
     },
+    onMessage (event, data) {
+      switch (event) {
+        case 'dblclick':
+          console.log('双击')
+          break;
+        case 'node':
+          this.isShowDetail = true
+          this.nodeDetail = data
+          console.log('点击节点 --> node', data)
+          break;
+      }
+    },
     resizeCanvas () { // 适配外框
       let canvasRect = this.canvas.getRect() // 画布大小
       console.log('原始画布', canvasRect)
@@ -99,6 +122,7 @@ export default {
       console.log('当前执行节点', targetNode)
       return targetNode
     },
+
     startAllAnimate () {
       this.canvas.data.pens.map(item => {
         item.animateStart = Date.now()
@@ -128,13 +152,27 @@ export default {
         this.canvas.animate()
       }
     },
-    set_image (tag, url) { // 设置图片
+    handle_changeImg (tag, url) { // 设置图片
       let targetNode = this.getNode(tag)
       if (targetNode) {
         targetNode.image = url
         this.canvas.render()
       }
-    }
+    },
+    handle_changeIcon (tag, iconSize, iconColor) { // 设置图片
+      let targetNode = this.getNode(tag)
+      if (targetNode) {
+        targetNode.iconSize = iconSize
+        targetNode.iconColor = iconColor
+      }
+    },
+    handle_changeFont (tag, fontSize, color) { // 修改
+      let targetNode = this.getNode(tag)
+      if (targetNode) {
+        targetNode.font.color = color
+        targetNode.fontSize = fontSize
+      }
+    },
 
   }
 
@@ -149,6 +187,7 @@ export default {
     width: 100%;
     height: calc(100% - 40px);
     border: 1px solid #dcdcdc;
+    position: relative;
     .tools {
       width: 10%;
       min-width: 140px;
@@ -169,6 +208,12 @@ export default {
       height: 100%;
       position: relative;
       overflow: hidden;
+    }
+    .business-container {
+      width: 90%;
+      height: 100%;
+      position: absolute;
+      left: 10%;
     }
   }
 }

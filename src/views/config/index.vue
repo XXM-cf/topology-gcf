@@ -24,7 +24,7 @@
       el-menu(mode='horizontal', background-color='#f8f8f8')
         el-menu-item 视图：{{scale}}%
         el-menu-item(index='scale', v-show="scale !== 100" @click="onState('scale',1)") 还原
-        el-menu-item(index='locked', @click="onState('locked', locked ? 0 : 2)") {{ locked ? '解锁' : '锁定'}}
+        el-menu-item(index='locked', @click="onState('locked', locked ? 0 : 1)") {{ locked ? '解锁' : '锁定'}}
 
         el-submenu(index='lineName', title='默认连线类型')
           template(slot='title')
