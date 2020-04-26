@@ -20,6 +20,7 @@
         el-button(@click="handle_changeIcon('fault')") 故障
         el-button(@click="handle_changeIcon('runing')") 运行
         el-button(@click="handle_changeIcon('normal')") 停止
+        el-button(@click="handle_changeFont('alarm')") 文字告警
       #topology-canvas.full(ref="myCanvas" style="width:100%; height:100%")
     .business-container
       el-dialog(
@@ -42,7 +43,7 @@ export default {
       nodeDetail: {},
       canvasOptions: {
         lock: 1,
-        activeColor: 'rgba(0,0,0,0)'
+        activeColor: 'rgba(0,0,0,0)' // 去除选中边框
       },
       canvas: {}
     }
@@ -131,8 +132,13 @@ export default {
       let targetNode = this.canvas.data.pens.find(item => {
         return item.tags.indexOf(this.deviceId) !== -1 // 关联tag
       })
-      console.log('当前执行节点', targetNode)
-      return targetNode
+      if (targetNode) {
+        console.log('当前执行节点', targetNode)
+        return targetNode
+      } else {
+        console.warn(`没有找到tag为${tag}的目标节点`)
+        return
+      }
     },
 
     startAllAnimate () {
@@ -174,7 +180,7 @@ export default {
       }
     },
 
-    // 五种状态：
+    // 设备图例对应的五种状态：
     // 告警： alarm
     // 故障： fault
     // 离线： offline
@@ -242,11 +248,27 @@ export default {
         }
       }
     },
-    handle_changeFont (tag, fontSize, color) { // 修改
-      let targetNode = this.getNode(tag)
+
+    handle_changeFont (status) { // 修改
+      let targetNode = this.getNode()
       if (targetNode) {
-        targetNode.font.color = color
-        targetNode.fontSize = fontSize
+        switch (status) { // 告警
+          case 'normal':
+            targetNode.font.color = '#999'
+            break;
+          case 'runing':
+            targetNode.font.color = '#00dc94'
+            break;
+          case 'offline':
+            targetNode.font.color = '#9655ff'
+            break;
+          case 'fault':
+            targetNode.font.color = '#ffb300'
+            break;
+          case 'alarm':
+            targetNode.font.color = '#ff4a4a'
+            break;
+        }
       }
     },
 
