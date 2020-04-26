@@ -100,10 +100,10 @@ export function canvasRegister () {
   registerNode('flowComment', flowComment, flowCommentAnchors, null, null)
 }
 import water from './water'
-import icon from './icon'
+import plantIcon from './plantIcon'
 import electricity from './electricity'
 export const Tools = [
-  icon,
+  plantIcon,
   water,
   electricity,
   {

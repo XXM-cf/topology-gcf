@@ -176,6 +176,9 @@
             :key='item.value',
             :label='item.label',
             :value='item.value')
+      .item.full-item
+        .label 允许点击（查看设备详情）
+        el-switch(v-model="currNodeEnable")
 
     .group
       .title 位置和大小
@@ -431,13 +434,25 @@ export default {
       ],
       deviceList: [
         {
-          label: '设备1',
+          label: '点位1',
           value: 'device001'
         },
         {
-          label: '设备2',
+          label: '点位2',
           value: 'device002'
-        }
+        },
+        {
+          label: '点位3',
+          value: 'device003'
+        },
+        {
+          label: '点位4',
+          value: 'device004'
+        },
+        {
+          label: '点位5',
+          value: 'device005'
+        },
       ],
       videoList: [
         {
@@ -463,6 +478,20 @@ export default {
     props: {
       type: Object,
       require: true
+    }
+  },
+  computed: {
+    currNodeEnable: {
+      get () {
+        let enable = (this.props.node.data || {}).enable
+        return enable || false
+      },
+      set (val) {
+        if (this.props.node.data === '') {
+          this.props.node.data = {}
+        }
+        this.props.node.data.enable = val
+      }
     }
   },
   methods: {
@@ -519,14 +548,14 @@ export default {
           state.rect.ey += 5;
           state.rect.width += 10;
           state.rect.height += 10;
-          state.strokeStyle = '#f06';
-          state.borderWidth = 10;
-          state.globalAlpha -= 0.5
+          state.strokeStyle = 'rgba(255,74,74,0.6)';
+          state.lineWidth = 10;
           this.props.node.animateFrames.push({
-            duration: 200,
+            duration: 400,
             linear: true,
             state
           });
+
           this.props.node.animateFrames.push({
             duration: 400,
             linear: true,

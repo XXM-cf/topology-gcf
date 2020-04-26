@@ -8,13 +8,18 @@
     .canvas-container
       .tools
         h3 操作指令
+        el-input(v-model="deviceId")
         el-button(@click="startAllAnimate()") 触发所有动画
         el-button(@click="endAllAnimate()") 结束所有动画
-        el-button(@click="handle_startAnimate('device001')") 触发节点动画
-        el-button(@click="handle_endAnimate('device001')") 停止节点动画
-        el-button(@click="handke_changeImg('device001', 'img/fj_normal.png')") 触发告警
-        el-button(@click="handke_changeImg('device001', 'img/fengji.png')") 停止告警
+        el-button(@click="handle_startAnimate()") 触发节点动画
+        el-button(@click="handle_endAnimate()") 停止节点动画
         el-button(@click="resizeCanvas()") 缩放适配
+        p 平面图设备状态
+        el-button(@click="handle_changeIcon('alarm')") 告警
+        el-button(@click="handle_changeIcon('offline')") 离线
+        el-button(@click="handle_changeIcon('fault')") 故障
+        el-button(@click="handle_changeIcon('runing')") 运行
+        el-button(@click="handle_changeIcon('normal')") 停止
       #topology-canvas.full(ref="myCanvas" style="width:100%; height:100%")
     .business-container
       el-dialog(
@@ -27,9 +32,12 @@
 
 <script>
 import { Topology } from 'topology-core'
+import { Node } from 'topology-core/models/node'
+
 export default {
   data () {
     return {
+      deviceId: 'device001', // 默认设备
       isShowDetail: false,
       nodeDetail: {},
       canvasOptions: {
@@ -95,9 +103,13 @@ export default {
           console.log('双击')
           break;
         case 'node':
-          this.isShowDetail = true
-          this.nodeDetail = data
-          console.log('点击节点 --> node', data)
+          if (data.data.enable) {
+            this.isShowDetail = true
+            this.nodeDetail = data
+            console.log('点击节点 --> node', data)
+          } else {
+            console.warn('该节点无点击操作')
+          }
           break;
       }
     },
@@ -114,10 +126,10 @@ export default {
       this.canvas.translate(-newCanvasRect.x, -newCanvasRect.y) // 取相反数平移
       this.canvas.render()
     },
+
     getNode (tag) { // 寻找目标节点，用来操作动画，样式切换等
       let targetNode = this.canvas.data.pens.find(item => {
-        console.log(item.data, tag)
-        return item.tags.indexOf(tag) !== -1 // 关联tag
+        return item.tags.indexOf(this.deviceId) !== -1 // 关联tag
       })
       console.log('当前执行节点', targetNode)
       return targetNode
@@ -136,6 +148,7 @@ export default {
         this.canvas.animate()
       })
     },
+
     handle_startAnimate (tag) { // 开始动画
       let targetNode = this.getNode(tag)
       targetNode.rotate = 0
@@ -152,6 +165,7 @@ export default {
         this.canvas.animate()
       }
     },
+
     handle_changeImg (tag, url) { // 设置图片
       let targetNode = this.getNode(tag)
       if (targetNode) {
@@ -159,11 +173,74 @@ export default {
         this.canvas.render()
       }
     },
-    handle_changeIcon (tag, iconSize, iconColor) { // 设置图片
-      let targetNode = this.getNode(tag)
+
+    // 五种状态：
+    // 告警： alarm
+    // 故障： fault
+    // 离线： offline
+    // 运行： runing
+    // 正常： normal
+    handle_changeIcon (status) { // 改变icon状态
+      let targetNode = this.getNode()
       if (targetNode) {
-        targetNode.iconSize = iconSize
-        targetNode.iconColor = iconColor
+        const state = Node.cloneState(targetNode)
+        switch (status) { // 告警
+          case 'normal':
+            targetNode.iconColor = '#999'
+            targetNode.animateStart = 0
+            targetNode.lineWidth = 0
+            this.canvas.render()
+            break;
+          case 'runing':
+            targetNode.iconColor = '#00dc94'
+            targetNode.animateStart = 0
+            targetNode.lineWidth = 0
+            this.canvas.render()
+            break;
+          case 'offline':
+            targetNode.iconColor = '#9655ff'
+            targetNode.animateStart = 0
+            targetNode.lineWidth = 0
+            this.canvas.render()
+            break;
+          case 'fault':
+            targetNode.iconColor = '#ffb300'
+            targetNode.animateStart = 0
+            targetNode.lineWidth = 0
+            this.canvas.render()
+            break;
+          case 'alarm':
+            targetNode.iconColor = '#ff4a4a'
+            targetNode.animateType = 'heart'
+            targetNode.animateStart = Date.now()
+            targetNode.animateFrames = []
+            targetNode.animateDuration = 0
+            state.rect.x -= 5;
+            state.rect.ex += 5;
+            state.rect.y -= 5;
+            state.rect.ey += 5;
+            state.rect.width += 10;
+            state.rect.height += 10;
+            state.strokeStyle = 'rgba(255,74,74,0.6)';
+            state.lineWidth = 10;
+            targetNode.animateFrames.push({
+              duration: 400,
+              linear: true,
+              state
+            });
+            targetNode.animateFrames.push({
+              duration: 400,
+              linear: true,
+              state: Node.cloneState(targetNode)
+            });
+
+            for (const item of targetNode.animateFrames) {
+              targetNode.animateDuration += item.duration;
+            }
+            this.canvas.animate()
+            this.canvas.render()
+            break;
+        }
       }
     },
     handle_changeFont (tag, fontSize, color) { // 修改

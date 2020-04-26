@@ -18,7 +18,7 @@
                   v-if="btn.data.name === 'image'",
                   :src='btn.data.image')
                 i(v-else-if='btn.data.iconClass', :class='`iconfont ${btn.data.iconClass}`')
-                i(v-else='', :class='`iconfont ${btn.icon}`')
+                i(v-else='', :class='`iconfont ${btn.icon}`' style="font-size:26px")
                 //- i(class="iconfont icon-shidu")
                 .name {{ btn.name }}
 
@@ -176,17 +176,10 @@ export default {
             locked: data.locked
           }
           console.log('点击节点 --> node', data)
-          console.log('this.canvas', this.canvas)
           break
         case 'addNode':
           this.props = {
-            node: {
-              ...data,
-              data: {
-                ...data.data,
-                bid: '' // 默认添加bid属性
-              }
-            },
+            node: data,
             line: null,
             multi: false,
             nodes: null,
@@ -196,7 +189,6 @@ export default {
           break
         case 'line':
         case 'addLine':
-
           this.props = {
             node: null,
             line: data,
@@ -461,12 +453,12 @@ export default {
           }
           .name {
             font-size: 10px;
-            color: #333;
-            margin-top: -10px;
+            margin-top: -5px;
           }
         }
 
         .iconfont {
+          color: rgba(123, 126, 125, 0.8);
           font-size: 30px;
           padding-bottom: 0;
         }
