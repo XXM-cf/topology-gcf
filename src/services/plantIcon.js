@@ -181,7 +181,10 @@ const pipeImg = {
         iconClass: item.class,
         iconSize: 40,
         name: 'rectangle',
-        borderRadius: 16
+        borderRadius: 16,
+        data: {
+          legendType: 'plane' // 设备平面图
+        }
       }
     }
   })
