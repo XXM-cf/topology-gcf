@@ -1,3 +1,4 @@
+
 @font-face { // 平面图图标
   font-family: 'iconfont';  /* project id 1776547 */
   src: url('//at.alicdn.com/t/font_1776547_3es98zmuy21.eot');
@@ -7,7 +8,8 @@
   url('//at.alicdn.com/t/font_1776547_3es98zmuy21.ttf') format('truetype'),
   url('//at.alicdn.com/t/font_1776547_3es98zmuy21.svg#iconfont') format('svg');
 }
-
+@import "./plane-icon.scss";
+@import "./topology-icon.scss";
 a {
   text-decoration: none;
   color: #314659;
@@ -15,7 +17,6 @@ a {
     color: #1890ff;
   }
 }
-
 .text-center {
   text-align: center;
 }

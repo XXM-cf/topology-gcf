@@ -1,11 +1,15 @@
 {
   "name": "topology-gcf",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.0.2",
+  "author": "xxm-cf",
+  "description": "智慧建筑web组态前端可视化解决方案",
+  "main": "lib/topology-gcf.umd.min.js",
+  "private": false,
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "lib": "vue-cli-service build --target lib --name topology-gcf --dest lib packages/index.js"
   },
   "dependencies": {
     "core-js": "^3.6.4",

@@ -53,7 +53,6 @@ import { Tools, canvasRegister } from '../../services/canvas'
 
 import CanvasProps from '../../components/CanvasProps'
 import CanvasContextMenu from '../../components/CanvasContextMenu'
-
 export default {
   components: {
     CanvasProps,
@@ -65,7 +64,7 @@ export default {
       tools: Tools,
       canvas: {},
       canvasOptions: {
-        rotateCursor: '/img/rotate.cur',
+        rotateCursor: '/img/rotate.vue',
         disableScale: true
       },
       props: {
