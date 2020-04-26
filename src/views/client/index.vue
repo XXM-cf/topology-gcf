@@ -108,7 +108,7 @@ export default {
             this.nodeDetail = data
             console.log('点击节点 --> node', data)
           } else {
-            console.warn('该节点无点击操作')
+            console.warn('该节点无点击操作', data)
           }
           break;
       }
@@ -189,40 +189,38 @@ export default {
             targetNode.iconColor = '#999'
             targetNode.animateStart = 0
             targetNode.lineWidth = 0
+            targetNode.strokeStyle = 'rgba(0,0,0,0)'
             this.canvas.render()
             break;
           case 'runing':
             targetNode.iconColor = '#00dc94'
             targetNode.animateStart = 0
             targetNode.lineWidth = 0
+            targetNode.strokeStyle = 'rgba(0,0,0,0)'
             this.canvas.render()
             break;
           case 'offline':
             targetNode.iconColor = '#9655ff'
             targetNode.animateStart = 0
             targetNode.lineWidth = 0
+            targetNode.strokeStyle = 'rgba(0,0,0,0)'
             this.canvas.render()
             break;
           case 'fault':
             targetNode.iconColor = '#ffb300'
             targetNode.animateStart = 0
             targetNode.lineWidth = 0
+            targetNode.strokeStyle = 'rgba(0,0,0,0)'
             this.canvas.render()
             break;
           case 'alarm':
             targetNode.iconColor = '#ff4a4a'
             targetNode.animateType = 'heart'
-            targetNode.animateStart = Date.now()
-            targetNode.animateFrames = []
+            targetNode.animateStart = 0
             targetNode.animateDuration = 0
-            state.rect.x -= 5;
-            state.rect.ex += 5;
-            state.rect.y -= 5;
-            state.rect.ey += 5;
-            state.rect.width += 10;
-            state.rect.height += 10;
+            targetNode.animateFrames = []
             state.strokeStyle = 'rgba(255,74,74,0.6)';
-            state.lineWidth = 10;
+            state.lineWidth = 30;
             targetNode.animateFrames.push({
               duration: 400,
               linear: true,
@@ -237,6 +235,7 @@ export default {
             for (const item of targetNode.animateFrames) {
               targetNode.animateDuration += item.duration;
             }
+            targetNode.animateStart = Date.now()
             this.canvas.animate()
             this.canvas.render()
             break;
