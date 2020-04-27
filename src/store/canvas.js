@@ -9,18 +9,11 @@ const canvars = {
       toArrowType: '',
       locked: 0,
       lineStyle: 'default'
-    },
-    event: {
-      name: '',
-      data: null
     }
   },
   mutations: {
     setData (state, data) {
       state.data = data
-    },
-    setEvent (state, event) {
-      state.event = event
     }
   }
 }

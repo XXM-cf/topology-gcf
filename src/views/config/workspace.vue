@@ -53,6 +53,7 @@ import { Tools, canvasRegister } from '../../services/canvas'
 
 import CanvasProps from '../../components/CanvasProps'
 import CanvasContextMenu from '../../components/CanvasContextMenu'
+import { Store } from 'le5le-store';
 export default {
   components: {
     CanvasProps,
@@ -60,6 +61,7 @@ export default {
   },
   data () {
     return {
+      currEvent: {}, // 事件通信，储存当前触发事件
       activeNames: ['自定义图标'],
       tools: Tools,
       canvas: {},
@@ -83,7 +85,7 @@ export default {
   },
   computed: {
     event () {
-      return this.$store.state.canvas.event
+      return this.currEvent
     },
     globalData () {
       return this.$store.state.canvas.data
@@ -91,6 +93,7 @@ export default {
   },
   watch: {
     event (curVal) {
+      console.log('当前', curVal)
       if (this['handle_' + curVal.name]) {
         this['handle_' + curVal.name](curVal.data)
       }
@@ -101,6 +104,10 @@ export default {
   },
   mounted () {
     this.init()
+    Store.subscribe('canvasEvent', value => {
+      console.log('当前执行事件:', value);
+      this.currEvent = value
+    })
   },
   methods: {
     init () {
@@ -363,7 +370,7 @@ export default {
     },
 
     handle_paste (data) {
-      this.canvas.parse()
+      this.canvas.paste()
     },
 
     handle_state (data) {

@@ -15,6 +15,7 @@
     "core-js": "^3.6.4",
     "element-ui": "^2.13.0",
     "file-saver": "^2.0.2",
+    "le5le-store": "^1.0.4",
     "node-sass": "^4.13.1",
     "pug": "^2.0.4",
     "pug-plain-loader": "^1.0.0",

@@ -16,7 +16,7 @@
           el-menu-item.separator
           el-menu-item(index='copy') 复制
           el-menu-item(index='cut') 剪切
-          el-menu-item(index='parse') 粘贴
+          el-menu-item(index='paste') 粘贴
 
       el-menu.full(mode='horizontal', background-color='#f8f8f8')
         el-menu-item(@click="handleView") 查看效果
@@ -57,7 +57,7 @@
 
 <script >
 import workspace from './workspace'
-
+import { Store } from 'le5le-store';
 export default {
   components: {
     workspace
@@ -120,15 +120,8 @@ export default {
         case 'new':
           this.$router.push('/config')
           break
-        case 'open':
-          setTimeout(() => {
-            this.$store.commit('canvas/setEvent', {
-              name: key
-            })
-          }, 100)
-          break
         default:
-          this.$store.commit('canvas/setEvent', {
+          Store.set('canvasEvent', {
             name: key
           })
           break
@@ -136,7 +129,7 @@ export default {
 
     },
     onState (key, value) {
-      this.$store.commit('canvas/setEvent', {
+      Store.set('canvasEvent', {
         name: 'state',
         data: {
           key,
