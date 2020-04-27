@@ -1,13 +1,14 @@
 <template lang="pug">
-  config
+  topologyConfig
 </template>
 
 <script>
-import config from '../../src/views/config/workspace.vue'
+import topologyConfig from '../../src/views/config/index.vue'
+import '@/assets/css/base.scss'
 export default {
   name: 'topology-config',
   components: {
-    config
+    topologyConfig
   }
 }
 </script>

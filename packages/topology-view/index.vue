@@ -1,13 +1,15 @@
 <template lang="pug">
-  view
+  topologyView
 </template>
 
   <script>
-import view from '../../src/views/client/index.vue'
+import topologyView from '../../src/views/client/index.vue'
+import '@/assets/css/base.scss'
+
 export default {
   name: 'topology-view',
   components: {
-    view
+    topologyView
   }
 }
 </script>

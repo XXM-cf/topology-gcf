@@ -5,7 +5,7 @@ function resolve (dir) {
 }
 
 module.exports = {
-  // 修改 src 为 examples
+  publicPath: '../../',
   pages: {
     index: {
       entry: 'src/main.js',
