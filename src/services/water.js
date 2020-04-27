@@ -9,6 +9,17 @@ import p8 from '@/assets/images/water/冷却塔.png'
 import p9 from '@/assets/images/water/水仓.png'
 import p10 from '@/assets/images/water/水槽.png'
 import p11 from '@/assets/images/water/消化池.png'
+
+import p12 from '@/assets/images/baseImg/b.gif'
+import p13 from '@/assets/images/baseImg/a.svg'
+
+import p14 from '@/assets/images/water/测-02.svg'
+import p15 from '@/assets/images/water/测-03.svg'
+import p16 from '@/assets/images/water/测-04.svg'
+import p17 from '@/assets/images/water/测-02.png'
+import p18 from '@/assets/images/water/测-03.png'
+import p19 from '@/assets/images/water/测-04.png'
+
 const arr = [
   { name: '工业传感器', url: p1 },
   { name: '工业水泵', url: p2 },
@@ -20,7 +31,16 @@ const arr = [
   { name: '冷却塔', url: p8 },
   { name: '水仓', url: p9 },
   { name: '水槽', url: p10 },
-  { name: '消化池', url: p11 }
+  { name: '消化池', url: p11 },
+  { name: 'gif', url: p12 },
+  { name: 'svg动图', url: p13 },
+
+  { name: '测2svg', url: p14 },
+  { name: '测3svg', url: p15 },
+  { name: '测4svg', url: p16 },
+  { name: '测2pnng', url: p17 },
+  { name: '测3pnng', url: p18 },
+  { name: '测4pnng', url: p19 },
 ]
 
 const pipeImg = {

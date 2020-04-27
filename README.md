@@ -30,6 +30,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - [ ] 图片上传
 - [ ] 多节点对齐（源码bug)
 - [ ] 音频、视频嵌入播放
+- [ ] gif图
 - [ ] 动画联动
 - [ ] 电梯效果
 - [ ] 水槽液位变化
@@ -60,6 +61,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 图片
 - [x] 图片修改（本地）
+- [x] 使用svg文件
 
 文字
 - [x] 颜色

@@ -5,7 +5,6 @@ function resolve (dir) {
 }
 
 module.exports = {
-  publicPath: '../../',
   // 修改 src 为 examples
   pages: {
     index: {
