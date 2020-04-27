@@ -55,14 +55,21 @@ import CanvasProps from '../../components/CanvasProps'
 import CanvasContextMenu from '../../components/CanvasContextMenu'
 import { Store } from 'le5le-store';
 export default {
+  props: {
+    currCanvasData: {
+      type: Object,
+      default: () => { }
+    }
+  },
   components: {
     CanvasProps,
     CanvasContextMenu
   },
   data () {
     return {
-      currEvent: {}, // 事件通信，储存当前触发事件
-      activeNames: ['自定义图标'],
+      eventSubscribe: null,
+      currCanvasEvent: {}, // 事件通信，储存当前触发事件
+      activeNames: ['变配电'],
       tools: Tools,
       canvas: {},
       canvasOptions: {
@@ -83,17 +90,8 @@ export default {
       }
     }
   },
-  computed: {
-    event () {
-      return this.currEvent
-    },
-    globalData () {
-      return this.$store.state.canvas.data
-    }
-  },
   watch: {
-    event (curVal) {
-      console.log('当前', curVal)
+    currCanvasEvent (curVal) {
       if (this['handle_' + curVal.name]) {
         this['handle_' + curVal.name](curVal.data)
       }
@@ -104,9 +102,8 @@ export default {
   },
   mounted () {
     this.init()
-    Store.subscribe('canvasEvent', value => {
-      console.log('当前执行事件:', value);
-      this.currEvent = value
+    this.eventSubscribe = Store.subscribe('canvasEvent', value => {
+      this.currCanvasEvent = value
     })
   },
   methods: {
@@ -115,7 +112,7 @@ export default {
       this.canvas = new Topology('topology-canvas', this.canvasOptions)
       this.canvas.data = {
         ...this.canvas.data,
-        ...this.globalData,
+        ...this.currCanvasData,
       }
       this.canvas.render()
     },
@@ -155,7 +152,7 @@ export default {
       this.canvas.render()
     },
     changeLine (id) { // 改变连线样式，绘制水管
-      if (this.globalData.lineStyle === 'pipe') {
+      if (this.currCanvasData.lineStyle === 'pipe') {
         let targetLine = this.canvas.data.pens.find(item => {
           return item.id === id
         })
@@ -248,13 +245,13 @@ export default {
         case 'scale':
         case 'locked':
           if (this.canvas && this.canvas.data) {
-            this.$store.commit('canvas/setData', {
+            Store.set('canvasData', {
               scale: this.canvas.data.scale || 1,
               lineName: this.canvas.data.lineName,
               fromArrowType: this.canvas.data.fromArrowType,
               toArrowType: this.canvas.data.toArrowType,
               locked: this.canvas.data.locked,
-              lineStyle: this.globalData.lineStyle || 'pipe'
+              lineStyle: this.currCanvasData.lineStyle || 'pipe'
             })
           }
           break
@@ -379,7 +376,7 @@ export default {
       } else {
         this.canvas.data[data.key] = data.value
       }
-      this.$store.commit('canvas/setData', {
+      Store.set('canvasData', {
         scale: this.canvas.data.scale || 1,
         lineName: this.canvas.data.lineName,
         fromArrowType: this.canvas.data.fromArrowType,
@@ -406,6 +403,9 @@ export default {
         }
       }
     }
+  },
+  destroyed () {
+    this.eventSubscribe.unsubscribe()
   }
 }
 </script>

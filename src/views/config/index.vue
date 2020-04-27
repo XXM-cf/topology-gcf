@@ -52,7 +52,7 @@
             span {{ lineStyle.label }}
           el-menu-item(v-for='(item, index) in lineStyleOptions', :key='item.value', @click="onState('lineStyle', item.value)")
             span {{ item.label }}
-    workspace
+    workspace(:currCanvasData="currCanvasData")
 </template>
 
 <script >
@@ -81,29 +81,46 @@ export default {
         'lineUp',
         'lineDown'
       ],
+      subscribe: null, // 事件订阅实例
+      currCanvasData: {
+        scale: 1,
+        lineName: 'polyline',
+        fromArrowType: '',
+        toArrowType: '',
+        locked: 0,
+        lineStyle: 'default'
+      }, // 初始化实时全局值
     }
   },
   computed: {
     scale () {
-      return Math.floor(this.$store.state.canvas.data.scale * 100)
+      return Math.floor(this.currCanvasData.scale * 100)
     },
     lineName () {
-      return this.$store.state.canvas.data.lineName
+      return this.currCanvasData.lineName
     },
     fromArrowType () {
-      return this.$store.state.canvas.data.fromArrowType
+      return this.currCanvasData.fromArrowType
     },
     toArrowType () {
-      return this.$store.state.canvas.data.toArrowType
+      return this.currCanvasData.toArrowType
     },
     locked () {
-      return this.$store.state.canvas.data.locked
+      return this.currCanvasData.locked
     },
     lineStyle () {
-      let lineStyle = this.$store.state.canvas.data.lineStyle
+      let lineStyle = this.currCanvasData.lineStyle
       let obj = this.lineStyleOptions.find(item => item.value === lineStyle)
       return obj || {}
     }
+  },
+  created () {
+    Store.set('canvasData', this.currCanvasData)
+  },
+  mounted () {
+    this.subscribe = Store.subscribe('canvasData', value => { // 订阅
+      this.currCanvasData = value
+    })
   },
   methods: {
     handleView () {
@@ -137,6 +154,9 @@ export default {
         }
       })
     }
+  },
+  destroyed () {
+    this.subscribe.unsubscribe()
   }
 }
 </script>
