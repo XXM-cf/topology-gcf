@@ -357,18 +357,6 @@ export const Tools = [
           name: 'div'
         }
       }
-      // {
-      //   name: '图片',
-      //   icon: 'icon-image',
-      //   data: {
-      //     rect: {
-      //       width: 100,
-      //       height: 100
-      //     },
-      //     name: 'image',
-      //     image: '/img/logo.png'
-      //   }
-      // }
     ]
   }
 ]

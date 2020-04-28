@@ -426,10 +426,6 @@ export default {
         {
           label: '酒店1层',
           value: require('@/assets/images/baseImg/floor.png')
-        },
-        {
-          label: '演示底图',
-          value: require('@/assets/images/baseImg/yohuo.png')
         }
       ],
       deviceList: [
