@@ -152,16 +152,19 @@ export default {
       this.canvas.render()
     },
     changeLine (id) { // 改变连线样式，绘制水管
-      if (this.currCanvasData.lineStyle === 'pipe') {
-        let targetLine = this.canvas.data.pens.find(item => {
-          return item.id === id
-        })
-        if (targetLine) {
+      let targetLine = this.canvas.data.pens.find(item => {
+        return item.id === id
+      })
+      switch (this.currCanvasData.lineStyle) {
+        case 'pipe': // 水管
           targetLine.strokeStyle = '#6cf'
           targetLine.lineWidth = 15
           targetLine.borderWidth = 5
           targetLine.borderColor = '#dcdc'
-        }
+          break
+        case 'electricity': // 变配电原理图
+          targetLine.strokeStyle = 'rgba(244, 105, 6, 1)'
+          break
       }
     },
     onMessage (event, data) {
@@ -426,9 +429,9 @@ export default {
     .el-collapse-item__header {
       color: #0d1a26;
       font-weight: 600;
-      font-size: 0.12rem;
+      font-size: 14px;
       line-height: 1;
-      padding: 0.05rem 0.1rem;
+      padding: 5px 10px;
       border-bottom: 1px solid #ddd;
 
       &:first-child {
@@ -437,7 +440,7 @@ export default {
     }
 
     .buttons {
-      padding: 0.1rem 0;
+      padding: 5px 0;
       a {
         display: inline-block;
         text-align: center;

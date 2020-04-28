@@ -181,11 +181,11 @@ export default {
     },
 
     // 设备图例对应的五种状态：
-    // 告警： alarm
-    // 故障： fault
-    // 离线： offline
-    // 运行： runing
-    // 正常： normal
+    // 告警： alarm : #ff4a4a
+    // 故障： fault: #ffb300
+    // 离线： offline: #9655ff
+    // 运行： runing: #00dc94
+    // 正常： normal: #999
     handle_changeIcon (status) { // 改变icon状态
       let targetNode = this.getNode()
       if (targetNode) {

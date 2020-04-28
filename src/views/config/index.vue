@@ -67,6 +67,7 @@ export default {
       lineStyleOptions: [
         { label: '默认', value: 'default' },
         { label: '水管', value: 'pipe' },
+        { label: '变配电', value: 'electricity' },
       ],
       lineNames: ['curve', 'polyline', 'line'],
       arrowTypes: [

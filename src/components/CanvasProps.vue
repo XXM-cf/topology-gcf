@@ -428,14 +428,6 @@ export default {
           value: require('@/assets/images/baseImg/floor.png')
         },
         {
-          label: '酒店3层',
-          value: require('@/assets/images/baseImg/a.svg')
-        },
-        {
-          label: '酒店4层',
-          value: require('@/assets/images/baseImg/b.gif')
-        },
-        {
           label: '演示底图',
           value: require('@/assets/images/baseImg/yohuo.png')
         }

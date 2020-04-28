@@ -99,13 +99,15 @@ export function canvasRegister () {
   registerNode('flowParallel', flowParallel, flowParallelAnchors, null, null)
   registerNode('flowComment', flowComment, flowCommentAnchors, null, null)
 }
-import water from './water'
+import fans from './HVAC/fans'
+import sensor from './HVAC/sensor'
 import plantIcon from './plantIcon'
 import electricity from './electricity'
 export const Tools = [
   plantIcon,
-  water,
   electricity,
+  fans,
+  sensor,
   {
     group: '基本形状',
     children: [

@@ -177,7 +177,7 @@ const pipeImg = {
         strokeStyle: 'rgba(0,0,0,0)',
         icon: item.unicode,
         iconFamily: 'iconfont',
-        iconColor: '#00dc94',
+        iconColor: '#999',
         iconClass: item.class,
         iconSize: 40,
         name: 'rectangle',
