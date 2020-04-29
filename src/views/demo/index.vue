@@ -1,6 +1,34 @@
 <template lang="pug">
   .client
+    .headers
+      el-menu(mode='horizontal', background-color='#f8f8f8' @select='onMenu')
+        el-menu-item(index='back') 返回
+        el-menu-item(index='open') 打开本地文件
+
+    .canvas-container
+      .tools
+        h3 操作指令
+        el-input(v-model="deviceId")
+        el-button(@click="startAllAnimate()") 触发所有动画
+        el-button(@click="endAllAnimate()") 结束所有动画
+        el-button(@click="handle_startAnimate()") 触发节点动画
+        el-button(@click="handle_endAnimate()") 停止节点动画
+        el-button(@click="resizeCanvas()") 缩放适配
+        p 平面图设备状态
+        el-button(@click="handle_changeIcon('alarm')") 告警
+        el-button(@click="handle_changeIcon('offline')") 离线
+        el-button(@click="handle_changeIcon('fault')") 故障
+        el-button(@click="handle_changeIcon('runing')") 运行
+        el-button(@click="handle_changeIcon('normal')") 停止
+        el-button(@click="handle_changeFont('alarm')") 文字告警
       #topology-canvas.full(ref="myCanvas" style="width:100%; height:100%")
+    .business-container
+      el-dialog(
+        :visible.sync="isShowDetail"
+        title="点击获取设备实时状态"
+        )
+        pre {{ nodeDetail }}
+
 </template>
 
 <script>
@@ -8,14 +36,11 @@ import { Topology } from 'topology-core'
 import { Node } from 'topology-core/models/node'
 
 export default {
-  props: {
-    canvasData: {
-      type: Object,
-      default: () => { }
-    }
-  },
   data () {
     return {
+      deviceId: 'device001', // 默认设备
+      isShowDetail: false,
+      nodeDetail: {},
       canvasOptions: {
         lock: 1,
         activeColor: 'rgba(0,0,0,0)' // 去除选中边框
@@ -26,19 +51,52 @@ export default {
   mounted () {
     this.canvasOptions.on = this.onMessage
     this.canvas = new Topology('topology-canvas', this.canvasOptions)
-    this.onOpen()
   },
   methods: {
-    onOpen () {
-      const data = this.canvasData
-      if (data && Array.isArray(data.pens)) {
-        data.locked = 1
-        console.log('json数据读取完毕', data)
-        this.canvas.open(data)
-        this.resizeCanvas()
-      } else {
-        console.log('暂无可用配置')
+    onMenu (key, keyPath) {
+      if (!key || key.indexOf('/') === 0) {
+        return
       }
+      switch (key) {
+        case 'back':
+          this.$router.push('/config')
+          break
+        case 'open':
+          this.onOpen()
+          break
+        default:
+          break
+      }
+
+    },
+    onOpen (data) {
+      const input = document.createElement('input')
+      input.type = 'file'
+      input.onchange = event => {
+        const elem = event.srcElement || event.target
+        if (elem.files && elem.files[0]) {
+          const name = elem.files[0].name.replace('.json', '')
+          const reader = new FileReader()
+          reader.onload = e => {
+            const text = e.target.result + ''
+            try {
+              const data = JSON.parse(text)
+              if (
+                data && Array.isArray(data.pens)
+              ) {
+                data.locked = 1
+                console.log('json数据读取完毕', data)
+                this.canvas.open(data)
+                this.resizeCanvas()
+              }
+            } catch (e) {
+              return false
+            }
+          }
+          reader.readAsText(elem.files[0])
+        }
+      }
+      input.click()
     },
     onMessage (event, data) {
       switch (event) {
@@ -47,6 +105,8 @@ export default {
           break;
         case 'node':
           if (data.data.legendType && data.data.legendType === 'plane') {
+            this.isShowDetail = true
+            this.nodeDetail = data
             this.$emit('nodeClick', data)
             console.log('点击节点 --> node', data)
           } else {
@@ -71,7 +131,7 @@ export default {
 
     getNode (tag) { // 寻找目标节点，用来操作动画，样式切换等
       let targetNode = this.canvas.data.pens.find(item => {
-        return item.tags.indexOf(tag) !== -1 // 关联tag
+        return item.tags.indexOf(this.deviceId) !== -1 // 关联tag
       })
       if (targetNode) {
         console.log('当前执行节点', targetNode)
@@ -80,6 +140,20 @@ export default {
         console.warn(`没有找到tag为${tag}的目标节点`)
         return
       }
+    },
+
+    startAllAnimate () {
+      this.canvas.data.pens.map(item => {
+        item.animateStart = Date.now()
+        this.canvas.animate()
+      })
+    },
+    endAllAnimate () {
+      this.canvas.data.pens.map(item => {
+        item.animateStart = 0
+        item.rotate = 0
+        this.canvas.animate()
+      })
     },
 
     handle_startAnimate (tag) { // 开始动画
@@ -106,14 +180,15 @@ export default {
         this.canvas.render()
       }
     },
+
     // 设备图例对应的五种状态：
     // 告警： alarm : #ff4a4a
     // 故障： fault: #ffb300
     // 离线： offline: #9655ff
     // 运行： runing: #00dc94
     // 正常： normal: #999
-    handle_changeIcon (tag, status) { // 改变icon状态
-      let targetNode = this.getNode(tag)
+    handle_changeIcon (status) { // 改变icon状态
+      let targetNode = this.getNode()
       if (targetNode) {
         const state = Node.cloneState(targetNode)
         switch (status) { // 告警
@@ -175,8 +250,8 @@ export default {
       }
     },
 
-    handle_changeFont (tag, status) { // 修改
-      let targetNode = this.getNode(tag)
+    handle_changeFont (status) { // 修改
+      let targetNode = this.getNode()
       if (targetNode) {
         switch (status) { // 告警
           case 'normal':

@@ -4,7 +4,7 @@
       el-menu(mode='horizontal', @select='onMenu', background-color='#f8f8f8')
         el-submenu(index='file')
           template(slot='title') 文件
-          el-menu-item(index='new') 新建文件
+          //- el-menu-item(index='new') 新建文件
           el-menu-item(index='replace') 导入本地文件
           el-menu-item.separator
           el-menu-item(index='save') 保存到本地
@@ -19,7 +19,7 @@
           el-menu-item(index='paste') 粘贴
 
       el-menu.full(mode='horizontal', background-color='#f8f8f8')
-        el-menu-item(@click="handleView") 查看效果
+        //- el-menu-item(@click="handleView") 查看效果
 
       el-menu(mode='horizontal', background-color='#f8f8f8')
         el-menu-item 视图：{{scale}}%
@@ -52,18 +52,56 @@
             span {{ lineStyle.label }}
           el-menu-item(v-for='(item, index) in lineStyleOptions', :key='item.value', @click="onState('lineStyle', item.value)")
             span {{ item.label }}
-    workspace(:currCanvasData="currCanvasData")
+    workspace(:currCanvasData="currCanvasData" :imgList="imgList" :deviceList="deviceList")
 </template>
 
 <script >
 import workspace from './workspace'
 import { Store } from 'le5le-store';
 export default {
+  props: {
+    imgList: {
+      type: Array,
+      default: () => []
+    },
+    deviceList: {
+      type: Array,
+      default: () => []
+    }
+  },
   components: {
     workspace
   },
   data () {
     return {
+      demoImgList: [
+        {
+          label: '酒店1层',
+          value: require('@/assets/images/baseImg/floor.png')
+        }
+      ],
+      demoDeviceList: [
+        {
+          label: '点位1',
+          value: 'device001'
+        },
+        {
+          label: '点位2',
+          value: 'device002'
+        },
+        {
+          label: '点位3',
+          value: 'device003'
+        },
+        {
+          label: '点位4',
+          value: 'device004'
+        },
+        {
+          label: '点位5',
+          value: 'device005'
+        },
+      ],
       lineStyleOptions: [
         { label: '默认', value: 'default' },
         { label: '水管', value: 'pipe' },
@@ -124,27 +162,13 @@ export default {
     })
   },
   methods: {
-    handleView () {
-      this.$router.push({
-        path: '/client'
-      })
-    },
     onMenu (key, keyPath) {
       if (!key || key.indexOf('/') === 0) {
         return
       }
-
-      switch (key) {
-        case 'new':
-          this.$router.push('/config')
-          break
-        default:
-          Store.set('canvasEvent', {
-            name: key
-          })
-          break
-      }
-
+      Store.set('canvasEvent', {
+        name: key
+      })
     },
     onState (key, value) {
       Store.set('canvasEvent', {
@@ -164,6 +188,7 @@ export default {
 
 <style lang="scss">
 .confing-layout {
+  width: 100%;
   height: 100%;
 }
 </style>

@@ -13,8 +13,8 @@ export const constantRoutes = [
     component: () => import('@/views/config/index')
   },
   {
-    path: '/client',
-    component: () => import('@/views/client/index')
+    path: '/demo',
+    component: () => import('@/views/demo/index')
   }
 ]
 export default new Router({

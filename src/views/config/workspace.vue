@@ -28,6 +28,8 @@
 
     .props
       CanvasProps(
+        :imgList="imgList"
+        :deviceList="deviceList"
         :canvas='canvas'
         :options="canvasOptions"
         :props.sync='props'
@@ -59,6 +61,14 @@ export default {
     currCanvasData: {
       type: Object,
       default: () => { }
+    },
+    imgList: {
+      type: Array,
+      default: () => []
+    },
+    deviceList: {
+      type: Array,
+      default: () => []
     }
   },
   components: {
@@ -69,7 +79,7 @@ export default {
     return {
       eventSubscribe: null,
       currCanvasEvent: {}, // 事件通信，储存当前触发事件
-      activeNames: ['变配电'],
+      activeNames: [],
       tools: Tools,
       canvas: {},
       canvasOptions: {

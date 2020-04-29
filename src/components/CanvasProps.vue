@@ -1,11 +1,11 @@
 <template lang="pug">
 .canvas-props
   h3.tips 操作栏
-  .group
-    .title 快捷操作
-    .container
-      .item.full-item
-       el-button(@click="onAddPipeLine") 绘制水管
+  //- .group
+  //-   .title 快捷操作
+  //-   .container
+  //-     .item.full-item
+  //-      el-button(@click="onAddPipeLine") 绘制水管
 
   .group
     .title 基础配置
@@ -13,7 +13,7 @@
       .item.full-item
         .label 选择底图
         el-select(v-model='baseImg', placeholder='选择底图', @change='handleBaseImg')
-          el-option(v-for='item in baseImgList', :key='item.value', :label='item.label', :value='item.value')
+          el-option(v-for='item in imgList', :key='item.value', :label='item.label', :value='item.value')
       .item
         .label 禁用滚轮缩放
         el-switch(v-model="canvasOptions.disableScale" @change='onChangeOptions')
@@ -176,10 +176,6 @@
             :key='item.value',
             :label='item.label',
             :value='item.value')
-      .item.full-item
-        .label 允许点击（查看设备详情）
-        el-switch(v-model="currNodeEnable")
-
     .group
       .title 位置和大小
       .container
@@ -420,36 +416,8 @@ export default {
         { label: '线段', value: 'polyline' }
       ],
       nodesAlgin: ['left', 'right', 'top', 'bottom', 'center', 'middle'],
+      nodeEnable: false,
       // ---------- 业务数据 ------------- //
-
-      baseImgList: [
-        {
-          label: '酒店1层',
-          value: require('@/assets/images/baseImg/floor.png')
-        }
-      ],
-      deviceList: [
-        {
-          label: '点位1',
-          value: 'device001'
-        },
-        {
-          label: '点位2',
-          value: 'device002'
-        },
-        {
-          label: '点位3',
-          value: 'device003'
-        },
-        {
-          label: '点位4',
-          value: 'device004'
-        },
-        {
-          label: '点位5',
-          value: 'device005'
-        },
-      ],
       videoList: [
         {
           label: '火灾联动',
@@ -463,6 +431,14 @@ export default {
     }
   },
   props: {
+    imgList: {
+      type: Array,
+      default: () => []
+    },
+    deviceList: {
+      type: Array,
+      default: () => []
+    },
     canvas: {
       type: Object,
       require: true
@@ -474,20 +450,6 @@ export default {
     props: {
       type: Object,
       require: true
-    }
-  },
-  computed: {
-    currNodeEnable: {
-      get () {
-        let enable = (this.props.node.data || {}).enable
-        return enable || false
-      },
-      set (val) {
-        if (this.props.node.data === '') {
-          this.props.node.data = {}
-        }
-        this.props.node.data.enable = val
-      }
     }
   },
   methods: {
@@ -627,10 +589,11 @@ export default {
 .props-container {
   overflow-x: hidden;
   overflow-y: auto;
+  font-size: 12px;
 }
 .bottom {
   position: absolute;
-  bottom: 0.1rem;
+  bottom: 20px;
   .title {
     padding: 0 10px;
     border-bottom: 1px solid #ccc;
