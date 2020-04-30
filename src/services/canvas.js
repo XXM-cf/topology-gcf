@@ -99,21 +99,19 @@ export function canvasRegister () {
   registerNode('flowParallel', flowParallel, flowParallelAnchors, null, null)
   registerNode('flowComment', flowComment, flowCommentAnchors, null, null)
 }
-import fans from './HVAC/fans'
-import Sensors from './HVAC/Sensors'
-import airflow from './HVAC/airflow'
-import enumDevice from './HVAC/enumDevice'
-import Ductwork from './HVAC/Ductwork'
+
 import plantIcon from './plantIcon'
 import electricity from './electricity'
+import Ductwork from './HVAC/Ductwork'
+
+import Water from './HVAC/Water'
+import Sensors from './HVAC/Sensors'
 export const Tools = [
   plantIcon,
   electricity,
-  fans,
-  Sensors,
-  airflow,
-  enumDevice,
   Ductwork,
+  Water,
+  Sensors,
   {
     group: '基本形状',
     children: [

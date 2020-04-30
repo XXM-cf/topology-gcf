@@ -1,11 +1,11 @@
 <template lang="pug">
 .canvas-props
   h3.tips 操作栏
-  //- .group
-  //-   .title 快捷操作
-  //-   .container
-  //-     .item.full-item
-  //-      el-button(@click="onAddPipeLine") 绘制水管
+  .group
+    .title 快捷操作
+    .container
+      .item.full-item
+       el-button(@click="onAddPipeLine") 绘制水管
 
   .group
     .title 基础配置
@@ -320,6 +320,28 @@ import { Node } from 'topology-core/models/node'
 import { Line } from 'topology-core/models/line'
 import { Point } from 'topology-core/models/point'
 export default {
+  props: {
+    imgList: {
+      type: Array,
+      default: () => []
+    },
+    deviceList: {
+      type: Array,
+      default: () => []
+    },
+    canvas: {
+      type: Object,
+      require: true
+    },
+    options: {
+      type: Object,
+      require: true
+    },
+    props: {
+      type: Object,
+      require: true
+    }
+  },
   data () {
     return {
       baseImg: '',
@@ -408,6 +430,10 @@ export default {
         {
           value: 'show',
           label: '炫耀'
+        },
+        {
+          value: 'elevator',
+          label: '电梯运行'
         }
       ],
       lineTypeOptions: [
@@ -430,28 +456,7 @@ export default {
       ]
     }
   },
-  props: {
-    imgList: {
-      type: Array,
-      default: () => []
-    },
-    deviceList: {
-      type: Array,
-      default: () => []
-    },
-    canvas: {
-      type: Object,
-      require: true
-    },
-    options: {
-      type: Object,
-      require: true
-    },
-    props: {
-      type: Object,
-      require: true
-    }
-  },
+
   methods: {
     handleBaseImg (val) {
       this.$emit('changeBaseImg', val)
@@ -540,6 +545,22 @@ export default {
             linear: true,
             state: Node.cloneState(state)
           });
+          break;
+        case 'elevator':
+          for (let i = 0; i < 10; i++) {
+            state.rect.y += 50;
+            this.props.node.animateFrames.push({
+              duration: 500,
+              linear: true,
+              state: Node.cloneState(state)
+            });
+          }
+          this.props.node.animateCycle = 1
+          // this.props.node.animateFrames.push({
+          //   duration: 100,
+          //   linear: true,
+          //   state: Node.cloneState(state)
+          // });
           break;
       }
       this.onAnimateDuration()
