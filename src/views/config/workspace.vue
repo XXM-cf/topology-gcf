@@ -167,10 +167,11 @@ export default {
       })
       switch (this.currCanvasData.lineStyle) {
         case 'pipe': // 水管
-          targetLine.strokeStyle = '#6cf'
+          targetLine.strokeStyle = '#A6E1FF '
           targetLine.lineWidth = 15
           targetLine.borderWidth = 5
-          targetLine.borderColor = '#dcdc'
+          targetLine.borderColor = '#51514E  '
+          targetLine.animateColor = '#46B8FF'
           break
         case 'electricity': // 变配电原理图
           targetLine.strokeStyle = 'rgba(244, 105, 6, 1)'
@@ -204,6 +205,15 @@ export default {
           console.warn('添加节点-->addNode', this.props.node)
           break
         case 'line':
+          this.props = {
+            node: null,
+            line: data,
+            multi: false,
+            nodes: null,
+            locked: data.locked
+          }
+          console.warn('点击连线 -->addLine', data)
+          break
         case 'addLine':
           this.props = {
             node: null,
@@ -213,7 +223,7 @@ export default {
             locked: data.locked
           }
           this.changeLine(data.id)
-          console.warn('添加或点击连线 -->addLine', data)
+          console.warn('添加连线 -->addLine', data)
           break
         case 'multi':
           console.warn('多选节点 -->multi', data.length)
@@ -439,14 +449,10 @@ export default {
     .el-collapse-item__header {
       color: #0d1a26;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 12px;
       line-height: 1;
       padding: 5px 10px;
       border-bottom: 1px solid #ddd;
-
-      &:first-child {
-        border-top: none;
-      }
     }
 
     .buttons {
@@ -503,10 +509,11 @@ export default {
   .props {
     flex-shrink: 0;
     width: 300px;
-    background-color: #f8f8f8;
+    background-color: #f5f5f5;
     border-left: 1px solid #d9d9d9;
     overflow-y: auto;
     position: relative;
+    font-size: 12px;
   }
 
   .context-menu {

@@ -1,5 +1,6 @@
 <template lang="pug">
-  router-view
+  #app
+    router-view
 </template>
 
 <script>
@@ -9,3 +10,11 @@ export default {
 
 }
 </script>
+<style lang="scss">
+body {
+  height: 100vh;
+}
+#app {
+  height: 100%;
+}
+</style>

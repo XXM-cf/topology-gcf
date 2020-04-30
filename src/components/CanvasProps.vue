@@ -180,11 +180,17 @@
       .title 位置和大小
       .container
         .item
-          .label X（px)
+          .label 左上角X（px)
           el-input-number(v-model='props.node.rect.x', controls-position='right', @change='onChange')
         .item
-          .label Y （px）
+          .label 左上角Y （px）
           el-input-number(v-model='props.node.rect.y', controls-position='right', @change='onChange')
+        .item
+          .label 右下角X（px)
+          el-input-number(v-model='props.node.rect.ex', controls-position='right', @change='onChange')
+        .item
+          .label 右下角Y （px）
+          el-input-number(v-model='props.node.rect.ey', controls-position='right', @change='onChange')
 
         .item
           .label 宽（px）
@@ -594,10 +600,10 @@ export default {
             new Point(200, 100),
             new Point(200, 300),
           ],
-          strokeStyle: '#6cf',
+          strokeStyle: '#B4B5B0',
           lineWidth: 15,
           borderWidth: 5,
-          borderColor: '#dcdc'
+          borderColor: '#51514E'
         })
       )
       this.canvas.render()
@@ -643,6 +649,9 @@ export default {
   .item {
     padding: 5px 10px;
     width: 50%;
+    .label {
+      padding-bottom: 10px;
+    }
   }
   .full-item {
     padding: 5px 10px;

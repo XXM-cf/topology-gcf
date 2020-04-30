@@ -1,11 +1,4 @@
-body {
-  font-size: 12px;
-  line-height: 2;
-   height: 100vh;
-}
-li {
-  list-style: none;
-}
+
 *,
 *:before,
 *:after {
@@ -13,10 +6,13 @@ li {
   margin: 0;
 }
 
-.headers {
+
+.confing-layout{
+  height: 100%;
+  .headers {
   display: flex;
   background-color: #dcdcdc;
-  font-size: 12px;
+  font-size: 14px;
   height: 40px;
   .el-menu {
     display: flex;
@@ -24,21 +20,11 @@ li {
   .full {
     flex: 1;
   }
-
-  .logo {
-    img {
-      height: 0.22rem;
-      position: relative;
-      top: -0.04rem;
-    }
-  }
 }
-
 .el-menu-item,
 .el-submenu__title {
   color: #314659 !important;
-  font-size: 12px;
-  padding: 0 0.1rem;
+  padding: 0 10px;
   height: 40px !important;
   line-height: 40px !important;
 
@@ -58,4 +44,5 @@ li {
     color: #314659;
     font-size: 24px;
   }
+}
 }
