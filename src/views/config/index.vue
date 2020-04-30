@@ -1,5 +1,5 @@
 <template lang="pug">
-  .confing-layout
+  .topology-confing-layout
     .headers
       el-menu(mode='horizontal', @select='onMenu', background-color='#f8f8f8')
         el-submenu(index='file')
@@ -7,7 +7,8 @@
           //- el-menu-item(index='new') 新建文件
           el-menu-item(index='replace') 导入本地文件
           el-menu-item.separator
-          el-menu-item(index='save') 保存到本地
+          el-menu-item(index='saveOnline') 线上保存
+          el-menu-item(index='save') 下载到本地
           el-menu-item(index='savePng') 下载为PNG
         el-submenu(index='edit')
           template(slot='title') 编辑
@@ -52,7 +53,12 @@
             span {{ lineStyle.label }}
           el-menu-item(v-for='(item, index) in lineStyleOptions', :key='item.value', @click="onState('lineStyle', item.value)")
             span {{ item.label }}
-    workspace(:currCanvasData="currCanvasData" :imgList="imgList" :deviceList="deviceList")
+    workspace(
+      :currCanvasData="currCanvasData"
+      :imgList="imgList"
+      :deviceList="deviceList"
+      @saveOnline="saveOnline"
+      )
 </template>
 
 <script >
@@ -162,6 +168,9 @@ export default {
     })
   },
   methods: {
+    saveOnline (data) { // 线上保存
+      this.$emit('saveOnline', data)
+    },
     onMenu (key, keyPath) {
       if (!key || key.indexOf('/') === 0) {
         return
@@ -187,7 +196,7 @@ export default {
 </script>
 
 <style lang="scss">
-.confing-layout {
+.topology-confing-layout {
   width: 100%;
   height: 100%;
 }

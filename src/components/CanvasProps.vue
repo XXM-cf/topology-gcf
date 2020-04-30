@@ -1,5 +1,5 @@
 <template lang="pug">
-.canvas-props
+.topology-canvas-props
   h3.tips 操作栏
   .group
     .title 快捷操作
@@ -613,57 +613,59 @@ export default {
 </script>
 
 <style lang="scss">
-.props-container {
-  overflow-x: hidden;
-  overflow-y: auto;
-  font-size: 12px;
-}
-.bottom {
-  position: absolute;
-  bottom: 20px;
-  .title {
-    padding: 0 10px;
-    border-bottom: 1px solid #ccc;
+.topology-canvas-props {
+  .props-container {
+    overflow-x: hidden;
+    overflow-y: auto;
+    font-size: 12px;
   }
-}
-.tips {
-  text-align: center;
-  background: #ccc;
-  padding: 10px;
-  margin: 0 0 10px 0;
-}
-.group {
-  .title {
-    color: #0d1a26;
-    font-weight: 600;
-    padding: 0 10px;
-    font-size: 14px;
-    margin-top: 10px;
-    border-bottom: 1px solid #ccc;
-  }
-  .container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-  .item {
-    padding: 5px 10px;
-    width: 50%;
-    .label {
-      padding-bottom: 10px;
+  .bottom {
+    position: absolute;
+    bottom: 20px;
+    .title {
+      padding: 0 10px;
+      border-bottom: 1px solid #ccc;
     }
   }
-  .full-item {
-    padding: 5px 10px;
-    width: 100%;
-    .el-select,
-    .el-input {
+  .tips {
+    text-align: center;
+    background: #ccc;
+    padding: 10px;
+    margin: 0 0 10px 0;
+  }
+  .group {
+    .title {
+      color: #0d1a26;
+      font-weight: 600;
+      padding: 0 10px;
+      font-size: 14px;
+      margin-top: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+    .container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .item {
+      padding: 5px 10px;
+      width: 50%;
+      .label {
+        padding-bottom: 10px;
+      }
+    }
+    .full-item {
+      padding: 5px 10px;
+      width: 100%;
+      .el-select,
+      .el-input {
+        width: 100%;
+      }
+    }
+    .el-color-picker__trigger,
+    .el-color-picker {
       width: 100%;
     }
-  }
-  .el-color-picker__trigger,
-  .el-color-picker {
-    width: 100%;
   }
 }
 </style>

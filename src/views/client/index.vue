@@ -1,5 +1,5 @@
 <template lang="pug">
-  .client
+  .topology-client
       #topology-canvas.full(ref="myCanvas" style="width:100%; height:100%")
 </template>
 
@@ -204,7 +204,7 @@ export default {
 </script>
 
 <style lang="scss">
-.client {
+.topology-client {
   height: 100%;
   .canvas-container {
     display: flex;

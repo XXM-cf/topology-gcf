@@ -1,5 +1,5 @@
 <template lang="pug">
-    .menus
+    .topology-canvas-menus
       div
         a(:class='{disabled:!props.node && !props.nodes}', @click='onTop()') 置顶
       div
@@ -130,14 +130,15 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.menus {
+<style lang="scss" scoped>
+.topology-canvas-menus {
   color: #000;
   background-color: #fff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   min-width: 1.8rem;
   text-align: left;
-  padding: 0.08rem 0;
+  padding: 10px;
+  font-size: 14px;
 
   & > div {
     line-height: 2.2;

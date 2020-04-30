@@ -7,7 +7,7 @@
 }
 
 
-.confing-layout{
+.topology-confing-layout{
   height: 100%;
   .headers {
   display: flex;
@@ -20,6 +20,13 @@
   .full {
     flex: 1;
   }
+  a {
+  text-decoration: none;
+  color: #314659;
+  &:hover {
+    color: #1890ff;
+  }
+}
 }
 .el-menu-item,
 .el-submenu__title {

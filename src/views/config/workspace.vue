@@ -1,5 +1,5 @@
 <template lang="pug">
-  .page
+  .topology-workspace
     .tools
       el-collapse(v-model="activeNames")
         el-collapse-item(
@@ -369,7 +369,10 @@ export default {
         `le5le.topology.json`
       )
     },
+    handle_saveOnline () {
+      this.$emit('saveOnline', this.canvas.data)
 
+    },
     handle_savePng (data) {
       this.canvas.saveAsImage('le5le.topology.png')
     },
@@ -434,7 +437,7 @@ export default {
 </script>
 
 <style lang="scss">
-.page {
+.topology-workspace {
   display: flex;
   width: 100%;
   height: calc(100% - 40px);
