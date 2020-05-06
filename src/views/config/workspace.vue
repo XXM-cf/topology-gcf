@@ -46,6 +46,7 @@ import { Topology } from 'topology-core'
 import { Node } from 'topology-core/models/node'
 import { Line } from 'topology-core/models/line'
 import { Point } from 'topology-core/models/point'
+import { Direction } from 'topology-core/models/direction';
 import * as FileSaver from 'file-saver'
 import { alignNodes } from 'topology-layout';
 
@@ -83,7 +84,8 @@ export default {
       canvas: {},
       canvasOptions: {
         rotateCursor: '/img/rotate.vue',
-        disableScale: true
+        disableScale: true,
+        hideInput: true
       },
       props: {
         node: null,
@@ -180,9 +182,13 @@ export default {
     },
     onMessage (event, data) {
       // console.log('onMessage:', event, data)
+      let e = window.event
       switch (event) {
         case 'dblclick':
-          console.log('双击')
+          console.log('双击', event, data)
+          if (this.props.line) {
+            this.handleSetControlPoint(window.event)
+          }
           break;
         case 'node':
           this.props = {
@@ -319,7 +325,21 @@ export default {
     onAnimateChange (line) {
       this.canvas.animate();
     },
-
+    handleSetControlPoint (e) {
+      let x = e.clientX - 200
+      let y = e.clientY - 40
+      this.canvas.addLine(
+        new Line({
+          name: 'line',
+          fromArrow: '',
+          toArrow: '',
+          from: new Point(x, y),
+          to: new Point(x + 100, y + 100),
+          strokeStyle: 'rgba(244, 105, 6, 1)'
+        })
+      )
+      this.canvas.render()
+    },
 
     // 菜单事件
     handle_new (data) {

@@ -11,7 +11,6 @@
   height: 100%;
   .headers {
   display: flex;
-  background-color: #dcdcdc;
   font-size: 14px;
   height: 40px;
   .el-menu {
@@ -20,19 +19,13 @@
   .full {
     flex: 1;
   }
-  a {
-    text-decoration: none;
-    color: #314659;
-  &:hover {
-    color: #1890ff;
-  }
-}
 }
 .el-menu-item,
 .el-submenu__title {
   color: #333 !important;
   padding: 0 10px;
   height: 40px !important;
+  padding:0 20px;
   line-height: 40px !important;
 
   a {

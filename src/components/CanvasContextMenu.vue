@@ -60,7 +60,6 @@ export default {
     }
   },
   methods: {
-
     onTop () {
       if (this.props.node) {
         this.canvas.top(this.props.node)

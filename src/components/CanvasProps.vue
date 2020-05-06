@@ -6,6 +6,8 @@
     .container
       .item.full-item
        el-button(@click="onAddPipeLine") 绘制水管
+       el-button(v-show="props.line" @click="handleChangeLine('horizontal')") 垂直线条
+       el-button(v-show="props.line" @click="handleChangeLine('vertical')") 水平线条
 
   .group
     .title 基础配置
@@ -42,7 +44,8 @@
         li Ctrl + 方向键：控制节点移动1个像素
         li Ctrl + 鼠标移动：移动整个画布
         li Ctrl + 鼠标滚轮：缩放
-        li 添加或选中节点，右侧属性支持上传各种图片
+        li 双击连线，添加一条线段
+        li 添加或选中节点，右侧支持各种属性修改
 
   // 多节点对齐
   .props-container(v-if="props.multi")
@@ -591,6 +594,16 @@ export default {
     onChangeOptions () {
       this.$emit('changeOptions', this.canvasOptions)
     },
+    handleChangeLine (state) { // 改变线条
+      if (this.props.line) {
+        if (state === 'vertical') {
+          this.props.line.to.y = this.props.line.from.y
+        } else {
+          this.props.line.to.x = this.props.line.from.x
+        }
+        this.$emit('change', this.props.node)
+      }
+    },
     onAddPipeLine () {
       this.canvas.addLine(
         new Line({
@@ -628,6 +641,11 @@ export default {
     .title {
       padding: 10px;
       border-bottom: 1px solid #ccc;
+    }
+    .group {
+      li {
+        padding: 5px 0;
+      }
     }
   }
   .tips {
