@@ -119,10 +119,11 @@ export default {
     init () {
       this.canvasOptions.on = this.onMessage
       this.canvas = new Topology('topology-canvas', this.canvasOptions)
-      this.canvas.data = {
-        ...this.canvas.data,
-        ...this.currCanvasData,
-      }
+      // this.canvas.data = {
+      //   ...this.canvas.data,
+      //   ...this.currCanvasData, // 自定义全局属性
+      // }
+
       this.canvas.render()
     },
     onDrag (event, node) {
