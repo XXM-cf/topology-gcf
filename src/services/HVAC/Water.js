@@ -90,10 +90,74 @@ const arr = [
       height: 300
     },
   },
+  {
+    name: '冷水四通',
+    url: currUrl + 'cold_4way.svg',
+    rect: {
+      width: 100,
+      height: 100
+    },
+  },
+  {
+    name: '冷水弯管',
+    url: currUrl + 'cold_corner.svg',
+    rect: {
+      width: 100,
+      height: 100
+    },
+  },
+  {
+    name: '冷水直管',
+    url: currUrl + 'cold_pipe.svg',
+    rect: {
+      width: 100,
+      height: 100
+    },
+  },
+  {
+    name: '冷水T管',
+    url: currUrl + 'cold_T.svg',
+    rect: {
+      width: 100,
+      height: 100
+    },
+  },
+  {
+    name: '热水四通',
+    url: currUrl + 'hot_4way.svg',
+    rect: {
+      width: 100,
+      height: 100
+    },
+  },
+  {
+    name: '热水弯管',
+    url: currUrl + 'hot_corner.svg',
+    rect: {
+      width: 100,
+      height: 100
+    },
+  },
+  {
+    name: '热水直管',
+    url: currUrl + 'hot_pipe.svg',
+    rect: {
+      width: 100,
+      height: 100
+    },
+  },
+  {
+    name: '热水T管',
+    url: currUrl + 'hot_T.svg',
+    rect: {
+      width: 100,
+      height: 100
+    },
+  },
 ]
 
 const pipeImg = {
-  group: '给排水',
+  group: '暖通水',
   children: arr.map(item => {
     return {
       name: item.name,

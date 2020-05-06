@@ -19,7 +19,6 @@
                   :src='btn.data.image')
                 i(v-else-if='btn.data.iconClass', :class='`iconfont ${btn.data.iconClass}`')
                 i(v-else='', :class='`iconfont ${btn.icon}`' style="font-size:26px")
-                //- i(class="iconfont icon-shidu")
                 .name {{ btn.name }}
 
 
@@ -343,13 +342,10 @@ export default {
             try {
               const data = JSON.parse(text)
               console.log('数据读取完毕', data)
-
               if (
-                data &&
-                Array.isArray(data.pens)
+                data && Array.isArray(data.pens)
               ) {
                 this.canvas.open(data)
-                this.canvas.render()
               }
             } catch (e) {
               return false
@@ -448,14 +444,20 @@ export default {
     background-color: #f8f8f8;
     border-right: 1px solid #d9d9d9;
     overflow-y: auto;
+    .el-collapse {
+      border-top: none;
+      .el-collapse-item__wrap {
+        background: #f8f8f8;
+      }
 
-    .el-collapse-item__header {
-      color: #0d1a26;
-      font-weight: 600;
-      font-size: 12px;
-      line-height: 1;
-      padding: 5px 10px;
-      border-bottom: 1px solid #ddd;
+      .el-collapse-item__header {
+        color: #0d1a26;
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 1;
+        padding: 5px 10px;
+        border-bottom: 1px solid #ddd;
+      }
     }
 
     .buttons {

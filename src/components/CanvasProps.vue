@@ -224,6 +224,9 @@
         .item
           .label 透明度（0-1）
           el-input-number(v-model="props.node.globalAlpha" @change='onChange')
+        .item
+          .label 旋转角度（0-360）
+          el-input-number(:min="0" :max="360" v-model="props.node.rotate" @change='onChange')
     .group
       .title 图片属性
       .item.full-item
@@ -623,7 +626,7 @@ export default {
     position: absolute;
     bottom: 20px;
     .title {
-      padding: 0 10px;
+      padding: 10px;
       border-bottom: 1px solid #ccc;
     }
   }
@@ -637,9 +640,9 @@ export default {
     .title {
       color: #0d1a26;
       font-weight: 600;
-      padding: 0 10px;
+      padding: 10px;
       font-size: 14px;
-      margin-top: 10px;
+      margin-top: 5px;
       border-bottom: 1px solid #ccc;
     }
     .container {

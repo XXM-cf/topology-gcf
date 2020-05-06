@@ -1,85 +1,122 @@
 const arr = [
   {
-    name: '带电显示器',
-    class: 'icon-peidian_daidianxianshiqi',
-    unicode: "\uecf8"
+    class: 'icon-peidian_diankangqi',
+    unicode: '\uecf8',
+    name: '电抗'
   },
 
   {
-    name: '避雷器',
-    class: 'icon-peidian_bileiqi',
-    unicode: "\uecf9"
-  },
-
-  {
-    name: '电流互感器',
-    class: 'icon-peidian_dianliuhuganqi',
-    unicode: "\uecfa"
-  },
-  {
-    name: '隔离开关',
-    class: 'icon-peidian_gelikaiguan',
-    unicode: "\uecfb"
-  },
-
-  {
-    name: '断路器-开',
-    class: 'icon-peidian_zhenkongduanluqikaizha',
-    unicode: "\uecfc"
-  },
-
-  {
-    name: '断路器-合',
-    class: 'icon-peidian_zhenkongduanluqihezha',
-    unicode: "\uecfd"
-  },
-
-  {
-    name: '电压互感器',
-    class: 'icon-peidian_dianyahuganqi',
-    unicode: "\uecfe"
-  },
-
-  {
-    name: '接地开关-开',
-    class: 'icon-peidian_jiedidaokaiguan',
-    unicode: "\uecff"
-  },
-
-  {
-    name: '电容器',
     class: 'icon-peidian_dianlidianrongqi',
-    unicode: "\ued01"
+    unicode: '\uecf9',
+    name: '电力电容'
   },
 
   {
-    name: '变压器',
+    class: 'icon-peidian_dianyahuganqi',
+    unicode: '\uecfa',
+    name: '电压互感'
+  },
+
+  {
     class: 'icon-peidian_bianyaqi',
-    unicode: "\ued02"
+    unicode: '\uecfb',
+    name: '变压器'
   },
 
   {
-    name: '接地开关-合',
-    class: 'icon-peidian_zhenkongduanluqihezhafuben',
-    unicode: "\ued03"
+    class: 'icon-peidian_daidianxianshijiedi',
+    unicode: '\uecfc',
+    name: '电容接地'
   },
 
   {
-    name: '双电源切换',
-    class: 'icon-peidian_shuangdianyuanqiehuanzhuangzhi',
-    unicode: "\ued04"
+    class: 'icon-peidian_bileiqi',
+    unicode: '\uecfd',
+    name: '避雷器'
   },
 
   {
-    name: '电压互感器',
-    class: 'icon-peidian_dianyahuganqifuben',
-    unicode: "\ued05"
+    class: 'icon-peidian_daidianxianshiqi',
+    unicode: '\uecfe',
+    name: '带电显示'
   },
 
   {
-    name: '配电接地',
+    class: 'icon-peidian_dianrong',
+    unicode: '\uecff',
+    name: '电容'
+  },
+
+  {
     class: 'icon-peidian_jiedi',
-    unicode: "\ued06"
+    unicode: '\ued00',
+    name: '地线'
+  },
+
+  {
+    class: 'icon-peidian_rongduanqi',
+    unicode: '\ued01',
+    name: '熔断器'
+  },
+
+  {
+    class: 'icon-peidian_jingzhaguan',
+    unicode: '\ued02',
+    name: '晶闸管'
+  },
+
+  {
+    class: 'icon-peidian_dianliuhuganqi',
+    unicode: '\ued03',
+    name: '电流互感'
+  },
+
+  {
+    class: 'icon-peidian_jiedidaokaiguan',
+    unicode: '\ued04',
+    name: '接地开关'
+  },
+
+  {
+    class: 'icon-peidian_gelikaiguan',
+    unicode: '\ued05',
+    name: '隔空开关'
+  },
+
+  {
+    class: 'icon-peidian_zhenkongduanluqihezhafuben',
+    unicode: '\ued06',
+    name: '真空断路器'
+  },
+
+  {
+    class: 'icon-peidian_shuangdianyuanqiehuanzhuangzhizujian',
+    unicode: '\ued07',
+    name: '电源切换'
+  },
+
+  {
+    class: 'icon-peidian_shuangdianyuanqiehuanzhuangzhi',
+    unicode: '\ued08',
+    name: '爽电源切换'
+  },
+
+  {
+    class: 'icon-peidian_dianyahuganqi2',
+    unicode: '\ued09',
+    name: '电压互感'
+  },
+
+  {
+    class: 'icon-peidian_zhenkongduanluqikaizha',
+    unicode: '\ued0a',
+    name: '断路器开'
+  },
+
+  {
+    class: 'icon-peidian_zhenkongduanluqihezha',
+    unicode: '\ued0b',
+    name: '断路器合'
   }
 ]
 

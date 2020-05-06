@@ -22,9 +22,9 @@
     "sass-loader": "^8.0.2",
     "scss": "^0.2.4",
     "scss-loader": "0.0.1",
-    "topology-core": "^0.2.8-dev",
+    "topology-core": "^0.2.9",
     "topology-flow-diagram": "0.0.3",
-    "topology-layout": "0.0.3",
+    "topology-layout": "0.0.4",
     "vue": "^2.6.11",
     "vue-router": "^3.1.6"
   },

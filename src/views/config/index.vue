@@ -1,12 +1,10 @@
 <template lang="pug">
   .topology-confing-layout
     .headers
-      el-menu(mode='horizontal', @select='onMenu', background-color='#f8f8f8')
+      el-menu(mode='horizontal', @select='onMenu')
         el-submenu(index='file')
           template(slot='title') 文件
-          //- el-menu-item(index='new') 新建文件
           el-menu-item(index='replace') 导入本地文件
-          el-menu-item.separator
           el-menu-item(index='saveOnline') 线上保存
           el-menu-item(index='save') 下载到本地
           el-menu-item(index='savePng') 下载为PNG
@@ -14,15 +12,14 @@
           template(slot='title') 编辑
           el-menu-item(index='undo') 撤消
           el-menu-item(index='redo') 重做
-          el-menu-item.separator
           el-menu-item(index='copy') 复制
           el-menu-item(index='cut') 剪切
           el-menu-item(index='paste') 粘贴
 
-      el-menu.full(mode='horizontal', background-color='#f8f8f8')
+      el-menu.full(mode='horizontal')
         //- el-menu-item(@click="handleView") 查看效果
 
-      el-menu(mode='horizontal', background-color='#f8f8f8')
+      el-menu(mode='horizontal')
         el-menu-item 视图：{{scale}}%
         el-menu-item(index='scale', v-show="scale !== 100" @click="onState('scale',1)") 还原
         el-menu-item(index='locked', @click="onState('locked', locked ? 0 : 1)") {{ locked ? '解锁' : '锁定'}}
@@ -33,21 +30,21 @@
           el-menu-item(v-for='(item, index) in lineNames', :key='index', :index='`line-${item}`', @click="onState('lineName', item)")
             i(:class='`iconfont icon-${item}`')
 
-      el-menu(mode='horizontal', background-color='#f8f8f8')
+      el-menu(mode='horizontal')
         el-submenu(index='fromArrowType', title='默认起点箭头')
           template(slot='title')
             i(:class='`iconfont icon-from-${fromArrowType}`')
           el-menu-item(v-for='(item, index) in arrowTypes', :key='index', :index='`fromArrowType-${item}`', @click="onState('fromArrowType', item)")
             i(:class='`iconfont icon-from-${item}`')
 
-      el-menu(mode='horizontal', background-color='#f8f8f8')
+      el-menu(mode='horizontal')
         el-submenu(index='toArrowType', title='默认终点箭头')
           template(slot='title')
             i(:class='`iconfont icon-to-${toArrowType}`')
           el-menu-item(v-for='(item, index) in arrowTypes', :key='index', :index='`toArrowType-${item}`', @click="onState('toArrowType', item)")
             i(:class='`iconfont icon-to-${item}`')
 
-      el-menu(mode='horizontal', background-color='#f8f8f8')
+      el-menu(mode='horizontal')
         el-submenu(index='lineStyle', title='连线样式')
           template(slot='title')
             span {{ lineStyle.label }}
@@ -57,7 +54,7 @@
       :currCanvasData="currCanvasData"
       :imgList="imgList"
       :deviceList="deviceList"
-      @saveOnline="saveOnline"
+      @saveOnline="handelSaveOnline"
       )
 </template>
 
@@ -168,7 +165,8 @@ export default {
     })
   },
   methods: {
-    saveOnline (data) { // 线上保存
+    handelSaveOnline (data) { // 线上保存
+      console.log('结果', data)
       this.$emit('saveOnline', data)
     },
     onMenu (key, keyPath) {
