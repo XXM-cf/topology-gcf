@@ -22,7 +22,7 @@
 }
 .el-menu-item,
 .el-submenu__title {
-  color: #333 !important;
+  color: #000 !important;
   padding: 0 10px;
   height: 40px !important;
   padding:0 20px;
@@ -34,13 +34,17 @@
   }
 
   .iconfont {
-    color: #314659;
+    color: #000;
     font-size: 24px;
   }
 }
-.el-menu-popup{
+.el-menu--popup{
   .iconfont{
-  font-size: 30px;
+    font-size: 30px;
   }
 }
+}
+.arrowicon{
+  color:#333;
+   font-size: 24px;
 }

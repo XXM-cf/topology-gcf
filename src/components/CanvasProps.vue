@@ -650,7 +650,7 @@ export default {
   }
   .tips {
     text-align: center;
-    background: #ccc;
+    background: rgb(219, 224, 225);
     padding: 10px;
     margin: 0 0 10px 0;
   }
@@ -659,7 +659,7 @@ export default {
       color: #0d1a26;
       font-weight: 600;
       padding: 10px;
-      font-size: 14px;
+      font-size: 12px;
       margin-top: 5px;
       border-bottom: 1px solid #ccc;
     }

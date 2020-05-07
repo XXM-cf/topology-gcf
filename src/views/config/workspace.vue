@@ -83,7 +83,7 @@ export default {
       tools: Tools,
       canvas: {},
       canvasOptions: {
-        rotateCursor: '/img/rotate.vue',
+        rotateCursor: 'http://113.31.118.32:9000/test/topology/HVAC/rotate.cur',
         disableScale: true,
         hideInput: true
       },
@@ -467,17 +467,20 @@ export default {
     overflow-y: auto;
     .el-collapse {
       border-top: none;
+
       .el-collapse-item__wrap {
         background: #f8f8f8;
       }
 
       .el-collapse-item__header {
         color: #0d1a26;
-        font-weight: 600;
         font-size: 12px;
         line-height: 1;
         padding: 5px 10px;
         border-bottom: 1px solid #ddd;
+      }
+      .is-active {
+        color: #409eff;
       }
     }
 

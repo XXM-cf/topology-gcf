@@ -15,20 +15,13 @@ npm run serve
 npm run build
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### 设计思想
 工具化、与业务解耦
 
 ### 核心功能
-动态图例（支持png、svg、gif、文字、线条多种图例，与设备状态实时联动）
-属性自定义（用户可自定义图片、连线、文字、节点样式）
+动态图例（支持png、svg、gif、文字、线条多种图例，多态图例与设备状态实时联动）
+自由定制（用户可自定义图片、连线、文字、节点样式）
 离线存储（离线储存画布，多项目可直接复用）
 高性能低耦合（画布分层渲染，单画布支持千级节点；完全解耦业务，适合多场景使用）
 
@@ -37,7 +30,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - [ ] 音频、视频嵌入播放
 - [ ] 动画联动
 - [ ] 电梯效果
-- [ ] 水槽液位变化
 
 
 
@@ -68,6 +60,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - [x] 图片修改（本地）
 - [x] 使用svg文件
 - [x] gif图
+- [x] 水槽液位变化
+- [x] 设备状态切换
 
 文字
 - [x] 颜色
