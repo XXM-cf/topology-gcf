@@ -322,6 +322,21 @@
         .item.full-item
           .label 网页URL
           el-input(v-model="props.node.iframe" @change='onChange')
+    .group(v-if="props.node.data.elevatorStart>=0")
+      .title 电梯配置
+      .container
+        .item
+          .label 起点Y （px）
+          el-input-number(v-model="props.node.data.elevatorStart" @change='onChange')
+        .item
+          .label 终点Y （px）
+          el-input-number(v-model="props.node.data.elevatorEnd" @change='onChange')
+        .item
+          .label 总楼层
+          el-input-number(v-model="props.node.data.elevatorStep" @change='onChange')
+        .item
+          .label 测试
+          el-button(@click="handleElevatorRun") 随机运行
 
 
 
@@ -568,11 +583,6 @@ export default {
             });
           }
           this.props.node.animateCycle = 1
-          // this.props.node.animateFrames.push({
-          //   duration: 100,
-          //   linear: true,
-          //   state: Node.cloneState(state)
-          // });
           break;
       }
       this.onAnimateDuration()
@@ -594,6 +604,7 @@ export default {
     onChangeOptions () {
       this.$emit('changeOptions', this.canvasOptions)
     },
+
     handleChangeLine (state) { // 改变线条
       if (this.props.line) {
         if (state === 'vertical') {
@@ -603,6 +614,68 @@ export default {
         }
         this.$emit('change', this.props.node)
       }
+    },
+    handleElevatorRun () {
+
+      this.props.node.animateFrames = []
+      let data = this.props.node.data
+
+
+      let targetStep = Math.ceil(Math.random() * data.elevatorStep) // 随机模拟当前楼层
+      console.log('目标楼层：', targetStep)
+
+      let step = Math.round(Math.abs(data.elevatorStart - data.elevatorEnd) / data.elevatorStep)
+
+      console.log('层高：', step)
+
+      let currY = this.props.node.rect.ey
+      console.log('当前位置：', currY)
+      let currStep = data.elevatorStep - currY / step + 1
+      console.log('当前楼层：', currStep)
+
+      let runStep = currStep - targetStep
+
+      console.log('运行层数：', runStep)
+
+      for (let i = data.elevatorStep; i > 0; i--) {
+        console.log(`第${data.elevatorStep - i}层坐标${step * i}`)
+        this.canvas.addLine(
+          new Line({
+            name: 'line',
+            fromArrow: '',
+            toArrow: '',
+            from: new Point(this.props.node.rect.x, step * i),
+            to: new Point(this.props.node.rect.x + 50, step * i),
+            strokeStyle: '#dcdcdc',
+            lineWidth: 1
+          })
+        )
+        this.canvas.addLine(
+          new Line({
+            name: 'line',
+            fromArrow: '',
+            toArrow: '',
+            from: new Point(this.props.node.rect.x, data.elevatorStart),
+            to: new Point(this.props.node.rect.x, data.elevatorEnd),
+            strokeStyle: '#dcdcdc',
+            lineWidth: 1
+          })
+        )
+        this.canvas.render()
+      }
+
+
+      const state = Node.cloneState(this.props.node);
+      state.rect.y = step * (data.elevatorStep - targetStep + 1)
+      this.props.node.animateFrames.push({
+        duration: Math.round(300 * Math.abs(runStep)),
+        linear: true,
+        state: Node.cloneState(state)
+      });
+      this.props.node.animateCycle = 1
+      this.onAnimateDuration()
+      this.props.node.animateStart = Date.now()
+      this.$emit('animateChange')
     },
     onAddPipeLine () {
       this.canvas.addLine(

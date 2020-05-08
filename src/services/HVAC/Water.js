@@ -107,8 +107,16 @@ const arr = [
     },
   },
   {
-    name: '冷水直管',
+    name: '冷水横管',
     url: currUrl + 'cold_pipe.svg',
+    rect: {
+      width: 100,
+      height: 100
+    },
+  },
+  {
+    name: '冷水直管',
+    url: currUrl + 'cold_pipe_h.svg',
     rect: {
       width: 100,
       height: 100
@@ -139,8 +147,16 @@ const arr = [
     },
   },
   {
-    name: '热水直管',
+    name: '热水横管',
     url: currUrl + 'hot_pipe.svg',
+    rect: {
+      width: 100,
+      height: 100
+    },
+  },
+  {
+    name: '热水直管',
+    url: currUrl + 'hot_pipe_h.svg',
     rect: {
       width: 100,
       height: 100

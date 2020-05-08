@@ -327,22 +327,19 @@ export const Tools = [
       },
 
       {
-        name: 'cube',
+        name: '电梯',
         icon: 'icon-cube',
         data: {
           rect: {
             width: 50,
             height: 70
           },
-          is3D: true,
-          z: 10,
-          zRotate: 10,
-          fillStyle: '#dcdcdc',
-          name: 'cube',
-          icon: '\ue63c',
-          iconFamily: 'topology',
-          iconColor: '#777',
-          iconSize: 30
+          data: {
+            elevatorStart: 0,
+            elevatorEnd: 0,
+            elevatorStep: 0,
+          },
+          name: 'rectangle',
         }
       },
       {
