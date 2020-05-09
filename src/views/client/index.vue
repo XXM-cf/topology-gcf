@@ -1,13 +1,15 @@
 <template lang="pug">
   .topology-client
-      #topology-canvas.full(ref="myCanvas" style="width:100%; height:100%")
+    #topology-canvas.full(ref="myCanvas" style="width:100%; height:100%")
 </template>
 
 <script>
 import { Topology } from 'topology-core'
 import { Node } from 'topology-core/models/node'
-
+import { Line } from 'topology-core/models/line'
+import { Point } from 'topology-core/models/point'
 export default {
+  name: 'topology-view',
   props: {
     canvasData: {
       type: Object,
@@ -37,7 +39,7 @@ export default {
         this.canvas.open(data)
         this.resizeCanvas()
       } else {
-        console.log('暂无可用配置')
+        console.log('暂无可用配置12')
       }
     },
     onMessage (event, data) {
@@ -99,13 +101,16 @@ export default {
       }
     },
 
-    handle_changeImg (tag, url) { // 设置图片
+    handle_changeStatus (tag, status) { // 设置状态
       let targetNode = this.getNode(tag)
       if (targetNode) {
-        targetNode.image = url
+        let arr = targetNode.image.split('.svg')[0].split('_')
+        arr[arr.length - 1] = status
+        targetNode.image = arr.join('_') + '.svg'
         this.canvas.render()
       }
     },
+
     // 设备图例对应的五种状态：
     // 告警： alarm : #ff4a4a
     // 故障： fault: #ffb300
@@ -175,9 +180,12 @@ export default {
       }
     },
 
-    handle_changeFont (tag, status) { // 修改
+    handle_changeFont (tag, status, text) { // 修改
       let targetNode = this.getNode(tag)
       if (targetNode) {
+        if (text) {
+          targetNode.font.text = text
+        }
         switch (status) { // 告警
           case 'normal':
             targetNode.font.color = '#999'
@@ -197,7 +205,91 @@ export default {
         }
       }
     },
+    handle_elevatorRun (tag, floorNum) {
+      let targetNode = this.getNode(tag)
+      let data = targetNode.data
+      let targetStep = Math.ceil(Math.random() * data.elevatorStep) // 随机模拟当前楼层
+      console.log('目标楼层：', targetStep)
+      let step = Math.round(Math.abs(data.elevatorStartY - data.elevatorEndY) / data.elevatorStep)
+      let currY = targetNode.rect.ey
+      let currStep = Math.round(data.elevatorStep - (currY - data.elevatorEndY) / step + 1)
+      console.log('当前楼层：', currStep)
+      let runStep = currStep - targetStep
+      console.log('运行方向', runStep < 0 ? `上行${-runStep}层` : `下行${runStep}层`)
 
+      let temp = Math.abs(data.elevatorStartY - data.elevatorEndY) / Math.abs(data.elevatorStartX - data.elevatorEndX)
+      let pointArr = [] // 所有坐标点
+      for (let i = 1; i <= data.elevatorStep; i++) {
+        let xPoint = 0
+        let yPoint = 0
+        if (data.elevatorEndX !== data.elevatorStartX) {
+          if (data.elevatorEndX < data.elevatorStartX) { // 第二象限
+            yPoint = data.elevatorEndY + step * i
+            xPoint = data.elevatorEndX + step * i / temp
+          } else { // 第一象限
+            yPoint = data.elevatorEndY + step * i
+            xPoint = data.elevatorStartX + step * (data.elevatorStep - i) / temp
+          }
+        } else {
+          xPoint = data.elevatorStartX
+          yPoint = step * i + data.elevatorEndY
+        }
+        pointArr.push(
+          {
+            num: (data.elevatorStep - i + 1),
+            x: xPoint,
+            y: yPoint
+          }
+        )
+        if (!targetNode.animateDuration) {
+          this.canvas.addLine(
+            new Line({
+              name: 'line',
+              fromArrow: '',
+              toArrow: '',
+              from: new Point(xPoint, yPoint),
+              to: new Point(xPoint + 5, yPoint),
+              strokeStyle: 'rgba(0,0,0,0.5)',
+              lineWidth: 1
+            })
+          )
+        }
+      }
+      if (!targetNode.animateDuration) {
+        this.canvas.addLine(
+          new Line({
+            name: 'line',
+            fromArrow: '',
+            toArrow: '',
+            from: new Point(data.elevatorStartX, data.elevatorStartY),
+            to: new Point(data.elevatorEndX, data.elevatorEndY),
+            strokeStyle: 'rgba(0,0,0,0.5)',
+            lineWidth: 1
+          })
+        )
+        this.canvas.render()
+      }
+
+      targetNode.animateFrames = []
+      const state = Node.cloneState(targetNode);
+      let targetPoint = pointArr.find(item => {
+        return item.num === targetStep
+      })
+      state.rect.x = targetPoint.x - state.rect.width / 2 // 设置为图例中点
+      state.rect.y = targetPoint.y - state.rect.height / 2
+      targetNode.animateFrames.push({
+        duration: Math.round(300 * Math.abs(runStep)),
+        linear: true,
+        state: Node.cloneState(state)
+      });
+      targetNode.animateCycle = 1
+      targetNode.animateDuration = 0;
+      for (const item of targetNode.animateFrames) {
+        targetNode.animateDuration += item.duration;
+      }
+      targetNode.animateStart = Date.now()
+      this.canvas.animate()
+    },
   }
 
 }
@@ -206,39 +298,6 @@ export default {
 <style lang="scss">
 .topology-client {
   height: 100%;
-  .canvas-container {
-    display: flex;
-    width: 100%;
-    height: calc(100% - 40px);
-    border: 1px solid #dcdcdc;
-    position: relative;
-    .tools {
-      width: 10%;
-      min-width: 140px;
-      height: 100%;
-      background: #f5f5f5;
-      display: flex;
-      flex-direction: column;
-      text-align: center;
-      padding: 10px;
-      .el-button {
-        margin-bottom: 15px;
-        margin-left: 0;
-      }
-    }
-
-    .full {
-      width: 90%;
-      height: 100%;
-      position: relative;
-      overflow: hidden;
-    }
-    .business-container {
-      width: 90%;
-      height: 100%;
-      position: absolute;
-      left: 10%;
-    }
-  }
+  width: 100%;
 }
 </style>

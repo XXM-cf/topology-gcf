@@ -322,15 +322,22 @@
         .item.full-item
           .label 网页URL
           el-input(v-model="props.node.iframe" @change='onChange')
-    .group(v-if="props.node.data.elevatorStart>=0")
+
+    .group(v-if="props.node.data.elevatorStartY>=0")
       .title 电梯配置
       .container
         .item
+          .label 起点X （px）
+          el-input-number(v-model="props.node.data.elevatorStartX" @change='onChange')
+        .item
           .label 起点Y （px）
-          el-input-number(v-model="props.node.data.elevatorStart" @change='onChange')
+          el-input-number(v-model="props.node.data.elevatorStartY" @change='onChange')
+        .item
+          .label 终点X （px）
+          el-input-number(v-model="props.node.data.elevatorEndX" @change='onChange')
         .item
           .label 终点Y （px）
-          el-input-number(v-model="props.node.data.elevatorEnd" @change='onChange')
+          el-input-number(v-model="props.node.data.elevatorEndY" @change='onChange')
         .item
           .label 总楼层
           el-input-number(v-model="props.node.data.elevatorStep" @change='onChange')
@@ -616,57 +623,77 @@ export default {
       }
     },
     handleElevatorRun () {
-
-      this.props.node.animateFrames = []
       let data = this.props.node.data
-
-
       let targetStep = Math.ceil(Math.random() * data.elevatorStep) // 随机模拟当前楼层
       console.log('目标楼层：', targetStep)
-
-      let step = Math.round(Math.abs(data.elevatorStart - data.elevatorEnd) / data.elevatorStep)
-
-      console.log('层高：', step)
-
+      let step = Math.round(Math.abs(data.elevatorStartY - data.elevatorEndY) / data.elevatorStep)
       let currY = this.props.node.rect.ey
-      console.log('当前位置：', currY)
-      let currStep = data.elevatorStep - currY / step + 1
+      let currStep = Math.round(data.elevatorStep - (currY - data.elevatorEndY) / step + 1)
       console.log('当前楼层：', currStep)
-
       let runStep = currStep - targetStep
+      console.log('运行方向', runStep < 0 ? `上行${-runStep}层` : `下行${runStep}层`)
 
-      console.log('运行层数：', runStep)
-
-      for (let i = data.elevatorStep; i > 0; i--) {
-        console.log(`第${data.elevatorStep - i}层坐标${step * i}`)
-        this.canvas.addLine(
-          new Line({
-            name: 'line',
-            fromArrow: '',
-            toArrow: '',
-            from: new Point(this.props.node.rect.x, step * i),
-            to: new Point(this.props.node.rect.x + 50, step * i),
-            strokeStyle: '#dcdcdc',
-            lineWidth: 1
-          })
+      let temp = Math.abs(data.elevatorStartY - data.elevatorEndY) / Math.abs(data.elevatorStartX - data.elevatorEndX)
+      let pointArr = [] // 所有坐标点
+      for (let i = 1; i <= data.elevatorStep; i++) {
+        let xPoint = 0
+        let yPoint = 0
+        if (data.elevatorEndX !== data.elevatorStartX) {
+          if (data.elevatorEndX < data.elevatorStartX) { // 第二象限
+            yPoint = data.elevatorEndY + step * i
+            xPoint = data.elevatorEndX + step * i / temp
+          } else { // 第一象限
+            yPoint = data.elevatorEndY + step * i
+            xPoint = data.elevatorStartX + step * (data.elevatorStep - i) / temp
+          }
+        } else {
+          xPoint = data.elevatorStartX
+          yPoint = step * i + data.elevatorEndY
+        }
+        pointArr.push(
+          {
+            num: (data.elevatorStep - i + 1),
+            x: xPoint,
+            y: yPoint
+          }
         )
+        if (!this.props.node.animateFrames.length) {
+          this.canvas.addLine(
+            new Line({
+              name: 'line',
+              fromArrow: '',
+              toArrow: '',
+              from: new Point(xPoint, yPoint),
+              to: new Point(xPoint + 5, yPoint),
+              strokeStyle: 'rgba(0,0,0,0.5)',
+              lineWidth: 1
+            })
+          )
+        }
+      }
+      console.log(pointArr)
+      if (!this.props.node.animateFrames.length) {
         this.canvas.addLine(
           new Line({
             name: 'line',
             fromArrow: '',
             toArrow: '',
-            from: new Point(this.props.node.rect.x, data.elevatorStart),
-            to: new Point(this.props.node.rect.x, data.elevatorEnd),
-            strokeStyle: '#dcdcdc',
+            from: new Point(data.elevatorStartX, data.elevatorStartY),
+            to: new Point(data.elevatorEndX, data.elevatorEndY),
+            strokeStyle: 'rgba(0,0,0,0.5)',
             lineWidth: 1
           })
         )
         this.canvas.render()
       }
 
-
+      this.props.node.animateFrames = []
       const state = Node.cloneState(this.props.node);
-      state.rect.y = step * (data.elevatorStep - targetStep + 1)
+      let targetPoint = pointArr.find(item => {
+        return item.num === targetStep
+      })
+      state.rect.x = targetPoint.x - state.rect.width / 2 // 设置为图例中点
+      state.rect.y = targetPoint.y - state.rect.height / 2
       this.props.node.animateFrames.push({
         duration: Math.round(300 * Math.abs(runStep)),
         linear: true,

@@ -52,8 +52,8 @@
             span {{ item.label }}
     workspace(
       :currCanvasData="currCanvasData"
-      :imgList="imgList"
-      :deviceList="deviceList"
+      :imgList="demoImgList"
+      :deviceList="demoDeviceList"
       @saveOnline="handelSaveOnline"
       )
 </template>
@@ -62,6 +62,7 @@
 import workspace from './workspace'
 import { Store } from 'le5le-store';
 export default {
+  name: 'topology-config',
   props: {
     imgList: {
       type: Array,
@@ -81,6 +82,10 @@ export default {
         {
           label: '酒店1层',
           value: require('@/assets/images/baseImg/floor.png')
+        },
+        {
+          label: '电梯',
+          value: 'http://113.31.118.32:9000/test/topology/HVAC/alr.png'
         }
       ],
       demoDeviceList: [

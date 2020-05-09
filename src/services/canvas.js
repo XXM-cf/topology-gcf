@@ -332,14 +332,17 @@ export const Tools = [
         data: {
           rect: {
             width: 50,
-            height: 70
+            height: 50
           },
           data: {
-            elevatorStart: 0,
-            elevatorEnd: 0,
+            elevatorStartX: 0, // 起点坐标
+            elevatorStartY: 0, // 终点坐标
+            elevatorEndX: 0,
+            elevatorEndY: 0,
             elevatorStep: 0,
           },
-          name: 'rectangle',
+          image: 'http://113.31.118.32:9000/test/topology/HVAC/elevator.jpg',
+          name: 'image',
         }
       },
       {
