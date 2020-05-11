@@ -1,6 +1,6 @@
 <template lang="pug">
 .topology-canvas-props
-  h3.tips 操作栏
+  .tips 操作栏
   .group
     .title 快捷操作
     .container
@@ -789,10 +789,11 @@ export default {
     }
   }
   .tips {
-    text-align: center;
     background: rgb(219, 224, 225);
     padding: 10px;
-    margin: 0 0 10px 0;
+    font-size: 14px;
+    text-align: left;
+    font-weight: bold;
   }
   .group {
     .title {

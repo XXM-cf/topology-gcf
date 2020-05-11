@@ -16,10 +16,6 @@
           el-menu-item(index='cut') 剪切
           el-menu-item(index='paste') 粘贴
 
-      el-menu.full(mode='horizontal')
-        //- el-menu-item(@click="handleView") 查看效果
-
-      el-menu(mode='horizontal')
         el-menu-item 视图：{{scale}}%
         el-menu-item(index='scale', v-show="scale !== 100" @click="onState('scale',1)") 还原
         el-menu-item(index='locked', @click="onState('locked', locked ? 0 : 1)") {{ locked ? '解锁' : '锁定'}}
@@ -30,32 +26,34 @@
           el-menu-item(v-for='(item, index) in lineNames', :key='index', :index='`line-${item}`', @click="onState('lineName', item)")
             i(:class='`iconfont arrowicon icon-${item}`')
 
-      el-menu(mode='horizontal')
         el-submenu(index='fromArrowType', title='默认起点箭头')
           template(slot='title')
             i(:class='`iconfont arrowicon icon-from-${fromArrowType}`')
           el-menu-item(v-for='(item, index) in arrowTypes', :key='index', :index='`fromArrowType-${item}`', @click="onState('fromArrowType', item)")
             i(:class='`iconfont arrowicon icon-from-${item}`')
 
-      el-menu(mode='horizontal')
-        el-submenu(index='toArrowType', title='默认终点箭头')
-          template(slot='title')
-            i(:class='`iconfont arrowicon icon-to-${toArrowType}`')
-          el-menu-item(v-for='(item, index) in arrowTypes', :key='index', :index='`toArrowType-${item}`', @click="onState('toArrowType', item)")
-            i(:class='`iconfont arrowicon icon-to-${item}`')
+        el-menu(mode='horizontal')
+          el-submenu(index='toArrowType', title='默认终点箭头')
+            template(slot='title')
+              i(:class='`iconfont arrowicon icon-to-${toArrowType}`')
+            el-menu-item(v-for='(item, index) in arrowTypes', :key='index', :index='`toArrowType-${item}`', @click="onState('toArrowType', item)")
+              i(:class='`iconfont arrowicon icon-to-${item}`')
 
-      el-menu(mode='horizontal')
-        el-submenu(index='lineStyle', title='连线样式')
-          template(slot='title')
-            span {{ lineStyle.label }}
-          el-menu-item(v-for='(item, index) in lineStyleOptions', :key='item.value', @click="onState('lineStyle', item.value)")
-            span {{ item.label }}
+        el-menu(mode='horizontal')
+          el-submenu(index='lineStyle', title='连线样式')
+            template(slot='title')
+              span {{ lineStyle.label }}
+            el-menu-item(v-for='(item, index) in lineStyleOptions', :key='item.value', @click="onState('lineStyle', item.value)")
+              span {{ item.label }}
+      .canvas-tools
+        span(@click="onMenu('saveComponent')") 导出组件
+        span(@click="onMenu('importComponent')") 导入组件
+
     workspace(
       :currCanvasData="currCanvasData"
       :imgList="demoImgList"
       :deviceList="demoDeviceList"
-      @saveOnline="handelSaveOnline"
-      )
+      @saveOnline="handelSaveOnline")
 </template>
 
 <script >
@@ -174,7 +172,9 @@ export default {
       console.log('结果', data)
       this.$emit('saveOnline', data)
     },
-    onMenu (key, keyPath) {
+    handleSaveComponent () { },
+    handleImportComponent () { },
+    onMenu (key) {
       if (!key || key.indexOf('/') === 0) {
         return
       }

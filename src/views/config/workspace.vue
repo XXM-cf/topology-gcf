@@ -24,7 +24,6 @@
 
 
     #topology-canvas.full(@contextmenu='onContextMenu($event)')
-
     .props
       CanvasProps(
         :imgList="imgList"
@@ -35,7 +34,6 @@
         @change='onUpdateProps'
         @animateChange='onAnimateChange'
         @align="onAlignNodes"
-        @changeOptions="onChangeOptions"
         @changeBaseImg='onSetBaseImg')
     .context-menu(v-if='contextmenu.left', :style='this.contextmenu')
       CanvasContextMenu(:canvas='canvas', :props.sync='props')
@@ -394,6 +392,44 @@ export default {
       this.$emit('saveOnline', this.canvas.data)
 
     },
+    handle_saveComponent () { // 导出组件
+      FileSaver.saveAs(
+        new Blob([JSON.stringify(this.canvas.data.pens)], {
+          type: 'text/plain;charset=utf-8'
+        }),
+        `le5le.topology.json`
+      )
+
+    },
+    handle_importComponent () { // 导入组件
+      const input = document.createElement('input')
+      input.type = 'file'
+      input.onchange = event => {
+        const elem = event.srcElement || event.target
+        if (elem.files && elem.files[0]) {
+          const name = elem.files[0].name.replace('.json', '')
+          const reader = new FileReader()
+          reader.onload = e => {
+            const text = e.target.result + ''
+            try {
+              const node = JSON.parse(text)
+              console.log('数据读取完毕', node)
+              if (
+                node && Array.isArray(node)
+              ) {
+                this.canvas.addNode(node[0])
+                this.canvas.render()
+              }
+            } catch (e) {
+              return false
+            }
+          }
+          reader.readAsText(elem.files[0])
+        }
+      }
+      input.click()
+
+    },
     handle_savePng (data) {
       this.canvas.saveAsImage('le5le.topology.png')
     },
@@ -481,6 +517,7 @@ export default {
         font-size: 12px;
         line-height: 1;
         padding: 5px 10px;
+        background-color: #f8f8f8;
         border-bottom: 1px solid #ddd;
       }
       .is-active {

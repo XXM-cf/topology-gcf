@@ -92,6 +92,7 @@ export default {
       if (!this.props.nodes) {
         return
       }
+      console.log('组合', this.props.nodes)
       this.canvas.combine(this.props.nodes, stand)
       this.canvas.render()
     },
