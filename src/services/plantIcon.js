@@ -148,8 +148,8 @@ const pipeImg = {
       name: item.name,
       data: {
         rect: {
-          width: 32,
-          height: 32
+          width: 36,
+          height: 36
         },
         borderColor: 'rgba(0,0,0,0)',  // 去除边框
         strokeStyle: 'rgba(0,0,0,0)',
@@ -159,7 +159,6 @@ const pipeImg = {
         iconClass: 'icon-' + item.font_class,
         iconSize: 40,
         name: 'rectangle',
-        borderRadius: 16,
         hideAnchor: true,
         hideSizeCP: true,
         hideRotateCP: true,
