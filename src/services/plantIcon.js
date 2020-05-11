@@ -1,166 +1,144 @@
 const arr = [
   {
-    name: '空调机组',
-    class: 'icon-kongtiaojizu',
-    unicode: "\uecda"
+    "name": "UPS 不间断电源",
+    "font_class": "UPSbujianduandianyuan",
+    "unicode": "\uecf5"
   },
-
   {
-    name: '手动报警',
-    class: 'icon-shoudongbaojinganniu',
-    unicode: "\uecdb"
+    "name": "VAV 多联机组",
+    "font_class": "VAVduolianjizu",
+    "unicode": "\uecf6"
   },
-
   {
-    name: '枪机',
-    class: 'icon-qiangji',
-    unicode: "\uecdc"
+    "name": "扶梯",
+    "font_class": "futi",
+    "unicode": "\uecf7"
   },
-
   {
-    name: '双鉴探测',
-    class: 'icon-shuangjiantance',
-    unicode: "\uece7"
+    "name": "吊顶式空调机组",
+    "font_class": "diaodingshikongtiaojizu",
+    "unicode": "\ued0c"
   },
-
   {
-    name: '新风机组',
-    class: 'icon-xinfengjizu',
-    unicode: "\uecdf"
+    "name": "环境传感器",
+    "font_class": "huanjingchuanganqi",
+    "unicode": "\ued0d"
   },
-
   {
-    name: '电表',
-    class: 'icon-bianpeidian-dianbiao',
-    unicode: "\uece1"
+    "name": "FCU 风机盘管",
+    "font_class": "FCUfengjipanguan",
+    "unicode": "\ued0e"
   },
-
   {
-    name: '火警',
-    class: 'icon-huojing',
-    unicode: "\uece2"
+    "name": "火警",
+    "font_class": "huojing",
+    "unicode": "\ued0f"
   },
-
   {
-    name: '温度计',
-    class: 'icon-wenqi',
-    unicode: "\uece3"
+    "name": "公共广播",
+    "font_class": "gonggongguangbo",
+    "unicode": "\ued10"
   },
-
   {
-    name: '给水系统',
-    class: 'icon-geishuixitong',
-    unicode: "\uece4"
+    "name": "给水系统",
+    "font_class": "geishuixitong",
+    "unicode": "\ued11"
   },
-
   {
-    name: '环境传感器',
-    class: 'icon-huanjingchuanganqi',
-    unicode: "\uece5"
+    "name": "集水井",
+    "font_class": "jishuijing",
+    "unicode": "\ued12"
   },
-
   {
-    name: '集水井2',
-    class: 'icon-jishuijing2',
-    unicode: "\uece6"
+    "name": "VRF多联机组",
+    "font_class": "VRFduolianjizu",
+    "unicode": "\ued13"
   },
-
   {
-    name: '电梯',
-    class: 'icon-dianti',
-    unicode: "\uece8"
+    "name": "电梯",
+    "font_class": "dianti",
+    "unicode": "\ued14"
   },
-
   {
-    name: '集水井1',
-    class: 'icon-jishuijing',
-    unicode: "\uece9"
+    "name": "排风机",
+    "font_class": "paifengji",
+    "unicode": "\ued15"
   },
-
   {
-    name: '智能照明',
-    class: 'icon-zhinengzhaoming',
-    unicode: "\uecea"
+    "name": "摄像机",
+    "font_class": "shexiangji",
+    "unicode": "\ued16"
   },
-
   {
-    name: '门禁',
-    class: 'icon-menjin',
-    unicode: "\ueceb"
+    "name": "水表",
+    "font_class": "shuibiao",
+    "unicode": "\ued17"
   },
-
   {
-    name: '摄像头',
-    class: 'icon-shexiangji',
-    unicode: "\uecec"
+    "name": "手动报警按钮",
+    "font_class": "shoudongbaojinganniu",
+    "unicode": "\ued18"
   },
-
   {
-    name: '烟感',
-    class: 'icon-yangan',
-    unicode: "\ueced"
+    "name": "送风机",
+    "font_class": "songfengji",
+    "unicode": "\ued19"
   },
-
   {
-    name: 'VAV',
-    class: 'icon-VAVduolianjizu',
-    unicode: "\uecee"
+    "name": "双鉴探测",
+    "font_class": "shuangjiantance",
+    "unicode": "\ued1a"
   },
-
   {
-    name: '风机盘管',
-    class: 'icon-FCUfengjipanguan',
-    unicode: "\uecef"
+    "name": "枪机",
+    "font_class": "qiangji",
+    "unicode": "\ued1b"
   },
-
   {
-    name: '排风机',
-    class: 'icon-paifengji',
-    unicode: "\uecf0"
+    "name": "空调机组",
+    "font_class": "kongtiaojizu",
+    "unicode": "\ued1c"
   },
-
   {
-    name: '水表',
-    class: 'icon-shuibiao',
-    unicode: "\uecf1"
+    "name": "温器",
+    "font_class": "wenqi",
+    "unicode": "\ued1d"
   },
-
   {
-    name: 'UPS',
-    class: 'icon-UPSbujianduandianyuan',
-    unicode: "\uecf2"
+    "name": "全热交换机",
+    "font_class": "quanrejiaohuanji",
+    "unicode": "\ued1e"
   },
-
   {
-    name: 'VRF',
-    class: 'icon-VRFduolianjizu',
-    unicode: "\uecf3"
+    "name": "新风机组",
+    "font_class": "xinfengjizu",
+    "unicode": "\ued1f"
   },
-
   {
-    name: '送风机',
-    class: 'icon-songfengji',
-    unicode: "\uecf4"
+    "name": "门禁",
+    "font_class": "menjin",
+    "unicode": "\ued20"
   },
-
   {
-    name: '全热交换机',
-    class: 'icon-quanrejiaohuanji',
-    unicode: "\uecf5"
+    "name": "智能照明",
+    "font_class": "zhinengzhaoming",
+    "unicode": "\ued21"
   },
-
   {
-    name: '吊顶式空调',
-    class: 'icon-diaodingshikongtiaojizu',
-    unicode: "\uecf6"
+    "name": "烟感",
+    "font_class": "yangan",
+    "unicode": "\ued22"
   },
-
   {
-    name: '功能广播',
-    class: 'icon-gonggongguangbo',
-    unicode: "\uecf7"
+    "name": "变配电-电表",
+    "font_class": "bianpeidian-dianbiao",
+    "unicode": "\ued23"
   },
-
+  {
+    "name": "集水井2",
+    "font_class": "jishuijing2",
+    "unicode": "\ued24"
+  },
 ]
 
 const pipeImg = {
@@ -178,10 +156,13 @@ const pipeImg = {
         icon: item.unicode,
         iconFamily: 'iconfont',
         iconColor: '#999',
-        iconClass: item.class,
+        iconClass: 'icon-' + item.font_class,
         iconSize: 40,
         name: 'rectangle',
         borderRadius: 16,
+        hideAnchor: true,
+        hideSizeCP: true,
+        hideRotateCP: true,
         data: {
           legendType: 'plane' // 设备平面图
         }

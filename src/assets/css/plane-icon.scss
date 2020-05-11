@@ -1,19 +1,250 @@
 @font-face {
   font-family: 'iconfont';  /* project id 1776547 */
-  src: url('//at.alicdn.com/t/font_1776547_o19v0sgx35.eot');
-  src: url('//at.alicdn.com/t/font_1776547_o19v0sgx35.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1776547_o19v0sgx35.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1776547_o19v0sgx35.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1776547_o19v0sgx35.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1776547_o19v0sgx35.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_1776547_v9asghd0me.eot');
+  src: url('//at.alicdn.com/t/font_1776547_v9asghd0me.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1776547_v9asghd0me.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1776547_v9asghd0me.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1776547_v9asghd0me.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1776547_v9asghd0me.svg#iconfont') format('svg');
 }
-
 .iconfont {
   font-family: "iconfont" !important;
   font-size: 16px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-dianti2:before {
+  content: "\ed41";
+}
+
+.icon-dianti1:before {
+  content: "\e600";
+}
+
+.icon-FCUfengjipanguanfuben:before {
+  content: "\ed25";
+}
+
+.icon-VRFduolianjizufuben:before {
+  content: "\ed26";
+}
+
+.icon-UPSbujianduandianyuanfuben:before {
+  content: "\ed27";
+}
+
+.icon-VAVduolianjizufuben:before {
+  content: "\ed28";
+}
+
+.icon-diaodingshikongtiaojizufuben:before {
+  content: "\ed29";
+}
+
+.icon-gonggongguangbofuben:before {
+  content: "\ed2a";
+}
+
+.icon-huanjingchuanganqifuben:before {
+  content: "\ed2b";
+}
+
+.icon-geishuixitongfuben:before {
+  content: "\ed2c";
+}
+
+.icon-diantifuben:before {
+  content: "\ed2d";
+}
+
+.icon-huojingfuben:before {
+  content: "\ed2e";
+}
+
+.icon-jishuijingfuben:before {
+  content: "\ed2f";
+}
+
+.icon-menjinfuben:before {
+  content: "\ed30";
+}
+
+.icon-kongtiaojizufuben:before {
+  content: "\ed31";
+}
+
+.icon-futifuben:before {
+  content: "\ed32";
+}
+
+.icon-bianpeidian-dianbiaofuben:before {
+  content: "\ed33";
+}
+
+.icon-paifengjifuben:before {
+  content: "\ed34";
+}
+
+.icon-quanrejiaohuanjifuben:before {
+  content: "\ed35";
+}
+
+.icon-shuangjiantancefuben:before {
+  content: "\ed36";
+}
+
+.icon-qiangjifuben:before {
+  content: "\ed37";
+}
+
+.icon-wenqifuben:before {
+  content: "\ed38";
+}
+
+.icon-shexiangjifuben:before {
+  content: "\ed39";
+}
+
+.icon-shoudongbaojinganniufuben:before {
+  content: "\ed3a";
+}
+
+.icon-zhinengzhaomingfuben:before {
+  content: "\ed3b";
+}
+
+.icon-songfengjifuben:before {
+  content: "\ed3c";
+}
+
+.icon-jishuijing2fuben:before {
+  content: "\ed3d";
+}
+
+.icon-xinfengjizufuben:before {
+  content: "\ed3e";
+}
+
+.icon-yanganfuben:before {
+  content: "\ed3f";
+}
+
+.icon-shuibiaofuben:before {
+  content: "\ed40";
+}
+
+.icon-UPSbujianduandianyuan:before {
+  content: "\ecf5";
+}
+
+.icon-VAVduolianjizu:before {
+  content: "\ecf6";
+}
+
+.icon-futi:before {
+  content: "\ecf7";
+}
+
+.icon-diaodingshikongtiaojizu:before {
+  content: "\ed0c";
+}
+
+.icon-huanjingchuanganqi:before {
+  content: "\ed0d";
+}
+
+.icon-FCUfengjipanguan:before {
+  content: "\ed0e";
+}
+
+.icon-huojing:before {
+  content: "\ed0f";
+}
+
+.icon-gonggongguangbo:before {
+  content: "\ed10";
+}
+
+.icon-geishuixitong:before {
+  content: "\ed11";
+}
+
+.icon-jishuijing:before {
+  content: "\ed12";
+}
+
+.icon-VRFduolianjizu:before {
+  content: "\ed13";
+}
+
+.icon-dianti:before {
+  content: "\ed14";
+}
+
+.icon-paifengji:before {
+  content: "\ed15";
+}
+
+.icon-shexiangji:before {
+  content: "\ed16";
+}
+
+.icon-shuibiao:before {
+  content: "\ed17";
+}
+
+.icon-shoudongbaojinganniu:before {
+  content: "\ed18";
+}
+
+.icon-songfengji:before {
+  content: "\ed19";
+}
+
+.icon-shuangjiantance:before {
+  content: "\ed1a";
+}
+
+.icon-qiangji:before {
+  content: "\ed1b";
+}
+
+.icon-kongtiaojizu:before {
+  content: "\ed1c";
+}
+
+.icon-wenqi:before {
+  content: "\ed1d";
+}
+
+.icon-quanrejiaohuanji:before {
+  content: "\ed1e";
+}
+
+.icon-xinfengjizu:before {
+  content: "\ed1f";
+}
+
+.icon-menjin:before {
+  content: "\ed20";
+}
+
+.icon-zhinengzhaoming:before {
+  content: "\ed21";
+}
+
+.icon-yangan:before {
+  content: "\ed22";
+}
+
+.icon-bianpeidian-dianbiao:before {
+  content: "\ed23";
+}
+
+.icon-jishuijing2:before {
+  content: "\ed24";
 }
 
 .icon-peidian_diankangqi:before {
@@ -94,113 +325,5 @@
 
 .icon-peidian_zhenkongduanluqihezha:before {
   content: "\ed0b";
-}
-
-.icon-shuangjiantance:before {
-  content: "\ece7";
-}
-
-.icon-kongtiaojizu:before {
-  content: "\ecda";
-}
-
-.icon-shoudongbaojinganniu:before {
-  content: "\ecdb";
-}
-
-.icon-qiangji:before {
-  content: "\ecdc";
-}
-
-.icon-xinfengjizu:before {
-  content: "\ecdf";
-}
-
-.icon-bianpeidian-dianbiao:before {
-  content: "\ece1";
-}
-
-.icon-huojing:before {
-  content: "\ece2";
-}
-
-.icon-wenqi:before {
-  content: "\ece3";
-}
-
-.icon-geishuixitong:before {
-  content: "\ece4";
-}
-
-.icon-huanjingchuanganqi:before {
-  content: "\ece5";
-}
-
-.icon-jishuijing2:before {
-  content: "\ece6";
-}
-
-.icon-dianti:before {
-  content: "\ece8";
-}
-
-.icon-jishuijing:before {
-  content: "\ece9";
-}
-
-.icon-zhinengzhaoming:before {
-  content: "\ecea";
-}
-
-.icon-menjin:before {
-  content: "\eceb";
-}
-
-.icon-shexiangji:before {
-  content: "\ecec";
-}
-
-.icon-yangan:before {
-  content: "\eced";
-}
-
-.icon-VAVduolianjizu:before {
-  content: "\ecee";
-}
-
-.icon-FCUfengjipanguan:before {
-  content: "\ecef";
-}
-
-.icon-paifengji:before {
-  content: "\ecf0";
-}
-
-.icon-shuibiao:before {
-  content: "\ecf1";
-}
-
-.icon-UPSbujianduandianyuan:before {
-  content: "\ecf2";
-}
-
-.icon-VRFduolianjizu:before {
-  content: "\ecf3";
-}
-
-.icon-songfengji:before {
-  content: "\ecf4";
-}
-
-.icon-quanrejiaohuanji:before {
-  content: "\ecf5";
-}
-
-.icon-diaodingshikongtiaojizu:before {
-  content: "\ecf6";
-}
-
-.icon-gonggongguangbo:before {
-  content: "\ecf7";
 }
 

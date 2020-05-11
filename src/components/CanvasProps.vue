@@ -323,29 +323,18 @@
           .label 网页URL
           el-input(v-model="props.node.iframe" @change='onChange')
 
-    .group(v-if="props.node.data.elevatorStartY>=0")
+    .group(v-if="props.node.data.legendType === 'elevatorTrack'")
       .title 电梯配置
       .container
         .item
-          .label 起点X （px）
-          el-input-number(v-model="props.node.data.elevatorStartX" @change='onChange')
-        .item
-          .label 起点Y （px）
-          el-input-number(v-model="props.node.data.elevatorStartY" @change='onChange')
-        .item
-          .label 终点X （px）
-          el-input-number(v-model="props.node.data.elevatorEndX" @change='onChange')
-        .item
-          .label 终点Y （px）
-          el-input-number(v-model="props.node.data.elevatorEndY" @change='onChange')
-        .item
-          .label 总楼层
+          .label 设置楼层
           el-input-number(v-model="props.node.data.elevatorStep" @change='onChange')
-        .item
+        .item(v-show="props.node.data.elevatorStep && props.node.tags.length")
+          .label 操作
+          el-button( @click="handleAddElvator") 生成轨道
+        .item(v-show="props.node.data.elevatorStep && props.node.tags.length")
           .label 测试
-          el-button(@click="handleElevatorRun") 随机运行
-
-
+          el-button(@click="handleElevatorRunTest") 测试运行
 
 </template>
 
@@ -622,22 +611,68 @@ export default {
         this.$emit('change', this.props.node)
       }
     },
-    handleElevatorRun () {
-      let data = this.props.node.data
-      let targetStep = Math.ceil(Math.random() * data.elevatorStep) // 随机模拟当前楼层
+
+    handleAddElvator () { // 添加电梯及轨道
+      let parentNode = this.props.node
+      let startPoint = parentNode.anchors[3].rotate(parentNode.rotate, {
+        x: parentNode.rect.center.x,
+        y: parentNode.rect.center.y
+      })
+      let endPoint = parentNode.anchors[1].rotate(parentNode.rotate, {
+        x: parentNode.rect.center.x,
+        y: parentNode.rect.center.y
+      })
+
+      let node = new Node({
+        rect: {
+          width: parentNode.rect.width,
+          height: parentNode.rect.width,
+          x: startPoint.x - parentNode.rect.width / 2,
+          y: startPoint.y - parentNode.rect.width
+        },
+        rotate: parentNode.rotate,
+        data: {
+          legendType: 'elevator',
+          elevatorStartX: startPoint.x, // 起点坐标
+          elevatorStartY: startPoint.y, // 终点坐标
+          elevatorEndX: endPoint.x,
+          elevatorEndY: endPoint.y,
+          elevatorStep: parentNode.data.elevatorStep,
+        },
+        tags: ['elevator#' + parentNode.tags[0]],
+        image: 'http://113.31.118.32:9000/test/topology/HVAC/Elevator/elevator_running.svg',
+        name: 'image',
+      })
+      this.canvas.addNode(node)
+      this.canvas.render()
+    },
+    handleElevatorRunTest () {
+      let randomNum = Math.ceil(Math.random() * 5) // 随机模拟1-5层
+      this.handleElevatorRun(this.props.node.tags[0], randomNum)
+    },
+    handleElevatorRun (tag, targetStep) {
+      console.log('电梯运行', tag, targetStep)
+      let elevatorNode = this.canvas.data.pens.find(item => {
+        return item.tags.indexOf(`elevator#${tag}`) !== -1 // 关联tag
+      })
+      if (!elevatorNode) {
+        return
+      }
+      let pointArr = [] // 所有坐标点
+      let runStep = 1
+
+      let data = elevatorNode.data
       console.log('目标楼层：', targetStep)
       let step = Math.round(Math.abs(data.elevatorStartY - data.elevatorEndY) / data.elevatorStep)
-      let currY = this.props.node.rect.ey
+      let currY = elevatorNode.rect.ey
       let currStep = Math.round(data.elevatorStep - (currY - data.elevatorEndY) / step + 1)
       console.log('当前楼层：', currStep)
-      let runStep = currStep - targetStep
+      runStep = currStep - targetStep
       console.log('运行方向', runStep < 0 ? `上行${-runStep}层` : `下行${runStep}层`)
-
       let temp = Math.abs(data.elevatorStartY - data.elevatorEndY) / Math.abs(data.elevatorStartX - data.elevatorEndX)
-      let pointArr = [] // 所有坐标点
+      let xPoint = 0
+      let yPoint = 0
       for (let i = 1; i <= data.elevatorStep; i++) {
-        let xPoint = 0
-        let yPoint = 0
         if (data.elevatorEndX !== data.elevatorStartX) {
           if (data.elevatorEndX < data.elevatorStartX) { // 第二象限
             yPoint = data.elevatorEndY + step * i
@@ -657,22 +692,21 @@ export default {
             y: yPoint
           }
         )
-        if (!this.props.node.animateFrames.length) {
+      }
+      if (!elevatorNode.animateFrames.length) {
+        pointArr.map(item => {
           this.canvas.addLine(
             new Line({
               name: 'line',
               fromArrow: '',
               toArrow: '',
-              from: new Point(xPoint, yPoint),
-              to: new Point(xPoint + 5, yPoint),
-              strokeStyle: 'rgba(0,0,0,0.5)',
+              from: new Point(item.x - 2, item.y),
+              to: new Point(item.x + 2, item.y),
+              strokeStyle: '#999',
               lineWidth: 1
             })
           )
-        }
-      }
-      console.log(pointArr)
-      if (!this.props.node.animateFrames.length) {
+        })
         this.canvas.addLine(
           new Line({
             name: 'line',
@@ -680,30 +714,36 @@ export default {
             toArrow: '',
             from: new Point(data.elevatorStartX, data.elevatorStartY),
             to: new Point(data.elevatorEndX, data.elevatorEndY),
-            strokeStyle: 'rgba(0,0,0,0.5)',
+            strokeStyle: '#999',
             lineWidth: 1
           })
         )
         this.canvas.render()
       }
 
-      this.props.node.animateFrames = []
-      const state = Node.cloneState(this.props.node);
+      elevatorNode.animateFrames = []
+      const state = Node.cloneState(elevatorNode);
       let targetPoint = pointArr.find(item => {
         return item.num === targetStep
       })
       state.rect.x = targetPoint.x - state.rect.width / 2 // 设置为图例中点
-      state.rect.y = targetPoint.y - state.rect.height / 2
-      this.props.node.animateFrames.push({
+      state.rect.y = targetPoint.y - state.rect.height
+      console.log('动画时间', Math.round(300 * Math.abs(runStep)))
+      elevatorNode.animateFrames.push({
         duration: Math.round(300 * Math.abs(runStep)),
         linear: true,
         state: Node.cloneState(state)
       });
-      this.props.node.animateCycle = 1
-      this.onAnimateDuration()
-      this.props.node.animateStart = Date.now()
+      elevatorNode.animateCycle = 1
+      elevatorNode.animateDuration = 0;
+      for (const item of elevatorNode.animateFrames) {
+        elevatorNode.animateDuration += item.duration;
+      }
+      elevatorNode.animateStart = Date.now()
       this.$emit('animateChange')
     },
+
+
     onAddPipeLine () {
       this.canvas.addLine(
         new Line({

@@ -14,6 +14,10 @@ export default {
     canvasData: {
       type: Object,
       default: () => { }
+    },
+    resize: {
+      type: Boolean,
+      default: true
     }
   },
   data () {
@@ -37,9 +41,11 @@ export default {
         data.locked = 1
         console.log('json数据读取完毕', data)
         this.canvas.open(data)
-        this.resizeCanvas()
+        if (this.resize) {
+          this.resizeCanvas()
+        }
       } else {
-        console.log('暂无可用配置12')
+        console.log('暂无可用配置')
       }
     },
     onMessage (event, data) {
@@ -205,23 +211,29 @@ export default {
         }
       }
     },
-    handle_elevatorRun (tag, floorNum) {
-      let targetNode = this.getNode(tag)
-      let data = targetNode.data
-      let targetStep = Math.ceil(Math.random() * data.elevatorStep) // 随机模拟当前楼层
+    handle_elevatorRun (tag, targetStep) {
+      console.log('电梯运行', tag, targetStep)
+      let elevatorNode = this.canvas.data.pens.find(item => {
+        return item.tags.indexOf(`elevator#${tag}`) !== -1 // 关联tag
+      })
+      if (!elevatorNode) {
+        return
+      }
+      let pointArr = [] // 所有坐标点
+      let runStep = 1
+
+      let data = elevatorNode.data
       console.log('目标楼层：', targetStep)
       let step = Math.round(Math.abs(data.elevatorStartY - data.elevatorEndY) / data.elevatorStep)
-      let currY = targetNode.rect.ey
+      let currY = elevatorNode.rect.ey
       let currStep = Math.round(data.elevatorStep - (currY - data.elevatorEndY) / step + 1)
       console.log('当前楼层：', currStep)
-      let runStep = currStep - targetStep
+      runStep = currStep - targetStep
       console.log('运行方向', runStep < 0 ? `上行${-runStep}层` : `下行${runStep}层`)
-
       let temp = Math.abs(data.elevatorStartY - data.elevatorEndY) / Math.abs(data.elevatorStartX - data.elevatorEndX)
-      let pointArr = [] // 所有坐标点
+      let xPoint = 0
+      let yPoint = 0
       for (let i = 1; i <= data.elevatorStep; i++) {
-        let xPoint = 0
-        let yPoint = 0
         if (data.elevatorEndX !== data.elevatorStartX) {
           if (data.elevatorEndX < data.elevatorStartX) { // 第二象限
             yPoint = data.elevatorEndY + step * i
@@ -241,21 +253,21 @@ export default {
             y: yPoint
           }
         )
-        if (!targetNode.animateDuration) {
+      }
+      if (!elevatorNode.animateFrames.length) {
+        pointArr.map(item => {
           this.canvas.addLine(
             new Line({
               name: 'line',
               fromArrow: '',
               toArrow: '',
-              from: new Point(xPoint, yPoint),
-              to: new Point(xPoint + 5, yPoint),
-              strokeStyle: 'rgba(0,0,0,0.5)',
+              from: new Point(item.x - 2, item.y),
+              to: new Point(item.x + 2, item.y),
+              strokeStyle: '#999',
               lineWidth: 1
             })
           )
-        }
-      }
-      if (!targetNode.animateDuration) {
+        })
         this.canvas.addLine(
           new Line({
             name: 'line',
@@ -263,31 +275,32 @@ export default {
             toArrow: '',
             from: new Point(data.elevatorStartX, data.elevatorStartY),
             to: new Point(data.elevatorEndX, data.elevatorEndY),
-            strokeStyle: 'rgba(0,0,0,0.5)',
+            strokeStyle: '#999',
             lineWidth: 1
           })
         )
         this.canvas.render()
       }
 
-      targetNode.animateFrames = []
-      const state = Node.cloneState(targetNode);
+      elevatorNode.animateFrames = []
+      const state = Node.cloneState(elevatorNode);
       let targetPoint = pointArr.find(item => {
         return item.num === targetStep
       })
       state.rect.x = targetPoint.x - state.rect.width / 2 // 设置为图例中点
-      state.rect.y = targetPoint.y - state.rect.height / 2
-      targetNode.animateFrames.push({
+      state.rect.y = targetPoint.y - state.rect.height
+      console.log('动画时间', Math.round(300 * Math.abs(runStep)))
+      elevatorNode.animateFrames.push({
         duration: Math.round(300 * Math.abs(runStep)),
         linear: true,
         state: Node.cloneState(state)
       });
-      targetNode.animateCycle = 1
-      targetNode.animateDuration = 0;
-      for (const item of targetNode.animateFrames) {
-        targetNode.animateDuration += item.duration;
+      elevatorNode.animateCycle = 1
+      elevatorNode.animateDuration = 0;
+      for (const item of elevatorNode.animateFrames) {
+        elevatorNode.animateDuration += item.duration;
       }
-      targetNode.animateStart = Date.now()
+      elevatorNode.animateStart = Date.now()
       this.canvas.animate()
     },
   }

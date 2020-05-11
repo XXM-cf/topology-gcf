@@ -22,7 +22,7 @@
         el-button(@click="handle_changeIcon('normal')") 停止
         el-button(@click="handle_changeFont('alarm')") 文字告警
       .full(ref="myCanvas" style="width:100%; height:100%")
-        topologyView(:canvasData="jsonContent" ref="topologyView")
+        topologyView(:canvasData="jsonContent" :resize="false" ref="topologyView")
     .business-container
       el-dialog(
         :visible.sync="isShowDetail"
@@ -62,7 +62,7 @@ export default {
   methods: {
     handle_changeIcon () {
       console.log(this.$refs.topologyView)
-      this.$refs.topologyView.handle_elevatorRun('device005', 5)
+      this.$refs.topologyView.handle_elevatorRun('device002', 5)
 
     },
     onMenu (key, keyPath) {

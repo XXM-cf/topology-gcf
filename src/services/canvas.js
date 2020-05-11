@@ -101,6 +101,7 @@ export function canvasRegister () {
 }
 
 import plantIcon from './plantIcon'
+import plantIcon2 from './plantIcon2'
 import electricity from './electricity'
 import Ductwork from './HVAC/Ductwork'
 
@@ -108,6 +109,7 @@ import Water from './HVAC/Water'
 import Sensors from './HVAC/Sensors'
 export const Tools = [
   plantIcon,
+  plantIcon2,
   electricity,
   Ductwork,
   Water,
@@ -325,24 +327,21 @@ export const Tools = [
           name: 'text'
         }
       },
-
       {
-        name: '电梯',
-        icon: 'icon-cube',
+        name: '电梯轨道',
+        icon: 'icon-rect',
         data: {
           rect: {
-            width: 50,
-            height: 50
+            width: 25,
+            height: 400
           },
+          fillStyle: 'rgba(217,225,232, 0.63)',
+          strokeStyle: 'rgba(237, 233, 233, 0.2)',
+          name: 'rectangle',
           data: {
-            elevatorStartX: 0, // 起点坐标
-            elevatorStartY: 0, // 终点坐标
-            elevatorEndX: 0,
-            elevatorEndY: 0,
             elevatorStep: 0,
-          },
-          image: 'http://113.31.118.32:9000/test/topology/HVAC/elevator.jpg',
-          name: 'image',
+            legendType: 'elevatorTrack'
+          }
         }
       },
       {

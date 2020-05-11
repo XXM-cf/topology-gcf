@@ -132,6 +132,9 @@ export default {
       event.dataTransfer.setData('Text', JSON.stringify(node.data))
     },
     onSetBaseImg (val) {
+      // this.canvas.clearBkImg() // 设置背景图
+      // this.canvas.data.bkImage = val
+      // this.canvas.render()
       const node = new Node({
         name: 'image',
         rect: {
@@ -143,6 +146,7 @@ export default {
         data: {
           baseImg: true
         },
+        hideAnchor: true,
         image: val
       })
       let currBaseimgNode = this.canvas.data.pens.find(item => {
@@ -151,7 +155,7 @@ export default {
       if (currBaseimgNode) { // 已存在底图，则替换地图
         currBaseimgNode.image = val
       } else {
-        this.canvas.addNode(node, true) // 新建
+        this.canvas.addNode(node, false) // 新建
         this.canvas.bottom(node) // 手动置底
       }
       this.canvas.render()
