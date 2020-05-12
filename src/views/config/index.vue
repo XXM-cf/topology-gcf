@@ -59,6 +59,7 @@
 <script >
 import workspace from './workspace'
 import { Store } from 'le5le-store';
+import '@/assets/css/base.scss'
 export default {
   name: 'topology-config',
   props: {

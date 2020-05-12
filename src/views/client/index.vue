@@ -1,6 +1,5 @@
 <template lang="pug">
-  .topology-client
-    #topology-canvas.full(ref="myCanvas" style="width:100%; height:100%")
+  #topology-client(ref="myCanvas" style="width:100%; height:100%")
 </template>
 
 <script>
@@ -8,6 +7,8 @@ import { Topology } from 'topology-core'
 import { Node } from 'topology-core/models/node'
 import { Line } from 'topology-core/models/line'
 import { Point } from 'topology-core/models/point'
+import '@/assets/css/base.scss'
+
 export default {
   name: 'topology-view',
   props: {
@@ -31,7 +32,7 @@ export default {
   },
   mounted () {
     this.canvasOptions.on = this.onMessage
-    this.canvas = new Topology('topology-canvas', this.canvasOptions)
+    this.canvas = new Topology('topology-client', this.canvasOptions)
     this.onOpen()
   },
   methods: {
@@ -68,6 +69,7 @@ export default {
       console.log('原始画布', canvasRect)
       let contianerWidth = this.$refs.myCanvas.clientWidth
       let contianerHeight = this.$refs.myCanvas.clientHeight
+      console.log('外层容器宽高', contianerWidth, contianerHeight)
       let widthNum = parseFloat((contianerWidth / canvasRect.width).toFixed(2))
       let heightNum = parseFloat((contianerHeight / canvasRect.height).toFixed(2))
       this.canvas.scaleTo(Math.min(widthNum, heightNum))
