@@ -1,18 +1,18 @@
 # topology-gcf
 
-## Project setup
+## 安装依赖
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 启动服务
 ```
-npm run serve
+npm run dev
 ```
 
-### Compiles and minifies for production
+### 打包
 ```
-npm run build
+npm run lib
 ```
 
 
@@ -28,8 +28,6 @@ npm run build
 ### 待完成
 - [ ] 图片上传
 - [ ] 音频、视频嵌入播放
-- [ ] 动画联动
-- [ ] 电梯效果
 
 
 
@@ -81,5 +79,8 @@ npm run build
 
 定制需求
 - [x] 水管绘制
+- [x] 电梯运行
+- [x] 组件化导入导出，多图例组合图形，导出备用
+
 
 

@@ -4,7 +4,7 @@
       el-menu(mode='horizontal', @select='onMenu')
         el-submenu(index='file')
           template(slot='title') 文件
-          el-menu-item(index='replace') 导入本地文件
+          el-menu-item(index='open') 导入本地文件
           el-menu-item(index='saveOnline') 线上保存
           el-menu-item(index='save') 下载到本地
           el-menu-item(index='savePng') 下载为PNG
@@ -51,8 +51,8 @@
 
     workspace(
       :currCanvasData="currCanvasData"
-      :imgList="demoImgList"
-      :deviceList="demoDeviceList"
+      :imgList="imgList"
+      :deviceList="deviceList"
       @saveOnline="handelSaveOnline")
 </template>
 

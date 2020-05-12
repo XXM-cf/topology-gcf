@@ -32,7 +32,6 @@
         :options="canvasOptions"
         :props.sync='props'
         @change='onUpdateProps'
-        @animateChange='onAnimateChange'
         @align="onAlignNodes"
         @changeBaseImg='onSetBaseImg')
     .context-menu(v-if='contextmenu.left', :style='this.contextmenu')
@@ -100,18 +99,18 @@ export default {
     }
   },
   watch: {
-    currCanvasEvent (curVal) {
+    currCanvasEvent (curVal) { // 事件系统，通过订阅触发相应事件
       if (this['handle_' + curVal.name]) {
         this['handle_' + curVal.name](curVal.data)
       }
     }
   },
   created () {
-    canvasRegister()
+    canvasRegister() // 注册canvas
   },
   mounted () {
     this.init()
-    this.eventSubscribe = Store.subscribe('canvasEvent', value => {
+    this.eventSubscribe = Store.subscribe('canvasEvent', value => { // 订阅事件
       this.currCanvasEvent = value
     })
   },
@@ -119,17 +118,17 @@ export default {
     init () {
       this.canvasOptions.on = this.onMessage
       this.canvas = new Topology('topology-canvas', this.canvasOptions)
-      // this.canvas.data = {
+      // this.canvas.data = { // 开启会导致canvas初始化失败，暂时不用
       //   ...this.canvas.data,
       //   ...this.currCanvasData, // 自定义全局属性
       // }
 
       this.canvas.render()
     },
-    onDrag (event, node) {
+    onDrag (event, node) { // 拖拽布局
       event.dataTransfer.setData('Text', JSON.stringify(node.data))
     },
-    onSetBaseImg (val) {
+    onSetBaseImg (val) { // 设置底图
       // this.canvas.clearBkImg() // 设置背景图
       // this.canvas.data.bkImage = val
       // this.canvas.render()
@@ -150,7 +149,7 @@ export default {
       let currBaseimgNode = this.canvas.data.pens.find(item => {
         return item.data.baseImg
       })
-      if (currBaseimgNode) { // 已存在底图，则替换地图
+      if (currBaseimgNode) { // 已存在底图，则替换底图
         currBaseimgNode.image = val
       } else {
         this.canvas.addNode(node, false) // 新建
@@ -165,7 +164,7 @@ export default {
       }
       this.canvas.render()
     },
-    changeLine (id) { // 改变连线样式，绘制水管
+    changeLine (id) { // 改变连线样式，绘制水管,配电线
       let targetLine = this.canvas.data.pens.find(item => {
         return item.id === id
       })
@@ -176,6 +175,8 @@ export default {
           targetLine.borderWidth = 5
           targetLine.borderColor = '#51514E  '
           targetLine.animateColor = '#46B8FF'
+          targetLine.toArrow = ''
+          targetLine.fromArrow = ''
           break
         case 'electricity': // 变配电原理图
           targetLine.strokeStyle = 'rgba(244, 105, 6, 1)'
@@ -187,9 +188,8 @@ export default {
       let e = window.event
       switch (event) {
         case 'dblclick':
-          console.log('双击', event, data)
           if (this.props.line) {
-            this.handleSetControlPoint(window.event)
+            this.handleAddaidLine(window.event)
           }
           break;
         case 'node':
@@ -310,12 +310,12 @@ export default {
 
       return locked
     },
-    onAlignNodes (align) {
+    onAlignNodes (align) { // 多节点对齐
       alignNodes(this.canvas.activeLayer.pens, this.canvas.activeLayer.rect, align);
       this.canvas.updateProps()
       this.canvas.cache()
     },
-    onUpdateProps (node) {
+    onUpdateProps (node) { // 改变属性
       // 如果是node属性改变，需要传入node，重新计算node相关属性值
       // 如果是line属性改变，无需传参
       if (node) {
@@ -324,10 +324,7 @@ export default {
         this.canvas.render()
       }
     },
-    onAnimateChange (line) {
-      this.canvas.animate();
-    },
-    handleSetControlPoint (e) {
+    handleAddaidLine (e) { // 添加辅助线，方便绘制配电图
       let x = e.clientX - 200
       let y = e.clientY - 40
       this.canvas.addLine(
@@ -343,16 +340,12 @@ export default {
       this.canvas.render()
     },
 
-    // 菜单事件
+    //------------------- 菜单事件 ------------------//
     handle_new (data) {
       this.canvas.open({ nodes: [], lines: [] })
     },
 
     handle_open (data) {
-      this.handle_replace(data)
-    },
-
-    handle_replace (data) {
       const input = document.createElement('input')
       input.type = 'file'
       input.onchange = event => {
@@ -369,6 +362,10 @@ export default {
                 data && Array.isArray(data.pens)
               ) {
                 this.canvas.open(data)
+                this.$message({
+                  type: 'success',
+                  message: '导入成功'
+                })
               }
             } catch (e) {
               return false
@@ -385,12 +382,10 @@ export default {
         new Blob([JSON.stringify(this.canvas.data)], {
           type: 'text/plain;charset=utf-8'
         }),
-        `le5le.topology.json`
-      )
+        `PleaseRename.json`)
     },
     handle_saveOnline () {
       this.$emit('saveOnline', this.canvas.data)
-
     },
     handle_saveComponent () { // 导出组件
       FileSaver.saveAs(
@@ -419,6 +414,10 @@ export default {
               ) {
                 this.canvas.addNode(node[0])
                 this.canvas.render()
+                this.$message({
+                  type: 'success',
+                  message: '导入成功'
+                })
               }
             } catch (e) {
               return false

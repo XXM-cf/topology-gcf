@@ -453,11 +453,8 @@ export default {
         {
           value: 'show',
           label: '炫耀'
-        },
-        {
-          value: 'elevator',
-          label: '电梯运行'
         }
+
       ],
       lineTypeOptions: [
         { label: '直线', value: 'line' },
@@ -486,10 +483,10 @@ export default {
     },
     onChangeLineAnimate () { // 线条动画
       this.props.line.animateStart = 0;
-      this.$emit('animateChange')
+      this.canvas.animate()
       setTimeout(() => {
         this.props.line.animateStart = Date.now();
-        this.$emit('animateChange')
+        this.canvas.animate()
       }, 100);
     },
 
@@ -569,21 +566,10 @@ export default {
             state: Node.cloneState(state)
           });
           break;
-        case 'elevator':
-          for (let i = 0; i < 10; i++) {
-            state.rect.y += 50;
-            this.props.node.animateFrames.push({
-              duration: 500,
-              linear: true,
-              state: Node.cloneState(state)
-            });
-          }
-          this.props.node.animateCycle = 1
-          break;
       }
       this.onAnimateDuration()
       this.props.node.animateStart = Date.now()
-      this.$emit('animateChange')
+      this.canvas.animate()
     },
     onAnimateDuration () {
       this.props.node.animateDuration = 0;
@@ -740,7 +726,7 @@ export default {
         elevatorNode.animateDuration += item.duration;
       }
       elevatorNode.animateStart = Date.now()
-      this.$emit('animateChange')
+      this.canvas.animate()
     },
 
 
