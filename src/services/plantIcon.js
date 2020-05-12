@@ -1,11 +1,11 @@
 const arr = [
   {
-    "name": "UPS 不间断电源",
+    "name": "UPS",
     "font_class": "UPSbujianduandianyuan",
     "unicode": "\uecf5"
   },
   {
-    "name": "VAV 多联机组",
+    "name": "VAV",
     "font_class": "VAVduolianjizu",
     "unicode": "\uecf6"
   },
@@ -15,7 +15,7 @@ const arr = [
     "unicode": "\uecf7"
   },
   {
-    "name": "吊顶式空调机组",
+    "name": "空调机组",
     "font_class": "diaodingshikongtiaojizu",
     "unicode": "\ued0c"
   },
@@ -25,7 +25,7 @@ const arr = [
     "unicode": "\ued0d"
   },
   {
-    "name": "FCU 风机盘管",
+    "name": "FCU",
     "font_class": "FCUfengjipanguan",
     "unicode": "\ued0e"
   },
@@ -50,7 +50,7 @@ const arr = [
     "unicode": "\ued12"
   },
   {
-    "name": "VRF多联机组",
+    "name": "VRF",
     "font_class": "VRFduolianjizu",
     "unicode": "\ued13"
   },
@@ -75,7 +75,7 @@ const arr = [
     "unicode": "\ued17"
   },
   {
-    "name": "手动报警按钮",
+    "name": "手报",
     "font_class": "shoudongbaojinganniu",
     "unicode": "\ued18"
   },
@@ -130,7 +130,7 @@ const arr = [
     "unicode": "\ued22"
   },
   {
-    "name": "变配电-电表",
+    "name": "电表",
     "font_class": "bianpeidian-dianbiao",
     "unicode": "\ued23"
   },
