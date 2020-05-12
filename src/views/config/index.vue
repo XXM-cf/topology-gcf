@@ -1,7 +1,7 @@
 <template lang="pug">
   .topology-confing-layout
     .headers
-      el-menu(mode='horizontal', @select='onMenu')
+      el-menu.topology-confing-menu(mode='horizontal', @select='onMenu')
         el-submenu(index='file')
           template(slot='title') 文件
           el-menu-item(index='open') 导入本地文件

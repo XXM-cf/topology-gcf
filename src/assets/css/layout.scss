@@ -1,62 +1,59 @@
-
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-  margin: 0;
-}
-
-
-.topology-confing-layout{
+.topology-confing-layout {
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+    margin: 0;
+  }
   height: 100%;
   .headers {
-  display: flex;
-  font-size: 14px;
-  height: 40px;
-  border-bottom: 1px solid #dcdcdc;
-  overflow: hidden;
-  background: #f9f9f9;;
-  .el-menu {
     display: flex;
-    border-bottom: 0!important;
-  }
-  .canvas-tools{
-    flex:1;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    border-left:1px solid #dcdcdc;
-    span{
-      padding: 0 10px;
-      cursor: pointer;
+    font-size: 14px;
+    height: 40px;
+    border-bottom: 1px solid #dcdcdc;
+    overflow: hidden;
+    background: #f9f9f9;
+
+    .canvas-tools {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      border-left: 1px solid #dcdcdc;
+      span {
+        padding: 0 10px;
+        cursor: pointer;
+      }
+    }
+    .topology-confing-menu {
+      display: flex;
+      border-bottom: 0 !important;
+      .el-menu-item,
+      .el-submenu__title {
+        color: #000 !important;
+        padding: 0 10px;
+        height: 100% !important;
+        padding: 0 20px;
+        line-height: 40px !important;
+        border-bottom: 0 !important;
+        background-color: #f9f9f9 !important;
+        border-right: 1px solid #f5f5f5;
+        .iconfont {
+          color: #000;
+          font-size: 24px;
+        }
+      }
+      .el-menu--popup {
+        .iconfont {
+          font-size: 30px;
+        }
+      }
     }
   }
 
-}
-.el-menu-item,
-.el-submenu__title {
-  color: #000 !important;
-  padding: 0 10px;
-  height: 100% !important;
-  padding:0 20px;
-  line-height: 40px !important;
-  border-bottom:0!important;
-  background-color: #f9f9f9!important;
-  border-right:1px solid #f5f5f5;
-
-  .iconfont {
-    color: #000;
+  .arrowicon {
+    color: #333;
     font-size: 24px;
   }
-}
-.el-menu--popup{
-  .iconfont{
-    font-size: 30px;
-  }
-}
-}
-.arrowicon{
-  color:#333;
-  font-size: 24px;
 }
