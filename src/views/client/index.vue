@@ -12,7 +12,7 @@ import '@/assets/css/base.scss'
 export default {
   name: 'topology-view',
   props: {
-    canvasData: {
+    jsonContent: {
       type: Object,
       default: () => { }
     },
@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     onOpen () {
-      const data = this.canvasData
+      const data = this.jsonContent
       if (data && Array.isArray(data.pens)) {
         data.locked = 1
         console.log('json数据读取完毕', data)

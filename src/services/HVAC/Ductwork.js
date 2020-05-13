@@ -33,8 +33,8 @@ const arr = [
     name: '风机扇叶',
     url: currUrl + 'Fans_center.svg',
     rect: {
-      width: 45,
-      height: 45
+      width: 46,
+      height: 46
     }
   },
   {

@@ -6,8 +6,8 @@
     .container
       .item.full-item
        el-button(@click="onAddPipeLine") 绘制水管
-       el-button(v-show="props.line" @click="handleChangeLine('horizontal')") 垂直线条
-       el-button(v-show="props.line" @click="handleChangeLine('vertical')") 水平线条
+       el-button(@click="handleChangeLine('horizontal')") 垂直线条
+       el-button(@click="handleChangeLine('vertical')") 水平线条
 
   .group
     .title 基础配置

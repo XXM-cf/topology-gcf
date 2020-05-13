@@ -33,6 +33,7 @@
         :props.sync='props'
         @change='onUpdateProps'
         @align="onAlignNodes"
+        @changeOptions="onChangeOptions"
         @changeBaseImg='onSetBaseImg')
     .context-menu(v-if='contextmenu.left', :style='this.contextmenu')
       CanvasContextMenu(:canvas='canvas', :props.sync='props')
@@ -43,19 +44,23 @@ import { Topology } from 'topology-core'
 import { Node } from 'topology-core/models/node'
 import { Line } from 'topology-core/models/line'
 import { Point } from 'topology-core/models/point'
-import { Direction } from 'topology-core/models/direction';
+import { Direction } from 'topology-core/models/direction'
 import * as FileSaver from 'file-saver'
-import { alignNodes } from 'topology-layout';
+import { alignNodes } from 'topology-layout'
+import { Store } from 'le5le-store'
 
 
 import { Tools, canvasRegister } from '../../services/canvas'
 
 import CanvasProps from '../../components/CanvasProps'
 import CanvasContextMenu from '../../components/CanvasContextMenu'
-import { Store } from 'le5le-store';
 export default {
   props: {
-    currCanvasData: {
+    globalCanvasConfig: {
+      type: Object,
+      default: () => { }
+    },
+    jsonContent: {
       type: Object,
       default: () => { }
     },
@@ -81,7 +86,7 @@ export default {
       canvas: {},
       canvasOptions: {
         rotateCursor: 'http://113.31.118.32:9000/test/topology/HVAC/rotate.cur',
-        disableScale: true,
+        disableScale: false,
         hideInput: true
       },
       props: {
@@ -120,8 +125,11 @@ export default {
       this.canvas = new Topology('topology-canvas', this.canvasOptions)
       // this.canvas.data = { // 开启会导致canvas初始化失败，暂时不用
       //   ...this.canvas.data,
-      //   ...this.currCanvasData, // 自定义全局属性
+      //   ...this.globalCanvasConfig, // 自定义全局属性
       // }
+      if (this.jsonContent) { // 存在则编辑
+        this.canvas.open(this.jsonContent)
+      }
 
       this.canvas.render()
     },
@@ -168,7 +176,7 @@ export default {
       let targetLine = this.canvas.data.pens.find(item => {
         return item.id === id
       })
-      switch (this.currCanvasData.lineStyle) {
+      switch (this.globalCanvasConfig.lineStyle) {
         case 'pipe': // 水管
           targetLine.strokeStyle = '#A6E1FF '
           targetLine.lineWidth = 15
@@ -282,13 +290,15 @@ export default {
               fromArrowType: this.canvas.data.fromArrowType,
               toArrowType: this.canvas.data.toArrowType,
               locked: this.canvas.data.locked,
-              lineStyle: this.currCanvasData.lineStyle || 'pipe'
+              lineStyle: this.globalCanvasConfig.lineStyle || 'pipe'
             })
           }
           break
       }
     },
-
+    getData () {
+      return this.canvas.data
+    },
     getLocked (data) {
       let locked = true
       if (data.nodes && data.nodes.length) {
@@ -383,9 +393,6 @@ export default {
           type: 'text/plain;charset=utf-8'
         }),
         `PleaseRename.json`)
-    },
-    handle_saveOnline () {
-      this.$emit('saveOnline', this.canvas.data)
     },
     handle_saveComponent () { // 导出组件
       FileSaver.saveAs(

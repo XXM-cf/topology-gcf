@@ -321,7 +321,7 @@ export const Tools = [
         data: {
           text: '示例文字',
           rect: {
-            width: 160,
+            width: 60,
             height: 30
           },
           name: 'text'

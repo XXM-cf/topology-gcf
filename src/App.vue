@@ -13,6 +13,8 @@ export default {
 <style lang="scss">
 body {
   height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 #app {
   height: 100%;

@@ -5,7 +5,6 @@
         el-submenu(index='file')
           template(slot='title') 文件
           el-menu-item(index='open') 导入本地文件
-          el-menu-item(index='saveOnline') 线上保存
           el-menu-item(index='save') 下载到本地
           el-menu-item(index='savePng') 下载为PNG
         el-submenu(index='edit')
@@ -50,22 +49,28 @@
         span(@click="onMenu('importComponent')") 导入组件
 
     workspace(
-      :currCanvasData="currCanvasData"
+      ref="workspace"
+      :globalCanvasConfig="globalCanvasConfig"
       :imgList="imgList"
-      :deviceList="deviceList"
-      @saveOnline="handelSaveOnline")
+      :jsonContent="jsonContent"
+      :deviceList="deviceList")
 </template>
 
 <script >
 import workspace from './workspace'
 import { Store } from 'le5le-store';
 import '@/assets/css/base.scss'
+
 export default {
   name: 'topology-config',
   props: {
     imgList: {
       type: Array,
       default: () => []
+    },
+    jsonContent: {
+      type: Object,
+      default: () => { }
     },
     deviceList: {
       type: Array,
@@ -128,11 +133,11 @@ export default {
         'lineDown'
       ],
       subscribe: null, // 事件订阅实例
-      currCanvasData: {
+      globalCanvasConfig: {
         scale: 1,
-        lineName: 'polyline',
+        lineName: 'curve',
         fromArrowType: '',
-        toArrowType: '',
+        toArrowType: 'triangleSolid',
         locked: 0,
         lineStyle: 'default'
       }, // 初始化实时全局值
@@ -140,41 +145,38 @@ export default {
   },
   computed: {
     scale () {
-      return Math.floor(this.currCanvasData.scale * 100)
+      return Math.floor(this.globalCanvasConfig.scale * 100)
     },
     lineName () {
-      return this.currCanvasData.lineName
+      return this.globalCanvasConfig.lineName
     },
     fromArrowType () {
-      return this.currCanvasData.fromArrowType
+      return this.globalCanvasConfig.fromArrowType
     },
     toArrowType () {
-      return this.currCanvasData.toArrowType
+      return this.globalCanvasConfig.toArrowType
     },
     locked () {
-      return this.currCanvasData.locked
+      return this.globalCanvasConfig.locked
     },
     lineStyle () {
-      let lineStyle = this.currCanvasData.lineStyle
+      let lineStyle = this.globalCanvasConfig.lineStyle
       let obj = this.lineStyleOptions.find(item => item.value === lineStyle)
       return obj || {}
     }
   },
   created () {
-    Store.set('canvasData', this.currCanvasData)
+    Store.set('canvasData', this.globalCanvasConfig)
   },
   mounted () {
     this.subscribe = Store.subscribe('canvasData', value => { // 订阅
-      this.currCanvasData = value
+      this.globalCanvasConfig = value
     })
   },
   methods: {
-    handelSaveOnline (data) { // 线上保存
-      console.log('结果', data)
-      this.$emit('saveOnline', data)
+    getJsonContent () { // 将画布结果 暴露出去
+      return this.$refs.workspace.getData()
     },
-    handleSaveComponent () { },
-    handleImportComponent () { },
     onMenu (key) {
       if (!key || key.indexOf('/') === 0) {
         return
