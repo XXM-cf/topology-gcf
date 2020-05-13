@@ -324,6 +324,9 @@ export const Tools = [
             width: 60,
             height: 30
           },
+          data: {
+            legendType: 'text'
+          },
           name: 'text'
         }
       },

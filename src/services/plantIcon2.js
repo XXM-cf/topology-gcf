@@ -159,6 +159,7 @@ const pipeImg = {
         iconClass: 'icon-' + item.font_class,
         iconSize: 40,
         name: 'rectangle',
+        borderRadius: 18,
         hideAnchor: true,
         hideSizeCP: true,
         hideRotateCP: true,

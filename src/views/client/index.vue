@@ -83,141 +83,152 @@ export default {
     },
 
     getNode (tag) { // 寻找目标节点，用来操作动画，样式切换等
-      let targetNode = this.canvas.data.pens.find(item => {
-        return item.tags.indexOf(tag) !== -1 // 关联tag
+      let targetNodeArr = this.canvas.data.pens.filter(item => {
+        if (item.data.tag) {
+          return item.data.tag === tag // 关联tag
+        }
       })
-      if (targetNode) {
-        console.log('当前执行节点', targetNode)
-        return targetNode
+      if (targetNodeArr.length) {
+        console.log('当前执行节点', targetNodeArr)
+        return targetNodeArr
       } else {
         console.warn(`没有找到tag为${tag}的目标节点`)
-        return
+        return false
       }
     },
-    handle_startAnimate (tag) { // 开始动画
-      let targetNode = this.getNode(tag)
+    handle_startAnimate (targetNode) { // 开始动画
       targetNode.rotate = 0
       if (targetNode && targetNode.animateFrames.length) { // 目标节点，业务数据触发动画
         targetNode.animateStart = Date.now()
         this.canvas.animate()
       }
     },
-    handle_endAnimate (tag) { // 结束动画
-      let targetNode = this.getNode(tag)
+
+    handle_endAnimate (targetNode) { // 结束动画
       if (targetNode && targetNode.animateFrames.length) { // 目标节点，业务数据触发动画
         targetNode.animateStart = 0
         targetNode.rotate = 0
         this.canvas.animate()
       }
     },
-    handle_changeStatus (tag, status) { // 设置状态
-      let targetNode = this.getNode(tag)
-      if (targetNode) {
-        let arr = targetNode.image.split('.svg')[0].split('_')
-        arr[arr.length - 1] = status
-        targetNode.image = arr.join('_') + '.svg'
-        this.canvas.render()
-      }
-    },
-
     // 设备图例对应的五种状态：
     // 告警： alarm : #ff4a4a
     // 故障： fault: #ffb300
     // 离线： offline: #9655ff
-    // 运行： runing: #00dc94
+    // 运行： running: #00dc94
     // 正常： normal: #999
-    handle_changeIcon (tag, status) { // 改变icon状态
-      let targetNode = this.getNode(tag)
-      if (targetNode) {
-        const state = Node.cloneState(targetNode)
-        switch (status) { // 告警
-          case 'normal':
-            targetNode.iconColor = '#999'
-            targetNode.animateStart = 0
-            targetNode.lineWidth = 0
-            targetNode.strokeStyle = 'rgba(0,0,0,0)'
-            this.canvas.render()
-            break;
-          case 'runing':
-            targetNode.iconColor = '#00dc94'
-            targetNode.animateStart = 0
-            targetNode.lineWidth = 0
-            targetNode.strokeStyle = 'rgba(0,0,0,0)'
-            this.canvas.render()
-            break;
-          case 'offline':
-            targetNode.iconColor = '#9655ff'
-            targetNode.animateStart = 0
-            targetNode.lineWidth = 0
-            targetNode.strokeStyle = 'rgba(0,0,0,0)'
-            this.canvas.render()
-            break;
-          case 'fault':
-            targetNode.iconColor = '#ffb300'
-            targetNode.animateStart = 0
-            targetNode.lineWidth = 0
-            targetNode.strokeStyle = 'rgba(0,0,0,0)'
-            this.canvas.render()
-            break;
-          case 'alarm':
-            targetNode.iconColor = '#ff4a4a'
-            targetNode.animateType = 'heart'
-            targetNode.animateStart = 0
-            targetNode.animateDuration = 0
-            targetNode.animateFrames = []
-            state.strokeStyle = 'rgba(255,74,74,0.6)';
-            state.lineWidth = 30;
-            targetNode.animateFrames.push({
-              duration: 400,
-              linear: true,
-              state
-            });
-            targetNode.animateFrames.push({
-              duration: 400,
-              linear: true,
-              state: Node.cloneState(targetNode)
-            });
 
-            for (const item of targetNode.animateFrames) {
-              targetNode.animateDuration += item.duration;
-            }
-            targetNode.animateStart = Date.now()
-            this.canvas.animate()
-            this.canvas.render()
-            break;
-        }
+    handle_update (tag, status, value) { // 更新数据: 文案，图标，多态图片、多档图片
+      let nodes = this.getNode(tag)
+      if (nodes.length) {
+        nodes.map(node => {
+          switch (node.data.legendType) {
+            case 'plane': // 平面图
+              this.handle_changeIcon(node, status)
+              break;
+            case 'text': // 文字
+              this.handle_changeFont(node, status, value)
+              break;
+            case 'enumImg': // 多档图片
+            case 'statusImg': // 多态图片
+              this.handle_changeImg(node, status)
+              break;
+          }
+        })
       }
     },
 
-    handle_changeFont (tag, status, text) { // 修改
-      let targetNode = this.getNode(tag)
-      if (targetNode) {
-        if (text) {
-          targetNode.font.text = text
-        }
-        switch (status) { // 告警
-          case 'normal':
-            targetNode.font.color = '#999'
-            break;
-          case 'runing':
-            targetNode.font.color = '#00dc94'
-            break;
-          case 'offline':
-            targetNode.font.color = '#9655ff'
-            break;
-          case 'fault':
-            targetNode.font.color = '#ffb300'
-            break;
-          case 'alarm':
-            targetNode.font.color = '#ff4a4a'
-            break;
-        }
+    handle_changeImg (targetNode, status) { // 改变图片
+      let arr = targetNode.image.split('.svg')[0].split('_')
+      arr[arr.length - 1] = status
+      targetNode.image = arr.join('_') + '.svg'
+    },
+    handle_changeIcon (targetNode, status) { // 改变icon状态
+      console.log('改变icon', status)
+      const state = Node.cloneState(targetNode)
+      switch (status) { // 告警
+        case 'normal':
+          targetNode.iconColor = '#999'
+          targetNode.animateStart = 0
+          targetNode.lineWidth = 0
+          targetNode.strokeStyle = 'rgba(0,0,0,0)'
+          this.canvas.render()
+          break;
+        case 'running':
+          targetNode.iconColor = '#00dc94'
+          targetNode.animateStart = 0
+          targetNode.lineWidth = 0
+          targetNode.strokeStyle = 'rgba(0,0,0,0)'
+          this.canvas.render()
+          break;
+        case 'offline':
+          targetNode.iconColor = '#9655ff'
+          targetNode.animateStart = 0
+          targetNode.lineWidth = 0
+          targetNode.strokeStyle = 'rgba(0,0,0,0)'
+          this.canvas.render()
+          break;
+        case 'fault':
+          targetNode.iconColor = '#ffb300'
+          targetNode.animateStart = 0
+          targetNode.lineWidth = 0
+          targetNode.strokeStyle = 'rgba(0,0,0,0)'
+          this.canvas.render()
+          break;
+        case 'alarm':
+          targetNode.iconColor = '#ff4a4a'
+          targetNode.animateType = 'heart'
+          targetNode.animateStart = 0
+          targetNode.animateDuration = 0
+          targetNode.animateFrames = []
+          state.strokeStyle = 'rgba(255,74,74,0.6)';
+          state.lineWidth = 30;
+          targetNode.animateFrames.push({
+            duration: 400,
+            linear: true,
+            state
+          });
+          targetNode.animateFrames.push({
+            duration: 400,
+            linear: true,
+            state: Node.cloneState(targetNode)
+          });
+
+          for (const item of targetNode.animateFrames) {
+            targetNode.animateDuration += item.duration;
+          }
+          targetNode.animateStart = Date.now()
+          this.canvas.animate()
+          break;
+      }
+    },
+
+    handle_changeFont (targetNode, status, text) { // 修改文案
+      if (text) {
+        targetNode.text = text
+      }
+      switch (status) { // 告警
+        case 'normal':
+          targetNode.font.color = '#999'
+          break;
+        case 'running':
+          targetNode.font.color = '#00dc94'
+          break;
+        case 'offline':
+          targetNode.font.color = '#9655ff'
+          break;
+        case 'fault':
+          targetNode.font.color = '#ffb300'
+          break;
+        case 'alarm':
+          targetNode.font.color = '#ff4a4a'
+          break;
       }
     },
     handle_elevatorRun (tag, targetStep) {
       console.log('电梯运行', tag, targetStep)
       let elevatorNode = this.canvas.data.pens.find(item => {
-        return item.tags.indexOf(`elevator#${tag}`) !== -1 // 关联tag
+        return item.data.tag === tag // 关联tag
       })
       if (!elevatorNode) {
         return

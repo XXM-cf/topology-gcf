@@ -3,26 +3,22 @@
     .headers
       el-menu(mode='horizontal', background-color='#f8f8f8' @select='onMenu')
         el-menu-item(index='back') 返回
-        el-menu-item(index='open') 打开本地文件
 
     .canvas-container
       .tools
         h5 操作指令
         el-input(v-model="deviceId")
-        el-button(@click="startAllAnimate()") 触发所有动画
-        el-button(@click="endAllAnimate()") 结束所有动画
-        el-button(@click="handle_startAnimate()") 触发节点动画
-        el-button(@click="handle_endAnimate()") 停止节点动画
-        el-button(@click="resizeCanvas()") 缩放适配
-        h5 平面图设备状态
-        el-button(@click="handle_changeIcon('alarm')") 告警
-        el-button(@click="handle_changeIcon('offline')") 离线
-        el-button(@click="handle_changeIcon('fault')") 故障
-        el-button(@click="handle_changeIcon('runing')") 运行
-        el-button(@click="handle_changeIcon('normal')") 停止
-        el-button(@click="handle_changeFont('alarm')") 文字告警
+        el-input(v-model="deviceStatus")
+        el-input(v-model="deviceValue")
+
+        el-button(@click="handleUpdate()") 更新
+
       .full(ref="myCanvas" style="width:100%; height:100%")
-        topologyView(:canvasData="jsonContent" :resize="false" ref="topologyView")
+        topologyView(
+          :jsonContent="jsonContent"
+          ref="topologyView"
+          @nodeClick="handleClick"
+          )
     .business-container
       el-dialog(
         :visible.sync="isShowDetail"
@@ -37,7 +33,6 @@ import { Topology } from 'topology-core'
 import { Node } from 'topology-core/models/node'
 
 import topologyView from '../../../packages/topology-view/index.js'
-// import topologyView from '../client'
 const canvasData = require('./demo.json')
 export default {
   components: {
@@ -47,6 +42,8 @@ export default {
     return {
       jsonContent: canvasData,
       deviceId: 'device001', // 默认设备
+      deviceStatus: 'normal', // 默认设备
+      deviceValue: '99', // 默认设备
       isShowDetail: false,
       nodeDetail: {},
       canvasOptions: {
@@ -60,10 +57,14 @@ export default {
     console.log('aaa', this.jsonContent)
   },
   methods: {
-    handle_changeIcon () {
+    handleUpdate () {
       console.log(this.$refs.topologyView)
-      this.$refs.topologyView.handle_elevatorRun('device002', 5)
-
+      this.$refs.topologyView.handle_update(this.deviceId, this.deviceStatus, this.deviceValue)
+      this.$refs.topologyView.render()
+    },
+    handleClick (val) {
+      this.isShowDetail = true
+      this.nodeDetail = val
     },
     onMenu (key, keyPath) {
       if (!key || key.indexOf('/') === 0) {
@@ -73,42 +74,10 @@ export default {
         case 'back':
           this.$router.push('/config')
           break
-        case 'open':
-          this.onOpen()
-          break
         default:
           break
       }
 
-    },
-    onOpen (data) {
-      const input = document.createElement('input')
-      input.type = 'file'
-      input.onchange = event => {
-        const elem = event.srcElement || event.target
-        if (elem.files && elem.files[0]) {
-          const name = elem.files[0].name.replace('.json', '')
-          const reader = new FileReader()
-          reader.onload = e => {
-            const text = e.target.result + ''
-            try {
-              const data = JSON.parse(text)
-              if (
-                data && Array.isArray(data.pens)
-              ) {
-                data.locked = 1
-                console.log('json数据读取完毕', data)
-                this.canvas.open(data)
-                this.resizeCanvas()
-              }
-            } catch (e) {
-              return false
-            }
-          }
-          reader.readAsText(elem.files[0])
-        }
-      }
-      input.click()
     }
   }
 }

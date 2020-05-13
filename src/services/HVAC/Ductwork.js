@@ -180,7 +180,7 @@ const arr = [
       width: 100,
       height: 120
     },
-    legendType: 'enumImg' // enumDevice: 枚举切换 statusImg: 状态图片
+    legendType: 'enumImg' // enumImg: 枚举切换 statusImg: 状态图片
   },
 ]
 

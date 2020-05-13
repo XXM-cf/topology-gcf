@@ -82,5 +82,22 @@ npm run lib
 - [x] 电梯运行
 - [x] 组件化导入导出，多图例组合图形，导出备用
 
+设备图例对应的五种状态：
+    告警： alarm : #ff4a4a
+    故障： fault: #ffb300
+    离线： offline: #9655ff
+    运行： running: #00dc94
+    正常： normal: #999
 
+五种挡位： 0-4
+
+设备图例：  legendType:
+
+  变配电：    'electricity'     iconfont  改变颜色，大小
+  平面图图标： 'plane'          iconfont  改变颜色，大小
+  多态图片：   'statusImg'      改变图片，修改资源后缀为对应的5种状态
+  多档图片：   'enumImg'        改变图片，修改资源后缀为对应的5种档位
+  普通图片：   'normalImg'      无状态改变
+  电梯：       'elevator'      无状态改变
+  文字：       'text'           改变颜色和内容
 

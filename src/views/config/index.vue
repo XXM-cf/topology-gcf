@@ -53,7 +53,7 @@
       :globalCanvasConfig="globalCanvasConfig"
       :imgList="imgList"
       :jsonContent="jsonContent"
-      :deviceList="deviceList")
+      :deviceList="demoDeviceList")
 </template>
 
 <script >
