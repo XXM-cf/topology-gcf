@@ -52,7 +52,7 @@
       ref="workspace"
       :globalCanvasConfig="globalCanvasConfig"
       :imgList="imgList"
-      :deviceList="demoDeviceList")
+      :deviceList="deviceList")
 </template>
 
 <script >
