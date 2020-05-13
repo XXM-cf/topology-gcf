@@ -52,7 +52,6 @@
       ref="workspace"
       :globalCanvasConfig="globalCanvasConfig"
       :imgList="imgList"
-      :jsonContent="jsonContent"
       :deviceList="demoDeviceList")
 </template>
 
@@ -60,17 +59,12 @@
 import workspace from './workspace'
 import { Store } from 'le5le-store';
 import '@/assets/css/base.scss'
-
 export default {
   name: 'topology-config',
   props: {
     imgList: {
       type: Array,
       default: () => []
-    },
-    jsonContent: {
-      type: Object,
-      default: () => { }
     },
     deviceList: {
       type: Array,
@@ -174,9 +168,13 @@ export default {
     })
   },
   methods: {
-    getJsonContent () { // 将画布结果 暴露出去
+    getJsonContent () { // 将画布结果暴露出去
       return this.$refs.workspace.getData()
     },
+    setJsonContent (data) { // 设置画布值
+      return this.$refs.workspace.setData(data)
+    },
+
     onMenu (key) {
       if (!key || key.indexOf('/') === 0) {
         return

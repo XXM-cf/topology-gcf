@@ -60,10 +60,6 @@ export default {
       type: Object,
       default: () => { }
     },
-    jsonContent: {
-      type: Object,
-      default: () => { }
-    },
     imgList: {
       type: Array,
       default: () => []
@@ -127,10 +123,6 @@ export default {
       //   ...this.canvas.data,
       //   ...this.globalCanvasConfig, // 自定义全局属性
       // }
-      if (this.jsonContent) { // 存在则编辑
-        this.canvas.open(this.jsonContent)
-      }
-
       this.canvas.render()
     },
     onDrag (event, node) { // 拖拽布局
@@ -298,6 +290,9 @@ export default {
     },
     getData () {
       return this.canvas.data
+    },
+    setData (data) {
+      this.canvas.open(data)
     },
     getLocked (data) {
       let locked = true
@@ -525,6 +520,8 @@ export default {
         padding: 5px 10px;
         background-color: #f8f8f8;
         border-bottom: 1px solid #ddd;
+        display: flex;
+        justify-content: space-between;
       }
       .is-active {
         color: #409eff;

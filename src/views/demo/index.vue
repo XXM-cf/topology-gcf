@@ -15,7 +15,6 @@
 
       .full(ref="myCanvas" style="width:100%; height:100%")
         topologyView(
-          :jsonContent="jsonContent"
           ref="topologyView"
           @nodeClick="handleClick"
           )
@@ -54,7 +53,7 @@ export default {
     }
   },
   mounted () {
-    console.log('aaa', this.jsonContent)
+    this.$refs.topologyView.open(this.jsonContent)
   },
   methods: {
     handleUpdate () {

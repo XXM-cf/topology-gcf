@@ -12,10 +12,6 @@ import '@/assets/css/base.scss'
 export default {
   name: 'topology-view',
   props: {
-    jsonContent: {
-      type: Object,
-      default: () => { }
-    },
     resize: {
       type: Boolean,
       default: true
@@ -33,11 +29,9 @@ export default {
   mounted () {
     this.canvasOptions.on = this.onMessage
     this.canvas = new Topology('topology-client', this.canvasOptions)
-    this.onOpen()
   },
   methods: {
-    onOpen () {
-      const data = this.jsonContent
+    open (data) {
       if (data && Array.isArray(data.pens)) {
         data.locked = 1
         console.log('json数据读取完毕', data)
