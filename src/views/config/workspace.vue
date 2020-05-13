@@ -86,8 +86,8 @@ export default {
       canvas: {},
       canvasOptions: {
         rotateCursor: 'http://113.31.118.32:9000/test/topology/HVAC/rotate.cur',
-        disableScale: false,
-        hideInput: true
+        disableScale: true,
+        hideInput: true,
       },
       props: {
         node: null,

@@ -64,6 +64,9 @@ export default {
           break;
       }
     },
+    render () {
+      this.canvas.render()
+    },
     resizeCanvas () { // 适配外框
       let canvasRect = this.canvas.getRect() // 画布大小
       console.log('原始画布', canvasRect)
@@ -91,7 +94,6 @@ export default {
         return
       }
     },
-
     handle_startAnimate (tag) { // 开始动画
       let targetNode = this.getNode(tag)
       targetNode.rotate = 0
@@ -108,7 +110,6 @@ export default {
         this.canvas.animate()
       }
     },
-
     handle_changeStatus (tag, status) { // 设置状态
       let targetNode = this.getNode(tag)
       if (targetNode) {
