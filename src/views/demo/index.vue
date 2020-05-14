@@ -14,16 +14,9 @@
         el-button(@click="handleUpdate()") 更新
 
       .full(ref="myCanvas" style="width:1200px; height:800px;border:1px solid red;overflow: hidden")
-        topologyView(
-          ref="topologyView"
-          @nodeClick="handleClick"
-          )
-    .business-container
-      el-dialog(
-        :visible.sync="isShowDetail"
-        title="点击获取设备实时状态"
-        )
-        pre {{ nodeDetail }}
+        topologyView( ref="topologyView" @nodeClick="handleClick")
+          pre(slot="dialog") 你好 {{ nodeDetail }}
+
 
 </template>
 
@@ -43,13 +36,8 @@ export default {
       deviceId: 'device001', // 默认设备
       deviceStatus: 'normal', // 默认设备
       deviceValue: '99', // 默认设备
-      isShowDetail: false,
+
       nodeDetail: {},
-      canvasOptions: {
-        lock: 1,
-        activeColor: 'transparent' // 去除选中边框
-      },
-      canvas: {}
     }
   },
   mounted () {
@@ -62,7 +50,6 @@ export default {
       this.$refs.topologyView.render()
     },
     handleClick (val) {
-      this.isShowDetail = true
       this.nodeDetail = val
     },
     onMenu (key, keyPath) {

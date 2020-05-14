@@ -1,5 +1,7 @@
 <template lang="pug">
   #topology-client(ref="myCanvas" style="width:100%; height:100%")
+    .topology-client-dialog(v-show="isShow" :style="{'top': top, 'left':left}")
+      slot(name="dialog")
 </template>
 
 <script>
@@ -19,6 +21,9 @@ export default {
   },
   data () {
     return {
+      isShow: false,
+      top: '',
+      left: '',
       canvasOptions: {
         lock: 1,
         disableScale: true,
@@ -53,13 +58,28 @@ export default {
           break;
         case 'node':
           if (data.data.legendType && data.data.legendType === 'plane') {
-            this.$emit('nodeClick', data)
+            console.log('打开')
+            this.handlePlaneClick(window.event, data)
+
             console.log('点击节点 --> node', data.strokeStyle, this.canvas)
           } else {
             console.warn('该节点无点击操作', data)
           }
           break;
+        case 'space':
+          this.isShow = false // 清除右键菜单
+          break
       }
+    },
+    handlePlaneClick (event, data) {
+      let x = event.clientX
+      let y = event.clientY
+      console.log(x, y)
+      console.log('node', data.rect)
+      this.isShow = true
+      this.top = data.rect.ey + 'px'
+      this.left = data.rect.ex + 'px'
+      this.$emit('nodeClick', data)
     },
     render () {
       this.canvas.animate()
@@ -313,3 +333,15 @@ export default {
 
 }
 </script>
+<style lang="scss">
+.topology-client-dialog {
+  position: absolute;
+  left: 200px;
+  top: 0px;
+  max-height: 400px;
+  max-width: 400px;
+  overflow: auto;
+  z-index: 99999;
+  border-radius: 4px;
+}
+</style>
