@@ -130,13 +130,13 @@ const pipeImg = {
           width: 40,
           height: 40
         },
-        borderColor: 'rgba(0,0,0,0)',  // 去除边框
-        strokeStyle: 'rgba(0,0,0,0)',
+        strokeStyle: 'transparent',
         icon: item.unicode,
         iconFamily: 'iconfont',
         iconColor: '#00dc94',
         iconClass: item.class,
         iconSize: 40,
+        hideSizeCP: true,
         name: 'rectangle',
         data: {
           legendType: 'electricity' //变配电

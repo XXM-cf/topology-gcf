@@ -200,6 +200,7 @@ export default {
             nodes: null,
             locked: data.locked
           }
+          this.contextmenu.left = null // 清除右键菜单
           console.log('点击节点 --> node', data)
           break
         case 'addNode':

@@ -151,8 +151,7 @@ const pipeImg = {
           width: 36,
           height: 36
         },
-        borderColor: 'rgba(0,0,0,0)',  // 去除边框
-        strokeStyle: 'rgba(0,0,0,0)',
+        strokeStyle: 'transparent', // 去除边框
         icon: item.unicode,
         iconFamily: 'iconfont',
         iconColor: '#999',

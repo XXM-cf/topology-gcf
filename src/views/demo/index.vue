@@ -47,7 +47,7 @@ export default {
       nodeDetail: {},
       canvasOptions: {
         lock: 1,
-        activeColor: 'rgba(0,0,0,0)' // 去除选中边框
+        activeColor: 'transparent' // 去除选中边框
       },
       canvas: {}
     }

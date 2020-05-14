@@ -21,7 +21,8 @@ export default {
     return {
       canvasOptions: {
         lock: 1,
-        activeColor: 'rgba(0,0,0,0)' // 去除选中边框
+        disableScale: true,
+        activeColor: 'transparent' // 去除选中边框
       },
       canvas: {}
     }
@@ -33,12 +34,13 @@ export default {
   methods: {
     open (data) {
       if (data && Array.isArray(data.pens)) {
-        data.locked = 1
+        data.locked = 1 // 锁定画布
         console.log('json数据读取完毕', data)
         this.canvas.open(data)
         if (this.resize) {
           this.resizeCanvas()
         }
+        this.canvas.render()
       } else {
         console.log('暂无可用配置')
       }
@@ -51,7 +53,7 @@ export default {
         case 'node':
           if (data.data.legendType && data.data.legendType === 'plane') {
             this.$emit('nodeClick', data)
-            console.log('点击节点 --> node', data)
+            console.log('点击节点 --> node', data.strokeStyle, this.canvas)
           } else {
             console.warn('该节点无点击操作', data)
           }
@@ -59,6 +61,7 @@ export default {
       }
     },
     render () {
+      this.canvas.animate()
       this.canvas.render()
     },
     resizeCanvas () { // 适配外框
@@ -139,60 +142,52 @@ export default {
     },
     handle_changeIcon (targetNode, status) { // 改变icon状态
       console.log('改变icon', status)
+      targetNode.animateStart = 0
+      targetNode.animateStart = 0
+      targetNode.lineWidth = 0
+      targetNode.strokeStyle = 'transparent'
+      targetNode.animateCycleIndex = 0
       const state = Node.cloneState(targetNode)
       switch (status) { // 告警
         case 'normal':
           targetNode.iconColor = '#999'
-          targetNode.animateStart = 0
-          targetNode.lineWidth = 0
-          targetNode.strokeStyle = 'rgba(0,0,0,0)'
-          this.canvas.render()
           break;
         case 'running':
           targetNode.iconColor = '#00dc94'
-          targetNode.animateStart = 0
-          targetNode.lineWidth = 0
-          targetNode.strokeStyle = 'rgba(0,0,0,0)'
-          this.canvas.render()
           break;
         case 'offline':
           targetNode.iconColor = '#9655ff'
-          targetNode.animateStart = 0
-          targetNode.lineWidth = 0
-          targetNode.strokeStyle = 'rgba(0,0,0,0)'
-          this.canvas.render()
           break;
         case 'fault':
           targetNode.iconColor = '#ffb300'
-          targetNode.animateStart = 0
-          targetNode.lineWidth = 0
-          targetNode.strokeStyle = 'rgba(0,0,0,0)'
-          this.canvas.render()
           break;
         case 'alarm':
-          targetNode.iconColor = '#ff4a4a'
-          targetNode.animateType = 'heart'
-          targetNode.animateStart = 0
-          targetNode.animateDuration = 0
-          targetNode.animateFrames = []
-          state.strokeStyle = 'rgba(255,74,74,0.6)';
-          state.lineWidth = 30;
-          targetNode.animateFrames.push({
-            duration: 400,
-            linear: true,
-            state
-          });
-          targetNode.animateFrames.push({
-            duration: 400,
-            linear: true,
-            state: Node.cloneState(targetNode)
-          });
+          if (targetNode.animateFrames.length) {
+            targetNode.iconColor = '#ff4a4a'
+            targetNode.animateStart = Date.now()
+            this.canvas.animate()
+          } else {
+            targetNode.iconColor = '#ff4a4a'
+            targetNode.animateType = 'heart'
+            state.lineWidth = 30;
+            state.strokeStyle = 'rgba(255,74,74,0.6)';
+            targetNode.animateFrames.push({
+              duration: 800,
+              linear: true,
+              state
+            });
+            targetNode.animateFrames.push({
+              duration: 800,
+              linear: true,
+              state: Node.cloneState(targetNode)
+            });
 
-          for (const item of targetNode.animateFrames) {
-            targetNode.animateDuration += item.duration;
+            for (const item of targetNode.animateFrames) {
+              targetNode.animateDuration += item.duration;
+            }
+            targetNode.animateStart = Date.now()
+            this.canvas.animate()
           }
-          targetNode.animateStart = Date.now()
-          this.canvas.animate()
           break;
       }
     },
@@ -315,10 +310,3 @@ export default {
 
 }
 </script>
-
-<style lang="scss">
-.topology-client {
-  height: 100%;
-  width: 100%;
-}
-</style>

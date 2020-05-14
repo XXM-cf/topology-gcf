@@ -53,8 +53,8 @@
           placeholder='关联设备'
           @change='onChange')
           el-option(
-            v-for='item in deviceList',
-            :key='item.value',
+            v-for='(item,index) in deviceList',
+            :key='index',
             :label='item.label',
             :value='item.value')
     .group
@@ -153,8 +153,8 @@
           placeholder='关联设备'
           @change='onChange')
           el-option(
-            v-for='item in deviceList',
-            :key='item.value',
+            v-for='(item,index) in deviceList',
+            :key='index',
             :label='item.label',
             :value='item.value')
     .group

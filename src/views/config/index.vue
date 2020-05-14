@@ -82,6 +82,10 @@ export default {
           value: require('@/assets/images/baseImg/floor.png')
         },
         {
+          label: '纯黑',
+          value: 'http://113.31.118.32:9000/test/topology/HVAC/black.jpg'
+        },
+        {
           label: '电梯',
           value: 'http://113.31.118.32:9000/test/topology/HVAC/alr.png'
         }

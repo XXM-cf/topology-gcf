@@ -1,28 +1,28 @@
 {
   "pens": [
     {
-      "id": "01288392",
+      "id": "6aecfe3d",
       "type": 0,
       "name": "rectangle",
       "tags": [],
       "rect": {
-        "x": 114,
-        "y": 65,
+        "x": 489,
+        "y": 233,
         "width": 36,
         "height": 36,
         "center": {
-          "x": 132,
-          "y": 83
+          "x": 507,
+          "y": 251
         },
-        "ex": 150,
-        "ey": 101
+        "ex": 525,
+        "ey": 269
       },
       "lineWidth": 1,
       "rotate": 0,
       "offsetRotate": 0,
       "globalAlpha": 1,
       "dash": 0,
-      "strokeStyle": "rgba(0,0,0,0)",
+      "strokeStyle": "transparent",
       "fillStyle": "",
       "font": {
         "color": "#222",
@@ -56,51 +56,51 @@
       "zRotate": 0,
       "anchors": [
         {
-          "x": 114,
-          "y": 83,
+          "x": 489,
+          "y": 251,
           "direction": 4
         },
         {
-          "x": 132,
-          "y": 65,
+          "x": 507,
+          "y": 233,
           "direction": 1
         },
         {
-          "x": 150,
-          "y": 83,
+          "x": 525,
+          "y": 251,
           "direction": 2
         },
         {
-          "x": 132,
-          "y": 101,
+          "x": 507,
+          "y": 269,
           "direction": 3
         }
       ],
       "rotatedAnchors": [
         {
-          "x": 114,
-          "y": 83,
+          "x": 489,
+          "y": 251,
           "direction": 4
         },
         {
-          "x": 132,
-          "y": 65,
+          "x": 507,
+          "y": 233,
           "direction": 1
         },
         {
-          "x": 150,
-          "y": 83,
+          "x": 525,
+          "y": 251,
           "direction": 2
         },
         {
-          "x": 132,
-          "y": 101,
+          "x": 507,
+          "y": 269,
           "direction": 3
         }
       ],
       "animateDuration": 0,
       "animateFrames": [],
-      "borderRadius": 0,
+      "borderRadius": 1,
       "icon": "",
       "iconFamily": "iconfont",
       "iconSize": 40,
@@ -117,78 +117,78 @@
       "paddingTopNum": 0,
       "paddingBottomNum": 0,
       "textRect": {
-        "x": 150,
-        "y": 65,
+        "x": 525,
+        "y": 233,
         "width": 0,
         "height": 36,
         "center": {
-          "x": 150,
-          "y": 83
+          "x": 525,
+          "y": 251
         },
-        "ex": 150,
-        "ey": 101
+        "ex": 525,
+        "ey": 269
       },
       "fullTextRect": {
-        "x": 114,
-        "y": 65,
+        "x": 489,
+        "y": 233,
         "width": 36,
         "height": 36,
         "center": {
-          "x": 132,
-          "y": 83
+          "x": 507,
+          "y": 251
         },
-        "ex": 150,
-        "ey": 101
+        "ex": 525,
+        "ey": 269
       },
       "iconRect": {
-        "x": 114,
-        "y": 65,
+        "x": 489,
+        "y": 233,
         "width": 36,
         "height": 36,
         "center": {
-          "x": 132,
-          "y": 83
+          "x": 507,
+          "y": 251
         },
-        "ex": 150,
-        "ey": 101
+        "ex": 525,
+        "ey": 269
       },
       "fullIconRect": {
-        "x": 114,
-        "y": 65,
+        "x": 489,
+        "y": 233,
         "width": 36,
         "height": 36,
         "center": {
-          "x": 132,
-          "y": 83
+          "x": 507,
+          "y": 251
         },
-        "ex": 150,
-        "ey": 101
+        "ex": 525,
+        "ey": 269
       },
       "elementRendered": false
     },
     {
-      "id": "49a7aaf8",
+      "id": "9df00b35",
       "type": 0,
       "name": "rectangle",
       "tags": [],
       "rect": {
-        "x": 211,
-        "y": 65,
+        "x": 480,
+        "y": 116,
         "width": 36,
         "height": 36,
         "center": {
-          "x": 229,
-          "y": 83
+          "x": 498,
+          "y": 134
         },
-        "ex": 247,
-        "ey": 101
+        "ex": 516,
+        "ey": 152
       },
       "lineWidth": 1,
       "rotate": 0,
       "offsetRotate": 0,
       "globalAlpha": 1,
       "dash": 0,
-      "strokeStyle": "rgba(0,0,0,0)",
+      "strokeStyle": "transparent",
       "fillStyle": "",
       "font": {
         "color": "#222",
@@ -222,51 +222,217 @@
       "zRotate": 0,
       "anchors": [
         {
-          "x": 211,
-          "y": 83,
+          "x": 480,
+          "y": 134,
           "direction": 4
         },
         {
-          "x": 229,
-          "y": 65,
+          "x": 498,
+          "y": 116,
           "direction": 1
         },
         {
-          "x": 247,
-          "y": 83,
+          "x": 516,
+          "y": 134,
           "direction": 2
         },
         {
-          "x": 229,
-          "y": 101,
+          "x": 498,
+          "y": 152,
           "direction": 3
         }
       ],
       "rotatedAnchors": [
         {
-          "x": 211,
-          "y": 83,
+          "x": 480,
+          "y": 134,
           "direction": 4
         },
         {
-          "x": 229,
-          "y": 65,
+          "x": 498,
+          "y": 116,
           "direction": 1
         },
         {
-          "x": 247,
-          "y": 83,
+          "x": 516,
+          "y": 134,
           "direction": 2
         },
         {
-          "x": 229,
-          "y": 101,
+          "x": 498,
+          "y": 152,
           "direction": 3
         }
       ],
       "animateDuration": 0,
       "animateFrames": [],
-      "borderRadius": 0,
+      "borderRadius": 1,
+      "icon": "",
+      "iconFamily": "iconfont",
+      "iconSize": 40,
+      "iconColor": "#999",
+      "imageAlign": "center",
+      "gradientAngle": 0,
+      "gradientRadius": 0.01,
+      "paddingTop": 0,
+      "paddingBottom": 0,
+      "paddingLeft": 0,
+      "paddingRight": 0,
+      "paddingLeftNum": 0,
+      "paddingRightNum": 0,
+      "paddingTopNum": 0,
+      "paddingBottomNum": 0,
+      "textRect": {
+        "x": 516,
+        "y": 116,
+        "width": 0,
+        "height": 36,
+        "center": {
+          "x": 516,
+          "y": 134
+        },
+        "ex": 516,
+        "ey": 152
+      },
+      "fullTextRect": {
+        "x": 480,
+        "y": 116,
+        "width": 36,
+        "height": 36,
+        "center": {
+          "x": 498,
+          "y": 134
+        },
+        "ex": 516,
+        "ey": 152
+      },
+      "iconRect": {
+        "x": 480,
+        "y": 116,
+        "width": 36,
+        "height": 36,
+        "center": {
+          "x": 498,
+          "y": 134
+        },
+        "ex": 516,
+        "ey": 152
+      },
+      "fullIconRect": {
+        "x": 480,
+        "y": 116,
+        "width": 36,
+        "height": 36,
+        "center": {
+          "x": 498,
+          "y": 134
+        },
+        "ex": 516,
+        "ey": 152
+      },
+      "elementRendered": false
+    },
+    {
+      "id": "cfb6ae85",
+      "type": 0,
+      "name": "rectangle",
+      "tags": [],
+      "rect": {
+        "x": 208,
+        "y": 131,
+        "width": 36,
+        "height": 36,
+        "center": {
+          "x": 226,
+          "y": 149
+        },
+        "ex": 244,
+        "ey": 167
+      },
+      "lineWidth": 1,
+      "rotate": 0,
+      "offsetRotate": 0,
+      "globalAlpha": 1,
+      "dash": 0,
+      "strokeStyle": "transparent",
+      "fillStyle": "",
+      "font": {
+        "color": "#222",
+        "fontFamily": "\"Hiragino Sans GB\", \"Microsoft YaHei\", \"Helvetica Neue\", Helvetica, Arial",
+        "fontSize": 12,
+        "lineHeight": 1.5,
+        "fontStyle": "normal",
+        "fontWeight": "normal",
+        "textAlign": "center",
+        "textBaseline": "middle"
+      },
+      "animateCycleIndex": 0,
+      "events": [],
+      "eventFns": [
+        "link",
+        "doAnimate",
+        "doFn",
+        "doWindowFn"
+      ],
+      "lineDashOffset": 0,
+      "textOffsetX": 0,
+      "textOffsetY": 0,
+      "animateType": "",
+      "hideRotateCP": true,
+      "hideSizeCP": true,
+      "hideAnchor": true,
+      "data": {
+        "legendType": "plane",
+        "tag": "device002"
+      },
+      "zRotate": 0,
+      "anchors": [
+        {
+          "x": 208,
+          "y": 149,
+          "direction": 4
+        },
+        {
+          "x": 226,
+          "y": 131,
+          "direction": 1
+        },
+        {
+          "x": 244,
+          "y": 149,
+          "direction": 2
+        },
+        {
+          "x": 226,
+          "y": 167,
+          "direction": 3
+        }
+      ],
+      "rotatedAnchors": [
+        {
+          "x": 208,
+          "y": 149,
+          "direction": 4
+        },
+        {
+          "x": 226,
+          "y": 131,
+          "direction": 1
+        },
+        {
+          "x": 244,
+          "y": 149,
+          "direction": 2
+        },
+        {
+          "x": 226,
+          "y": 167,
+          "direction": 3
+        }
+      ],
+      "animateDuration": 0,
+      "animateFrames": [],
+      "borderRadius": 1,
       "icon": "",
       "iconFamily": "iconfont",
       "iconSize": 40,
@@ -283,78 +449,78 @@
       "paddingTopNum": 0,
       "paddingBottomNum": 0,
       "textRect": {
-        "x": 247,
-        "y": 65,
+        "x": 244,
+        "y": 131,
         "width": 0,
         "height": 36,
         "center": {
-          "x": 247,
-          "y": 83
+          "x": 244,
+          "y": 149
         },
-        "ex": 247,
-        "ey": 101
+        "ex": 244,
+        "ey": 167
       },
       "fullTextRect": {
-        "x": 211,
-        "y": 65,
+        "x": 208,
+        "y": 131,
         "width": 36,
         "height": 36,
         "center": {
-          "x": 229,
-          "y": 83
+          "x": 226,
+          "y": 149
         },
-        "ex": 247,
-        "ey": 101
+        "ex": 244,
+        "ey": 167
       },
       "iconRect": {
-        "x": 211,
-        "y": 65,
+        "x": 208,
+        "y": 131,
         "width": 36,
         "height": 36,
         "center": {
-          "x": 229,
-          "y": 83
+          "x": 226,
+          "y": 149
         },
-        "ex": 247,
-        "ey": 101
+        "ex": 244,
+        "ey": 167
       },
       "fullIconRect": {
-        "x": 211,
-        "y": 65,
+        "x": 208,
+        "y": 131,
         "width": 36,
         "height": 36,
         "center": {
-          "x": 229,
-          "y": 83
+          "x": 226,
+          "y": 149
         },
-        "ex": 247,
-        "ey": 101
+        "ex": 244,
+        "ey": 167
       },
       "elementRendered": false
     },
     {
-      "id": "fc002697",
+      "id": "91cd1cf0",
       "type": 0,
       "name": "rectangle",
       "tags": [],
       "rect": {
-        "x": 310,
-        "y": 72,
-        "width": 40,
-        "height": 40,
+        "x": 361,
+        "y": 329,
+        "width": 36,
+        "height": 36,
         "center": {
-          "x": 330,
-          "y": 92
+          "x": 379,
+          "y": 347
         },
-        "ex": 350,
-        "ey": 112
+        "ex": 397,
+        "ey": 365
       },
       "lineWidth": 1,
       "rotate": 0,
       "offsetRotate": 0,
       "globalAlpha": 1,
       "dash": 0,
-      "strokeStyle": "rgba(0,0,0,0)",
+      "strokeStyle": "transparent",
       "fillStyle": "",
       "font": {
         "color": "#222",
@@ -378,61 +544,65 @@
       "textOffsetX": 0,
       "textOffsetY": 0,
       "animateType": "",
+      "hideRotateCP": true,
+      "hideSizeCP": true,
+      "hideAnchor": true,
       "data": {
-        "legendType": "electricity"
+        "legendType": "plane",
+        "tag": "device002"
       },
       "zRotate": 0,
       "anchors": [
         {
-          "x": 310,
-          "y": 92,
+          "x": 361,
+          "y": 347,
           "direction": 4
         },
         {
-          "x": 330,
-          "y": 72,
+          "x": 379,
+          "y": 329,
           "direction": 1
         },
         {
-          "x": 350,
-          "y": 92,
+          "x": 397,
+          "y": 347,
           "direction": 2
         },
         {
-          "x": 330,
-          "y": 112,
+          "x": 379,
+          "y": 365,
           "direction": 3
         }
       ],
       "rotatedAnchors": [
         {
-          "x": 310,
-          "y": 92,
+          "x": 361,
+          "y": 347,
           "direction": 4
         },
         {
-          "x": 330,
-          "y": 72,
+          "x": 379,
+          "y": 329,
           "direction": 1
         },
         {
-          "x": 350,
-          "y": 92,
+          "x": 397,
+          "y": 347,
           "direction": 2
         },
         {
-          "x": 330,
-          "y": 112,
+          "x": 379,
+          "y": 365,
           "direction": 3
         }
       ],
       "animateDuration": 0,
       "animateFrames": [],
-      "borderRadius": 0,
-      "icon": "",
+      "borderRadius": 1,
+      "icon": "",
       "iconFamily": "iconfont",
       "iconSize": 40,
-      "iconColor": "#00dc94",
+      "iconColor": "#999",
       "imageAlign": "center",
       "gradientAngle": 0,
       "gradientRadius": 0.01,
@@ -445,1453 +615,52 @@
       "paddingTopNum": 0,
       "paddingBottomNum": 0,
       "textRect": {
-        "x": 350,
-        "y": 72,
+        "x": 397,
+        "y": 329,
         "width": 0,
-        "height": 40,
+        "height": 36,
         "center": {
-          "x": 350,
-          "y": 92
+          "x": 397,
+          "y": 347
         },
-        "ex": 350,
-        "ey": 112
+        "ex": 397,
+        "ey": 365
       },
       "fullTextRect": {
-        "x": 310,
-        "y": 72,
-        "width": 40,
-        "height": 40,
+        "x": 361,
+        "y": 329,
+        "width": 36,
+        "height": 36,
         "center": {
-          "x": 330,
-          "y": 92
+          "x": 379,
+          "y": 347
         },
-        "ex": 350,
-        "ey": 112
+        "ex": 397,
+        "ey": 365
       },
       "iconRect": {
-        "x": 310,
-        "y": 72,
-        "width": 40,
-        "height": 40,
+        "x": 361,
+        "y": 329,
+        "width": 36,
+        "height": 36,
         "center": {
-          "x": 330,
-          "y": 92
+          "x": 379,
+          "y": 347
         },
-        "ex": 350,
-        "ey": 112
+        "ex": 397,
+        "ey": 365
       },
       "fullIconRect": {
-        "x": 310,
-        "y": 72,
-        "width": 40,
-        "height": 40,
+        "x": 361,
+        "y": 329,
+        "width": 36,
+        "height": 36,
         "center": {
-          "x": 330,
-          "y": 92
-        },
-        "ex": 350,
-        "ey": 112
-      },
-      "elementRendered": false
-    },
-    {
-      "id": "022cb828",
-      "type": 0,
-      "name": "image",
-      "tags": [],
-      "rect": {
-        "x": 92,
-        "y": 310,
-        "width": 80,
-        "height": 120,
-        "center": {
-          "x": 132,
-          "y": 370
-        },
-        "ex": 172,
-        "ey": 430
-      },
-      "lineWidth": 1,
-      "rotate": 0,
-      "offsetRotate": 0,
-      "globalAlpha": 1,
-      "dash": 0,
-      "strokeStyle": "#222",
-      "fillStyle": "",
-      "font": {
-        "color": "#222",
-        "fontFamily": "\"Hiragino Sans GB\", \"Microsoft YaHei\", \"Helvetica Neue\", Helvetica, Arial",
-        "fontSize": 12,
-        "lineHeight": 1.5,
-        "fontStyle": "normal",
-        "fontWeight": "normal",
-        "textAlign": "center",
-        "textBaseline": "middle"
-      },
-      "animateCycleIndex": 0,
-      "events": [],
-      "eventFns": [
-        "link",
-        "doAnimate",
-        "doFn",
-        "doWindowFn"
-      ],
-      "lineDashOffset": 0,
-      "textOffsetX": 0,
-      "textOffsetY": 0,
-      "animateType": "",
-      "data": {
-        "legendType": "enumImg",
-        "tag": "device002"
-      },
-      "zRotate": 0,
-      "anchors": [
-        {
-          "x": 92,
-          "y": 370,
-          "direction": 4
-        },
-        {
-          "x": 132,
-          "y": 310,
-          "direction": 1
-        },
-        {
-          "x": 172,
-          "y": 370,
-          "direction": 2
-        },
-        {
-          "x": 132,
-          "y": 430,
-          "direction": 3
-        }
-      ],
-      "rotatedAnchors": [
-        {
-          "x": 92,
-          "y": 370,
-          "direction": 4
-        },
-        {
-          "x": 132,
-          "y": 310,
-          "direction": 1
-        },
-        {
-          "x": 172,
-          "y": 370,
-          "direction": 2
-        },
-        {
-          "x": 132,
-          "y": 430,
-          "direction": 3
-        }
-      ],
-      "animateDuration": 0,
-      "animateFrames": [],
-      "borderRadius": 0,
-      "iconSize": null,
-      "image": "http://113.31.118.32:9000/test/topology/HVAC/Ductwork/Coils_Cooling_2Way_Bottom_0.svg",
-      "imgNaturalWidth": 80,
-      "imgNaturalHeight": 120,
-      "imageAlign": "center",
-      "gradientAngle": 0,
-      "gradientRadius": 0.01,
-      "paddingTop": 0,
-      "paddingBottom": 0,
-      "paddingLeft": 0,
-      "paddingRight": 0,
-      "paddingLeftNum": 0,
-      "paddingRightNum": 0,
-      "paddingTopNum": 0,
-      "paddingBottomNum": 0,
-      "textRect": {
-        "x": 92,
-        "y": 412,
-        "width": 80,
-        "height": 18,
-        "center": {
-          "x": 132,
-          "y": 421
-        },
-        "ex": 172,
-        "ey": 430
-      },
-      "fullTextRect": {
-        "x": 92,
-        "y": 310,
-        "width": 80,
-        "height": 120,
-        "center": {
-          "x": 132,
-          "y": 370
-        },
-        "ex": 172,
-        "ey": 430
-      },
-      "iconRect": {
-        "x": 92,
-        "y": 310,
-        "width": 80,
-        "height": 97,
-        "center": {
-          "x": 132,
-          "y": 358.5
-        },
-        "ex": 172,
-        "ey": 407
-      },
-      "fullIconRect": {
-        "x": 92,
-        "y": 310,
-        "width": 80,
-        "height": 120,
-        "center": {
-          "x": 132,
-          "y": 370
-        },
-        "ex": 172,
-        "ey": 430
-      },
-      "elementRendered": false,
-      "img": {},
-      "lastImage": "http://113.31.118.32:9000/test/topology/HVAC/Ductwork/Coils_Cooling_2Way_Bottom_0.svg"
-    },
-    {
-      "id": "d96844c3",
-      "type": 0,
-      "name": "text",
-      "tags": [],
-      "rect": {
-        "x": 93,
-        "y": 475,
-        "width": 60,
-        "height": 30,
-        "center": {
-          "x": 123,
-          "y": 490
-        },
-        "ex": 153,
-        "ey": 505
-      },
-      "lineWidth": 1,
-      "rotate": 0,
-      "offsetRotate": 0,
-      "globalAlpha": 1,
-      "dash": 0,
-      "strokeStyle": "#222",
-      "fillStyle": "",
-      "font": {
-        "color": "#222",
-        "fontFamily": "\"Hiragino Sans GB\", \"Microsoft YaHei\", \"Helvetica Neue\", Helvetica, Arial",
-        "fontSize": 12,
-        "lineHeight": 1.5,
-        "fontStyle": "normal",
-        "fontWeight": "normal",
-        "textAlign": "center",
-        "textBaseline": "middle"
-      },
-      "animateCycleIndex": 0,
-      "events": [],
-      "eventFns": [
-        "link",
-        "doAnimate",
-        "doFn",
-        "doWindowFn"
-      ],
-      "lineDashOffset": 0,
-      "text": "多档图片",
-      "textOffsetX": 0,
-      "textOffsetY": 0,
-      "animateType": "",
-      "data": {
-        "legendType": "text"
-      },
-      "zRotate": 0,
-      "anchors": [
-        {
-          "x": 93,
-          "y": 490,
-          "direction": 4
-        },
-        {
-          "x": 123,
-          "y": 475,
-          "direction": 1
-        },
-        {
-          "x": 153,
-          "y": 490,
-          "direction": 2
-        },
-        {
-          "x": 123,
-          "y": 505,
-          "direction": 3
-        }
-      ],
-      "rotatedAnchors": [
-        {
-          "x": 93,
-          "y": 490,
-          "direction": 4
-        },
-        {
-          "x": 123,
-          "y": 475,
-          "direction": 1
-        },
-        {
-          "x": 153,
-          "y": 490,
-          "direction": 2
-        },
-        {
-          "x": 123,
-          "y": 505,
-          "direction": 3
-        }
-      ],
-      "animateDuration": 0,
-      "animateFrames": [],
-      "borderRadius": 0,
-      "iconSize": null,
-      "imageAlign": "center",
-      "gradientAngle": 0,
-      "gradientRadius": 0.01,
-      "paddingTop": 0,
-      "paddingBottom": 0,
-      "paddingLeft": 0,
-      "paddingRight": 0,
-      "paddingLeftNum": 0,
-      "paddingRightNum": 0,
-      "paddingTopNum": 0,
-      "paddingBottomNum": 0,
-      "textRect": {
-        "x": 93,
-        "y": 497.5,
-        "width": 60,
-        "height": 7.5,
-        "center": {
-          "x": 123,
-          "y": 501.25
-        },
-        "ex": 153,
-        "ey": 505
-      },
-      "fullTextRect": {
-        "x": 93,
-        "y": 475,
-        "width": 60,
-        "height": 30,
-        "center": {
-          "x": 123,
-          "y": 490
-        },
-        "ex": 153,
-        "ey": 505
-      },
-      "iconRect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0,
-        "center": {
-          "x": 0,
-          "y": 0
-        },
-        "ex": 0,
-        "ey": 0
-      },
-      "elementRendered": false
-    },
-    {
-      "id": "fcd2b949",
-      "type": 0,
-      "name": "image",
-      "tags": [],
-      "rect": {
-        "x": 310,
-        "y": 317,
-        "width": 172,
-        "height": 114,
-        "center": {
-          "x": 396,
-          "y": 374
-        },
-        "ex": 482,
-        "ey": 431
-      },
-      "lineWidth": 1,
-      "rotate": 0,
-      "offsetRotate": 0,
-      "globalAlpha": 1,
-      "dash": 0,
-      "strokeStyle": "#222",
-      "fillStyle": "",
-      "font": {
-        "color": "#222",
-        "fontFamily": "\"Hiragino Sans GB\", \"Microsoft YaHei\", \"Helvetica Neue\", Helvetica, Arial",
-        "fontSize": 12,
-        "lineHeight": 1.5,
-        "fontStyle": "normal",
-        "fontWeight": "normal",
-        "textAlign": "center",
-        "textBaseline": "middle"
-      },
-      "animateCycleIndex": 0,
-      "events": [],
-      "eventFns": [
-        "link",
-        "doAnimate",
-        "doFn",
-        "doWindowFn"
-      ],
-      "lineDashOffset": 0,
-      "textOffsetX": 0,
-      "textOffsetY": 0,
-      "animateType": "",
-      "data": {
-        "legendType": "statusImg",
-        "tag": "device003"
-      },
-      "zRotate": 0,
-      "anchors": [
-        {
-          "x": 310,
-          "y": 374,
-          "direction": 4
-        },
-        {
-          "x": 396,
-          "y": 317,
-          "direction": 1
-        },
-        {
-          "x": 482,
-          "y": 374,
-          "direction": 2
-        },
-        {
-          "x": 396,
-          "y": 431,
-          "direction": 3
-        }
-      ],
-      "rotatedAnchors": [
-        {
-          "x": 310,
-          "y": 374,
-          "direction": 4
-        },
-        {
-          "x": 396,
-          "y": 317,
-          "direction": 1
-        },
-        {
-          "x": 482,
-          "y": 374,
-          "direction": 2
-        },
-        {
-          "x": 396,
-          "y": 431,
-          "direction": 3
-        }
-      ],
-      "animateDuration": 0,
-      "animateFrames": [],
-      "borderRadius": 0,
-      "iconSize": null,
-      "image": "http://113.31.118.32:9000/test/topology/HVAC/Water/air_cooled_heat_pump_normal.svg",
-      "imgNaturalWidth": 256,
-      "imgNaturalHeight": 150,
-      "imageAlign": "center",
-      "gradientAngle": 0,
-      "gradientRadius": 0.01,
-      "paddingTop": 0,
-      "paddingBottom": 0,
-      "paddingLeft": 0,
-      "paddingRight": 0,
-      "paddingLeftNum": 0,
-      "paddingRightNum": 0,
-      "paddingTopNum": 0,
-      "paddingBottomNum": 0,
-      "textRect": {
-        "x": 310,
-        "y": 413,
-        "width": 172,
-        "height": 18,
-        "center": {
-          "x": 396,
-          "y": 422
-        },
-        "ex": 482,
-        "ey": 431
-      },
-      "fullTextRect": {
-        "x": 310,
-        "y": 317,
-        "width": 172,
-        "height": 114,
-        "center": {
-          "x": 396,
-          "y": 374
-        },
-        "ex": 482,
-        "ey": 431
-      },
-      "iconRect": {
-        "x": 310,
-        "y": 317,
-        "width": 172,
-        "height": 91,
-        "center": {
-          "x": 396,
-          "y": 362.5
-        },
-        "ex": 482,
-        "ey": 408
-      },
-      "fullIconRect": {
-        "x": 310,
-        "y": 317,
-        "width": 172,
-        "height": 114,
-        "center": {
-          "x": 396,
-          "y": 374
-        },
-        "ex": 482,
-        "ey": 431
-      },
-      "elementRendered": false,
-      "img": {},
-      "lastImage": "http://113.31.118.32:9000/test/topology/HVAC/Water/air_cooled_heat_pump_normal.svg"
-    },
-    {
-      "id": "930ea946",
-      "type": 0,
-      "name": "text",
-      "tags": [],
-      "rect": {
-        "x": 366,
-        "y": 479,
-        "width": 60,
-        "height": 30,
-        "center": {
-          "x": 396,
-          "y": 494
-        },
-        "ex": 426,
-        "ey": 509
-      },
-      "lineWidth": 1,
-      "rotate": 0,
-      "offsetRotate": 0,
-      "globalAlpha": 1,
-      "dash": 0,
-      "strokeStyle": "#222",
-      "fillStyle": "",
-      "font": {
-        "color": "#222",
-        "fontFamily": "\"Hiragino Sans GB\", \"Microsoft YaHei\", \"Helvetica Neue\", Helvetica, Arial",
-        "fontSize": 12,
-        "lineHeight": 1.5,
-        "fontStyle": "normal",
-        "fontWeight": "normal",
-        "textAlign": "center",
-        "textBaseline": "middle"
-      },
-      "animateCycleIndex": 0,
-      "events": [],
-      "eventFns": [
-        "link",
-        "doAnimate",
-        "doFn",
-        "doWindowFn"
-      ],
-      "lineDashOffset": 0,
-      "text": "多态图片",
-      "textOffsetX": 0,
-      "textOffsetY": 0,
-      "animateType": "",
-      "data": {
-        "legendType": "text"
-      },
-      "zRotate": 0,
-      "anchors": [
-        {
-          "x": 366,
-          "y": 494,
-          "direction": 4
-        },
-        {
-          "x": 396,
-          "y": 479,
-          "direction": 1
-        },
-        {
-          "x": 426,
-          "y": 494,
-          "direction": 2
-        },
-        {
-          "x": 396,
-          "y": 509,
-          "direction": 3
-        }
-      ],
-      "rotatedAnchors": [
-        {
-          "x": 366,
-          "y": 494,
-          "direction": 4
-        },
-        {
-          "x": 396,
-          "y": 479,
-          "direction": 1
-        },
-        {
-          "x": 426,
-          "y": 494,
-          "direction": 2
-        },
-        {
-          "x": 396,
-          "y": 509,
-          "direction": 3
-        }
-      ],
-      "animateDuration": 0,
-      "animateFrames": [],
-      "borderRadius": 0,
-      "iconSize": null,
-      "imageAlign": "center",
-      "gradientAngle": 0,
-      "gradientRadius": 0.01,
-      "paddingTop": 0,
-      "paddingBottom": 0,
-      "paddingLeft": 0,
-      "paddingRight": 0,
-      "paddingLeftNum": 0,
-      "paddingRightNum": 0,
-      "paddingTopNum": 0,
-      "paddingBottomNum": 0,
-      "textRect": {
-        "x": 366,
-        "y": 501.5,
-        "width": 60,
-        "height": 7.5,
-        "center": {
-          "x": 396,
-          "y": 505.25
-        },
-        "ex": 426,
-        "ey": 509
-      },
-      "fullTextRect": {
-        "x": 366,
-        "y": 479,
-        "width": 60,
-        "height": 30,
-        "center": {
-          "x": 396,
-          "y": 494
-        },
-        "ex": 426,
-        "ey": 509
-      },
-      "iconRect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0,
-        "center": {
-          "x": 0,
-          "y": 0
-        },
-        "ex": 0,
-        "ey": 0
-      },
-      "elementRendered": false
-    },
-    {
-      "id": "e6ac376e",
-      "type": 0,
-      "name": "text",
-      "tags": [],
-      "rect": {
-        "x": 54,
-        "y": 257,
-        "width": 60,
-        "height": 30,
-        "center": {
-          "x": 84,
-          "y": 272
-        },
-        "ex": 114,
-        "ey": 287
-      },
-      "lineWidth": 1,
-      "rotate": 0,
-      "offsetRotate": 0,
-      "globalAlpha": 1,
-      "dash": 0,
-      "strokeStyle": "#222",
-      "fillStyle": "",
-      "font": {
-        "color": "#222",
-        "fontFamily": "\"Hiragino Sans GB\", \"Microsoft YaHei\", \"Helvetica Neue\", Helvetica, Arial",
-        "fontSize": 12,
-        "lineHeight": 1.5,
-        "fontStyle": "normal",
-        "fontWeight": "normal",
-        "textAlign": "center",
-        "textBaseline": "middle"
-      },
-      "animateCycleIndex": 0,
-      "events": [],
-      "eventFns": [
-        "link",
-        "doAnimate",
-        "doFn",
-        "doWindowFn"
-      ],
-      "lineDashOffset": 0,
-      "text": "当前档位",
-      "textOffsetX": 0,
-      "textOffsetY": 0,
-      "animateType": "",
-      "data": {
-        "legendType": "text"
-      },
-      "zRotate": 0,
-      "anchors": [
-        {
-          "x": 54,
-          "y": 272,
-          "direction": 4
-        },
-        {
-          "x": 84,
-          "y": 257,
-          "direction": 1
-        },
-        {
-          "x": 114,
-          "y": 272,
-          "direction": 2
-        },
-        {
-          "x": 84,
-          "y": 287,
-          "direction": 3
-        }
-      ],
-      "rotatedAnchors": [
-        {
-          "x": 54,
-          "y": 272,
-          "direction": 4
-        },
-        {
-          "x": 84,
-          "y": 257,
-          "direction": 1
-        },
-        {
-          "x": 114,
-          "y": 272,
-          "direction": 2
-        },
-        {
-          "x": 84,
-          "y": 287,
-          "direction": 3
-        }
-      ],
-      "animateDuration": 0,
-      "animateFrames": [],
-      "borderRadius": 0,
-      "iconSize": null,
-      "imageAlign": "center",
-      "gradientAngle": 0,
-      "gradientRadius": 0.01,
-      "paddingTop": 0,
-      "paddingBottom": 0,
-      "paddingLeft": 0,
-      "paddingRight": 0,
-      "paddingLeftNum": 0,
-      "paddingRightNum": 0,
-      "paddingTopNum": 0,
-      "paddingBottomNum": 0,
-      "textRect": {
-        "x": 54,
-        "y": 279.5,
-        "width": 60,
-        "height": 7.5,
-        "center": {
-          "x": 84,
-          "y": 283.25
-        },
-        "ex": 114,
-        "ey": 287
-      },
-      "fullTextRect": {
-        "x": 54,
-        "y": 257,
-        "width": 60,
-        "height": 30,
-        "center": {
-          "x": 84,
-          "y": 272
-        },
-        "ex": 114,
-        "ey": 287
-      },
-      "iconRect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0,
-        "center": {
-          "x": 0,
-          "y": 0
-        },
-        "ex": 0,
-        "ey": 0
-      },
-      "elementRendered": false
-    },
-    {
-      "id": "84e1b168",
-      "type": 0,
-      "name": "text",
-      "tags": [],
-      "rect": {
-        "x": 102,
-        "y": 260,
-        "width": 60,
-        "height": 30,
-        "center": {
-          "x": 132,
-          "y": 275
-        },
-        "ex": 162,
-        "ey": 290
-      },
-      "lineWidth": 1,
-      "rotate": 0,
-      "offsetRotate": 0,
-      "globalAlpha": 1,
-      "dash": 0,
-      "strokeStyle": "#222",
-      "fillStyle": "",
-      "font": {
-        "color": "#222",
-        "fontFamily": "\"Hiragino Sans GB\", \"Microsoft YaHei\", \"Helvetica Neue\", Helvetica, Arial",
-        "fontSize": 12,
-        "lineHeight": 1.5,
-        "fontStyle": "normal",
-        "fontWeight": "normal",
-        "textAlign": "center",
-        "textBaseline": "middle"
-      },
-      "animateCycleIndex": 0,
-      "events": [],
-      "eventFns": [
-        "link",
-        "doAnimate",
-        "doFn",
-        "doWindowFn"
-      ],
-      "lineDashOffset": 0,
-      "text": "10",
-      "textOffsetX": 0,
-      "textOffsetY": 0,
-      "animateType": "",
-      "data": {
-        "legendType": "text",
-        "tag": "device002"
-      },
-      "zRotate": 0,
-      "anchors": [
-        {
-          "x": 102,
-          "y": 275,
-          "direction": 4
-        },
-        {
-          "x": 132,
-          "y": 260,
-          "direction": 1
-        },
-        {
-          "x": 162,
-          "y": 275,
-          "direction": 2
-        },
-        {
-          "x": 132,
-          "y": 290,
-          "direction": 3
-        }
-      ],
-      "rotatedAnchors": [
-        {
-          "x": 102,
-          "y": 275,
-          "direction": 4
-        },
-        {
-          "x": 132,
-          "y": 260,
-          "direction": 1
-        },
-        {
-          "x": 162,
-          "y": 275,
-          "direction": 2
-        },
-        {
-          "x": 132,
-          "y": 290,
-          "direction": 3
-        }
-      ],
-      "animateDuration": 0,
-      "animateFrames": [],
-      "borderRadius": 0,
-      "iconSize": null,
-      "imageAlign": "center",
-      "gradientAngle": 0,
-      "gradientRadius": 0.01,
-      "paddingTop": 0,
-      "paddingBottom": 0,
-      "paddingLeft": 0,
-      "paddingRight": 0,
-      "paddingLeftNum": 0,
-      "paddingRightNum": 0,
-      "paddingTopNum": 0,
-      "paddingBottomNum": 0,
-      "textRect": {
-        "x": 102,
-        "y": 282.5,
-        "width": 60,
-        "height": 7.5,
-        "center": {
-          "x": 132,
-          "y": 286.25
-        },
-        "ex": 162,
-        "ey": 290
-      },
-      "fullTextRect": {
-        "x": 102,
-        "y": 260,
-        "width": 60,
-        "height": 30,
-        "center": {
-          "x": 132,
-          "y": 275
-        },
-        "ex": 162,
-        "ey": 290
-      },
-      "iconRect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0,
-        "center": {
-          "x": 0,
-          "y": 0
-        },
-        "ex": 0,
-        "ey": 0
-      },
-      "elementRendered": false
-    },
-    {
-      "id": "83a9c0c9",
-      "type": 0,
-      "name": "image",
-      "tags": [],
-      "rect": {
-        "x": 561,
-        "y": 320,
-        "width": 150,
-        "height": 100,
-        "center": {
-          "x": 636,
-          "y": 370
-        },
-        "ex": 711,
-        "ey": 420
-      },
-      "lineWidth": 1,
-      "rotate": 0,
-      "offsetRotate": 0,
-      "globalAlpha": 1,
-      "dash": 0,
-      "strokeStyle": "#222",
-      "fillStyle": "",
-      "font": {
-        "color": "#222",
-        "fontFamily": "\"Hiragino Sans GB\", \"Microsoft YaHei\", \"Helvetica Neue\", Helvetica, Arial",
-        "fontSize": 12,
-        "lineHeight": 1.5,
-        "fontStyle": "normal",
-        "fontWeight": "normal",
-        "textAlign": "center",
-        "textBaseline": "middle"
-      },
-      "animateCycleIndex": 0,
-      "events": [],
-      "eventFns": [
-        "link",
-        "doAnimate",
-        "doFn",
-        "doWindowFn"
-      ],
-      "lineDashOffset": 0,
-      "textOffsetX": 0,
-      "textOffsetY": 0,
-      "animateType": "",
-      "data": {
-        "legendType": "statusImg",
-        "tag": "device003"
-      },
-      "zRotate": 0,
-      "anchors": [
-        {
-          "x": 561,
-          "y": 370,
-          "direction": 4
-        },
-        {
-          "x": 636,
-          "y": 320,
-          "direction": 1
-        },
-        {
-          "x": 711,
-          "y": 370,
-          "direction": 2
-        },
-        {
-          "x": 636,
-          "y": 420,
-          "direction": 3
-        }
-      ],
-      "rotatedAnchors": [
-        {
-          "x": 561,
-          "y": 370,
-          "direction": 4
-        },
-        {
-          "x": 636,
-          "y": 320,
-          "direction": 1
-        },
-        {
-          "x": 711,
-          "y": 370,
-          "direction": 2
-        },
-        {
-          "x": 636,
-          "y": 420,
-          "direction": 3
-        }
-      ],
-      "animateDuration": 0,
-      "animateFrames": [],
-      "borderRadius": 0,
-      "iconSize": null,
-      "image": "http://113.31.118.32:9000/test/topology/HVAC/Water/circulating_pump_normal.svg",
-      "imgNaturalWidth": 225,
-      "imgNaturalHeight": 150,
-      "imageAlign": "center",
-      "gradientAngle": 0,
-      "gradientRadius": 0.01,
-      "paddingTop": 0,
-      "paddingBottom": 0,
-      "paddingLeft": 0,
-      "paddingRight": 0,
-      "paddingLeftNum": 0,
-      "paddingRightNum": 0,
-      "paddingTopNum": 0,
-      "paddingBottomNum": 0,
-      "textRect": {
-        "x": 561,
-        "y": 402,
-        "width": 150,
-        "height": 18,
-        "center": {
-          "x": 636,
-          "y": 411
-        },
-        "ex": 711,
-        "ey": 420
-      },
-      "fullTextRect": {
-        "x": 561,
-        "y": 320,
-        "width": 150,
-        "height": 100,
-        "center": {
-          "x": 636,
-          "y": 370
-        },
-        "ex": 711,
-        "ey": 420
-      },
-      "iconRect": {
-        "x": 561,
-        "y": 320,
-        "width": 150,
-        "height": 77,
-        "center": {
-          "x": 636,
-          "y": 358.5
-        },
-        "ex": 711,
-        "ey": 397
-      },
-      "fullIconRect": {
-        "x": 561,
-        "y": 320,
-        "width": 150,
-        "height": 100,
-        "center": {
-          "x": 636,
-          "y": 370
-        },
-        "ex": 711,
-        "ey": 420
-      },
-      "elementRendered": false,
-      "img": {},
-      "lastImage": "http://113.31.118.32:9000/test/topology/HVAC/Water/circulating_pump_normal.svg"
-    },
-    {
-      "id": "a3b7cd9a",
-      "type": 0,
-      "name": "image",
-      "tags": [],
-      "rect": {
-        "x": 86.5,
-        "y": 582,
-        "width": 127,
-        "height": 117,
-        "center": {
-          "x": 150,
-          "y": 640.5
-        },
-        "ex": 213.5,
-        "ey": 699
-      },
-      "lineWidth": 1,
-      "rotate": 0,
-      "offsetRotate": 0,
-      "globalAlpha": 1,
-      "dash": 0,
-      "strokeStyle": "#222",
-      "fillStyle": "",
-      "font": {
-        "color": "#222",
-        "fontFamily": "\"Hiragino Sans GB\", \"Microsoft YaHei\", \"Helvetica Neue\", Helvetica, Arial",
-        "fontSize": 12,
-        "lineHeight": 1.5,
-        "fontStyle": "normal",
-        "fontWeight": "normal",
-        "textAlign": "center",
-        "textBaseline": "middle"
-      },
-      "animateCycleIndex": 0,
-      "events": [],
-      "eventFns": [
-        "link",
-        "doAnimate",
-        "doFn",
-        "doWindowFn"
-      ],
-      "lineDashOffset": 0,
-      "textOffsetX": 0,
-      "textOffsetY": 0,
-      "animateType": "",
-      "data": {
-        "legendType": "enumImg",
-        "tag": "device004"
-      },
-      "zRotate": 0,
-      "anchors": [
-        {
-          "x": 86.5,
-          "y": 640.5,
-          "direction": 4
-        },
-        {
-          "x": 150,
-          "y": 582,
-          "direction": 1
-        },
-        {
-          "x": 213.5,
-          "y": 640.5,
-          "direction": 2
-        },
-        {
-          "x": 150,
-          "y": 699,
-          "direction": 3
-        }
-      ],
-      "rotatedAnchors": [
-        {
-          "x": 86.5,
-          "y": 640.5,
-          "direction": 4
-        },
-        {
-          "x": 150,
-          "y": 582,
-          "direction": 1
-        },
-        {
-          "x": 213.5,
-          "y": 640.5,
-          "direction": 2
-        },
-        {
-          "x": 150,
-          "y": 699,
-          "direction": 3
-        }
-      ],
-      "animateDuration": 0,
-      "animateFrames": [],
-      "borderRadius": 0,
-      "iconSize": null,
-      "image": "http://113.31.118.32:9000/test/topology/HVAC/Water/snmp_0.svg",
-      "imgNaturalWidth": 196,
-      "imgNaturalHeight": 150,
-      "imageAlign": "center",
-      "gradientAngle": 0,
-      "gradientRadius": 0.01,
-      "paddingTop": 0,
-      "paddingBottom": 0,
-      "paddingLeft": 0,
-      "paddingRight": 0,
-      "paddingLeftNum": 0,
-      "paddingRightNum": 0,
-      "paddingTopNum": 0,
-      "paddingBottomNum": 0,
-      "textRect": {
-        "x": 86.5,
-        "y": 681,
-        "width": 127,
-        "height": 18,
-        "center": {
-          "x": 150,
-          "y": 690
-        },
-        "ex": 213.5,
-        "ey": 699
-      },
-      "fullTextRect": {
-        "x": 86.5,
-        "y": 582,
-        "width": 127,
-        "height": 117,
-        "center": {
-          "x": 150,
-          "y": 640.5
-        },
-        "ex": 213.5,
-        "ey": 699
-      },
-      "iconRect": {
-        "x": 86.5,
-        "y": 582,
-        "width": 127,
-        "height": 94,
-        "center": {
-          "x": 150,
-          "y": 629
-        },
-        "ex": 213.5,
-        "ey": 676
-      },
-      "fullIconRect": {
-        "x": 86.5,
-        "y": 582,
-        "width": 127,
-        "height": 117,
-        "center": {
-          "x": 150,
-          "y": 640.5
-        },
-        "ex": 213.5,
-        "ey": 699
-      },
-      "elementRendered": false,
-      "img": {},
-      "lastImage": "http://113.31.118.32:9000/test/topology/HVAC/Water/snmp_0.svg"
-    },
-    {
-      "id": "e5b980c5",
-      "type": 0,
-      "name": "text",
-      "tags": [],
-      "rect": {
-        "x": 120,
-        "y": 721,
-        "width": 60,
-        "height": 30,
-        "center": {
-          "x": 150,
-          "y": 736
-        },
-        "ex": 180,
-        "ey": 751
-      },
-      "lineWidth": 1,
-      "rotate": 0,
-      "offsetRotate": 0,
-      "globalAlpha": 1,
-      "dash": 0,
-      "strokeStyle": "#222",
-      "fillStyle": "",
-      "font": {
-        "color": "#222",
-        "fontFamily": "\"Hiragino Sans GB\", \"Microsoft YaHei\", \"Helvetica Neue\", Helvetica, Arial",
-        "fontSize": 12,
-        "lineHeight": 1.5,
-        "fontStyle": "normal",
-        "fontWeight": "normal",
-        "textAlign": "center",
-        "textBaseline": "middle"
-      },
-      "animateCycleIndex": 0,
-      "events": [],
-      "eventFns": [
-        "link",
-        "doAnimate",
-        "doFn",
-        "doWindowFn"
-      ],
-      "lineDashOffset": 0,
-      "text": "示例文字",
-      "textOffsetX": 0,
-      "textOffsetY": 0,
-      "animateType": "",
-      "data": {
-        "legendType": "text"
-      },
-      "zRotate": 0,
-      "anchors": [
-        {
-          "x": 120,
-          "y": 736,
-          "direction": 4
-        },
-        {
-          "x": 150,
-          "y": 721,
-          "direction": 1
-        },
-        {
-          "x": 180,
-          "y": 736,
-          "direction": 2
-        },
-        {
-          "x": 150,
-          "y": 751,
-          "direction": 3
-        }
-      ],
-      "rotatedAnchors": [
-        {
-          "x": 120,
-          "y": 736,
-          "direction": 4
-        },
-        {
-          "x": 150,
-          "y": 721,
-          "direction": 1
-        },
-        {
-          "x": 180,
-          "y": 736,
-          "direction": 2
-        },
-        {
-          "x": 150,
-          "y": 751,
-          "direction": 3
-        }
-      ],
-      "animateDuration": 0,
-      "animateFrames": [],
-      "borderRadius": 0,
-      "iconSize": null,
-      "imageAlign": "center",
-      "gradientAngle": 0,
-      "gradientRadius": 0.01,
-      "paddingTop": 0,
-      "paddingBottom": 0,
-      "paddingLeft": 0,
-      "paddingRight": 0,
-      "paddingLeftNum": 0,
-      "paddingRightNum": 0,
-      "paddingTopNum": 0,
-      "paddingBottomNum": 0,
-      "textRect": {
-        "x": 120,
-        "y": 743.5,
-        "width": 60,
-        "height": 7.5,
-        "center": {
-          "x": 150,
-          "y": 747.25
-        },
-        "ex": 180,
-        "ey": 751
-      },
-      "fullTextRect": {
-        "x": 120,
-        "y": 721,
-        "width": 60,
-        "height": 30,
-        "center": {
-          "x": 150,
-          "y": 736
-        },
-        "ex": 180,
-        "ey": 751
-      },
-      "iconRect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0,
-        "center": {
-          "x": 0,
-          "y": 0
-        },
-        "ex": 0,
-        "ey": 0
+          "x": 379,
+          "y": 347
+        },
+        "ex": 397,
+        "ey": 365
       },
       "elementRendered": false
     }
@@ -1900,5 +669,6 @@
   "fromArrowType": "",
   "toArrowType": "triangleSolid",
   "scale": 1,
-  "locked": 0
+  "locked": 0,
+  "bkColor": "#000"
 }
