@@ -37,6 +37,7 @@ export default {
         data.locked = 1 // 锁定画布
         console.log('json数据读取完毕', data)
         this.canvas.open(data)
+        this.canvas.divLayer.canvas.focus()
         if (this.resize) {
           this.resizeCanvas()
         }
@@ -66,17 +67,19 @@ export default {
     },
     resizeCanvas () { // 适配外框
       let canvasRect = this.canvas.getRect() // 画布大小
-      console.log('原始画布', canvasRect)
       let contianerWidth = this.$refs.myCanvas.clientWidth
       let contianerHeight = this.$refs.myCanvas.clientHeight
       console.log('外层容器宽高', contianerWidth, contianerHeight)
+
       let widthNum = parseFloat((contianerWidth / canvasRect.width).toFixed(2))
       let heightNum = parseFloat((contianerHeight / canvasRect.height).toFixed(2))
-      this.canvas.scaleTo(Math.min(widthNum, heightNum))
+      this.canvas.scaleTo(Math.min(widthNum, heightNum)) // 缩放
+
+
       let newCanvasRect = this.canvas.getRect() // 画布大小
-      console.log('缩放后画布', newCanvasRect)
-      this.canvas.translate(-newCanvasRect.x, -newCanvasRect.y) // 取相反数平移
-      this.canvas.render()
+      console.log('画布宽高', newCanvasRect.width, newCanvasRect.height)
+      this.canvas.translate(-newCanvasRect.x + Math.abs(parseInt(newCanvasRect.width) - contianerWidth) / 2,
+        -newCanvasRect.y + Math.abs(parseInt(newCanvasRect.height) - contianerHeight) / 2) // 平移至外层画布中间
     },
 
     getNode (tag) { // 寻找目标节点，用来操作动画，样式切换等
