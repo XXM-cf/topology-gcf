@@ -53,14 +53,9 @@ export default {
     },
     onMessage (event, data) {
       switch (event) {
-        case 'dblclick':
-          console.log('双击')
-          break;
         case 'node':
           if (data.data.legendType && data.data.legendType === 'plane') {
-            console.log('打开')
             this.handlePlaneClick(window.event, data)
-
             console.log('点击节点 --> node', data.strokeStyle, this.canvas)
           } else {
             console.warn('该节点无点击操作', data)
@@ -72,10 +67,6 @@ export default {
       }
     },
     handlePlaneClick (event, data) {
-      let x = event.clientX
-      let y = event.clientY
-      console.log(x, y)
-      console.log('node', data.rect)
       this.isShow = true
       this.top = data.rect.ey + 'px'
       this.left = data.rect.ex + 'px'

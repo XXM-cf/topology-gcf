@@ -40,8 +40,30 @@
           v-for="item of nodesAlgin" :key="item"
           style="padding-left: 20px;cursor: pointer")
           i(:class="`iconfont icon-align-${ item }`"
-            @click="onNodesAlign(item)")
-
+            @click="onAlignNodes(item)")
+    .group
+      .title 排版（单位：px）
+      .container
+        .item
+          .label 最大宽度
+          el-input-number(v-model='layoutParams.maxWidth', controls-position='right', @change='onChange')
+        .item
+          .label 图例宽度
+          el-input-number(v-model='layoutParams.nodeWidth', controls-position='right', @change='onChange')
+        .item
+          .label 图例高度
+          el-input-number(v-model='layoutParams.nodeHeight', controls-position='right', @change='onChange')
+        .item
+          .label 水平个数
+          el-input-number(v-model='layoutParams.maxCount', controls-position='right', @change='onChange')
+        .item
+          .label 水平间距
+          el-input-number(v-model='layoutParams.spaceWidth', controls-position='right', @change='onChange')
+        .item
+          .label 垂直间距
+          el-input-number(v-model='layoutParams.spaceHeight', controls-position='right', @change='onChange')
+        .item.full-item
+          el-button(type="primary" @click="onLayoutNodes" style="width:100%") 立即排版
   // 线条属性
   .props-container(v-if="props.line")
     .group
@@ -320,6 +342,8 @@
 import { Node } from 'topology-core/models/node'
 import { Line } from 'topology-core/models/line'
 import { Point } from 'topology-core/models/point'
+import { alignNodes, layout, spaceBetween } from 'topology-layout'
+
 export default {
   props: {
     imgList: {
@@ -345,7 +369,15 @@ export default {
   },
   data () {
     return {
-      baseImg: '',
+      baseImg: '', // 地图
+      layoutParams: {
+        maxWidth: 0, // 布局
+        nodeWidth: 0,
+        nodeHeight: 0,
+        maxCount: 0,
+        spaceWidth: 30,
+        spaceHeight: 30
+      },
       canvasOptions: {
         disableScale: this.options.disableScale
       },
@@ -437,7 +469,7 @@ export default {
         { label: '曲线', value: 'curve' },
         { label: '线段', value: 'polyline' }
       ],
-      nodesAlgin: ['left', 'right', 'top', 'bottom', 'center', 'middle'],
+      nodesAlgin: ['left', 'right', 'top', 'bottom', 'center', 'middle', 'between'],
       nodeEnable: false,
       // ---------- 业务数据 ------------- //
       videoList: [
@@ -553,8 +585,22 @@ export default {
         this.props.node.animateDuration += item.duration;
       }
     },
-    onNodesAlign (align) {
-      this.$emit('align', align)
+    onAlignNodes (align) { // 多节点对齐
+      if (align === 'between') {
+        this.onSpaceBetween()
+      } else {
+        alignNodes(this.canvas.activeLayer.pens, this.canvas.activeLayer.rect, align);
+        this.canvas.updateProps()
+      }
+    },
+    onLayoutNodes () {
+      this.layoutParams.maxWidth = this.canvas.activeLayer.rect.width
+      layout(this.canvas.activeLayer.pens, this.layoutParams)
+      this.canvas.updateProps()
+    },
+    onSpaceBetween () {
+      spaceBetween(this.canvas.activeLayer.pens, this.canvas.activeLayer.rect.width);
+      this.canvas.updateProps();
     },
     onChange (value) {
       this.$emit('change', this.props.node)

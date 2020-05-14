@@ -78,10 +78,6 @@ export default {
     return {
       demoImgList: [
         {
-          label: '酒店1层',
-          value: require('@/assets/images/baseImg/floor.png')
-        },
-        {
           label: '纯黑',
           value: 'http://113.31.118.32:9000/test/topology/HVAC/black.jpg'
         },

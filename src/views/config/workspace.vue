@@ -32,7 +32,6 @@
         :options="canvasOptions"
         :props.sync='props'
         @change='onUpdateProps'
-        @align="onAlignNodes"
         @changeOptions="onChangeOptions"
         @changeBaseImg='onSetBaseImg')
     .context-menu(v-if='contextmenu.left', :style='this.contextmenu')
@@ -46,7 +45,6 @@ import { Line } from 'topology-core/models/line'
 import { Point } from 'topology-core/models/point'
 import { Direction } from 'topology-core/models/direction'
 import * as FileSaver from 'file-saver'
-import { alignNodes } from 'topology-layout'
 import { Store } from 'le5le-store'
 
 
@@ -184,7 +182,6 @@ export default {
       }
     },
     onMessage (event, data) {
-      // console.log('onMessage:', event, data)
       let e = window.event
       switch (event) {
         case 'dblclick':
@@ -316,11 +313,7 @@ export default {
 
       return locked
     },
-    onAlignNodes (align) { // 多节点对齐
-      alignNodes(this.canvas.activeLayer.pens, this.canvas.activeLayer.rect, align);
-      this.canvas.updateProps()
-      this.canvas.cache()
-    },
+
     onUpdateProps (node) { // 改变属性
       // 如果是node属性改变，需要传入node，重新计算node相关属性值
       // 如果是line属性改变，无需传参

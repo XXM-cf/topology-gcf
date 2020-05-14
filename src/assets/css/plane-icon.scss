@@ -1,18 +1,13 @@
-@font-face {
-  font-family: 'iconfont';  /* project id 1776547 */
-  src: url('//at.alicdn.com/t/font_1776547_v9asghd0me.eot');
-  src: url('//at.alicdn.com/t/font_1776547_v9asghd0me.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1776547_v9asghd0me.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1776547_v9asghd0me.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1776547_v9asghd0me.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1776547_v9asghd0me.svg#iconfont') format('svg');
-}
 .iconfont {
   font-family: "iconfont" !important;
   font-size: 16px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-align-between:before {
+  content: "\e788";
 }
 
 .icon-dianti2:before {
@@ -326,4 +321,3 @@
 .icon-peidian_zhenkongduanluqihezha:before {
   content: "\ed0b";
 }
-
