@@ -73,6 +73,8 @@
         el-select(
           v-model='props.line.data.tag'
           placeholder='关联设备'
+          filterable
+          clearable
           @change='onChange')
           el-option(
             v-for='(item,index) in deviceList',
@@ -172,6 +174,8 @@
         .label 关联业务（点位）
         el-select(
           v-model='props.node.data.tag',
+          clearable
+          filterable
           placeholder='关联设备'
           @change='onChange')
           el-option(

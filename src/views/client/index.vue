@@ -26,7 +26,7 @@ export default {
       left: '',
       canvasOptions: {
         lock: 1,
-        disableScale: true,
+        // disableScale: true,
         activeColor: 'transparent' // 去除选中边框
       },
       canvas: {}
@@ -48,6 +48,7 @@ export default {
           this.canvas.open(data)
           this.canvas.divLayer.canvas.focus()
           if (this.resize) {
+            this.canvas.scale(data.scale) // 缩放
             this.resizeCanvas()
           }
           this.canvas.render()
@@ -77,21 +78,46 @@ export default {
       this.$emit('nodeClick', data)
     },
     render () {
-      this.canvas.animate()
       this.canvas.render()
     },
+    destory () {
+      this.canvas.destroy()
+    },
+
     resizeCanvas () { // 适配外框
       let canvasRect = this.canvas.getRect() // 画布大小
+      console.log('原始画布宽高', canvasRect.width, canvasRect.height)
+      // 限制最大画布为1920 * 1080
+      let canvasWidth = parseInt(canvasRect.width)
+      let canvasHeight = parseInt(canvasRect.height)
 
       let contianerWidth = this.$refs.myCanvas.clientWidth
       let contianerHeight = this.$refs.myCanvas.clientHeight
+
       console.log('外层容器宽高', contianerWidth, contianerHeight)
-      let widthNum = parseFloat((contianerWidth / canvasRect.width).toFixed(2))
-      let heightNum = parseFloat((contianerHeight / canvasRect.height).toFixed(2))
 
-      this.canvas.scaleTo(Math.min(widthNum, heightNum)) // 缩放
+      let widthNum = parseFloat((canvasWidth / contianerWidth).toFixed(2))
+      let heightNum = parseFloat((canvasHeight / contianerHeight).toFixed(2))
+
+      let scaleWidthNum = parseFloat((contianerWidth / canvasWidth).toFixed(2))
+      let scaleHeightNum = parseFloat((contianerHeight / canvasHeight).toFixed(2))
+      console.log('宽高比例', widthNum, heightNum)
+
+      if (widthNum <= 1 && heightNum <= 1) { // 需放大
+        console.log('范围内，需放大', Math.min(scaleWidthNum, heightNum))
+        this.canvas.scaleTo(Math.min(scaleWidthNum, scaleHeightNum)) // 缩放
+      } else if (heightNum > 1 && widthNum <= 1) { // 高度超出
+        console.log('高度超出', scaleHeightNum)
+        this.canvas.scaleTo(scaleHeightNum) // 缩小
+      } else if (widthNum > 1 && heightNum <= 1) { // 宽度超出
+        console.log('宽度超出', (scaleWidthNum))
+        this.canvas.scaleTo(scaleWidthNum) // 缩小
+      } else { // 宽高都超出
+        console.log('全部超出', Math.min(scaleWidthNum, scaleHeightNum))
+        this.canvas.scaleTo(Math.min(scaleWidthNum, scaleHeightNum)) // 缩放
+      }
+
       let newCanvasRect = this.canvas.getRect() // 画布大小
-
       console.log('画布宽高', newCanvasRect.width, newCanvasRect.height)
       this.canvas.translate(-newCanvasRect.x + Math.abs(parseInt(newCanvasRect.width) - contianerWidth) / 2,
         -newCanvasRect.y + Math.abs(parseInt(newCanvasRect.height) - contianerHeight) / 2) // 平移至外层画布中间
@@ -116,7 +142,7 @@ export default {
     // 故障： fault: #ffb300
     // 离线： offline: #9655ff
     // 运行： running: #00dc94
-    // 正常： normal: #999
+    // 正常： normal: #333
 
     handle_update (tag, status, value) { // 更新数据: 文案，图标，多态图片、多档图片
       let nodes = this.getNode(tag)
@@ -137,6 +163,7 @@ export default {
               this.handle_changeImg(node, status)
               break;
           }
+          this.canvas.updateProps(node)
         })
       }
     },
@@ -187,7 +214,7 @@ export default {
       const state = Node.cloneState(targetNode)
       switch (status) { // 告警
         case 'normal':
-          targetNode.iconColor = '#999'
+          targetNode.iconColor = '#333'
           break;
         case 'running':
           targetNode.iconColor = '#00dc94'
@@ -238,7 +265,7 @@ export default {
       }
       switch (status) { // 告警
         case 'normal':
-          targetNode.font.color = '#999'
+          targetNode.font.color = '#333'
           break;
         case 'running':
           targetNode.font.color = '#00dc94'
@@ -303,7 +330,7 @@ export default {
               toArrow: '',
               from: new Point(item.x - 2, item.y),
               to: new Point(item.x + 2, item.y),
-              strokeStyle: '#999',
+              strokeStyle: '#333',
               lineWidth: 1
             })
           )
@@ -315,7 +342,7 @@ export default {
             toArrow: '',
             from: new Point(data.elevatorStartX, data.elevatorStartY),
             to: new Point(data.elevatorEndX, data.elevatorEndY),
-            strokeStyle: '#999',
+            strokeStyle: '#333',
             lineWidth: 1
           })
         )
@@ -343,8 +370,11 @@ export default {
       elevatorNode.animateStart = Date.now()
       this.canvas.animate()
     },
+  },
+  destroyed () {
+    console.warn('释放canvas资源')
+    this.canvas.destroy()
   }
-
 }
 </script>
 <style lang="scss">

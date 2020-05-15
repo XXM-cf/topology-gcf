@@ -154,7 +154,7 @@ const pipeImg = {
         strokeStyle: 'transparent', // 去除边框
         icon: item.unicode,
         iconFamily: 'iconfont',
-        iconColor: '#999',
+        iconColor: '#333',
         iconClass: 'icon-' + item.font_class,
         iconSize: 40,
         name: 'rectangle',
