@@ -33,23 +33,28 @@ export default {
     }
   },
   mounted () {
-    this.canvasOptions.on = this.onMessage
-    this.canvas = new Topology('topology-client', this.canvasOptions)
+    this.init()
   },
   methods: {
+    init () {
+      this.canvasOptions.on = this.onMessage
+      this.canvas = new Topology('topology-client', this.canvasOptions)
+    },
     open (data) {
-      if (data && Array.isArray(data.pens)) {
-        data.locked = 1 // 锁定画布
-        console.log('json数据读取完毕', data)
-        this.canvas.open(data)
-        this.canvas.divLayer.canvas.focus()
-        if (this.resize) {
-          this.resizeCanvas()
+      this.$nextTick(() => {
+        if (data && Array.isArray(data.pens)) {
+          data.locked = 1 // 锁定画布
+          console.log('json数据读取完毕', data)
+          this.canvas.open(data)
+          this.canvas.divLayer.canvas.focus()
+          if (this.resize) {
+            this.resizeCanvas()
+          }
+          this.canvas.render()
+        } else {
+          console.log('暂无可用配置')
         }
-        this.canvas.render()
-      } else {
-        console.log('暂无可用配置')
-      }
+      })
     },
     onMessage (event, data) {
       switch (event) {
@@ -57,12 +62,8 @@ export default {
           if (data.data.baseImg) { // 点击底图
             this.isShow = false // 清除右键菜单
           }
-          if (data.data.legendType && data.data.legendType === 'plane') {
-            this.handlePlaneClick(window.event, data)
-            console.log('点击节点 --> node', data)
-          } else {
-            console.warn('该节点无点击操作', data)
-          }
+          this.handlePlaneClick(window.event, data)
+          console.log('点击节点 --> node', data)
           break;
         case 'space':
           this.isShow = false // 清除右键菜单
@@ -81,16 +82,16 @@ export default {
     },
     resizeCanvas () { // 适配外框
       let canvasRect = this.canvas.getRect() // 画布大小
+
       let contianerWidth = this.$refs.myCanvas.clientWidth
       let contianerHeight = this.$refs.myCanvas.clientHeight
       console.log('外层容器宽高', contianerWidth, contianerHeight)
-
       let widthNum = parseFloat((contianerWidth / canvasRect.width).toFixed(2))
       let heightNum = parseFloat((contianerHeight / canvasRect.height).toFixed(2))
+
       this.canvas.scaleTo(Math.min(widthNum, heightNum)) // 缩放
-
-
       let newCanvasRect = this.canvas.getRect() // 画布大小
+
       console.log('画布宽高', newCanvasRect.width, newCanvasRect.height)
       this.canvas.translate(-newCanvasRect.x + Math.abs(parseInt(newCanvasRect.width) - contianerWidth) / 2,
         -newCanvasRect.y + Math.abs(parseInt(newCanvasRect.height) - contianerHeight) / 2) // 平移至外层画布中间
@@ -231,7 +232,6 @@ export default {
           break;
       }
     },
-
     handle_changeFont (targetNode, status, text) { // 修改文案
       if (text) {
         targetNode.text = text
@@ -254,11 +254,8 @@ export default {
           break;
       }
     },
-    handle_elevatorRun (tag, targetStep) {
-      console.log('电梯运行', tag, targetStep)
-      let elevatorNode = this.canvas.data.pens.find(item => {
-        return item.data.tag === tag // 关联tag
-      })
+    handle_elevatorRun (targetNode, targetStep) {
+      let elevatorNode = targetNode
       if (!elevatorNode) {
         return
       }

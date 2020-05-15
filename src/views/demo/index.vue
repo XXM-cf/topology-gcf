@@ -14,7 +14,7 @@
         el-button(@click="handleUpdate()") 更新
 
       .full(ref="myCanvas" style="width:1200px; height:800px;border:1px solid red;overflow: hidden")
-        topologyView( ref="topologyView" @nodeClick="handleClick")
+        topologyView(ref="topologyView" @nodeClick="handleClick")
           pre(slot="dialog") 你好 {{ nodeDetail }}
 
 
