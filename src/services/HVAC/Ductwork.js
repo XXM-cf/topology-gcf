@@ -35,7 +35,8 @@ const arr = [
     rect: {
       width: 46,
       height: 46
-    }
+    },
+    legendType: 'animateImg'
   },
   {
     name: '滤网零级',

@@ -27,7 +27,7 @@ export default {
       canvasOptions: {
         lock: 1,
         disableScale: true,
-        // activeColor: 'transparent' // 去除选中边框
+        activeColor: 'transparent' // 去除选中边框
       },
       canvas: {}
     }
@@ -54,11 +54,11 @@ export default {
     onMessage (event, data) {
       switch (event) {
         case 'node':
+          if (data.data.baseImg) { // 点击底图
+            this.isShow = false // 清除右键菜单
+          }
           if (data.data.legendType && data.data.legendType === 'plane') {
             this.handlePlaneClick(window.event, data)
-            if (data.data.baseImg) { // 点击底图
-              this.isShow = false // 清除右键菜单
-            }
             console.log('点击节点 --> node', data)
           } else {
             console.warn('该节点无点击操作', data)
@@ -110,21 +110,6 @@ export default {
         return false
       }
     },
-    handle_startAnimate (targetNode) { // 开始动画
-      targetNode.rotate = 0
-      if (targetNode && targetNode.animateFrames.length) { // 目标节点，业务数据触发动画
-        targetNode.animateStart = Date.now()
-        this.canvas.animate()
-      }
-    },
-
-    handle_endAnimate (targetNode) { // 结束动画
-      if (targetNode && targetNode.animateFrames.length) { // 目标节点，业务数据触发动画
-        targetNode.animateStart = 0
-        targetNode.rotate = 0
-        this.canvas.animate()
-      }
-    },
     // 设备图例对应的五种状态：
     // 告警： alarm : #ff4a4a
     // 故障： fault: #ffb300
@@ -143,6 +128,9 @@ export default {
             case 'text': // 文字
               this.handle_changeFont(node, status, value)
               break;
+            case 'animateImg': // 风机图片
+              this.handle_circle(node, status)
+              break;
             case 'enumImg': // 多档图片
             case 'statusImg': // 多态图片
               this.handle_changeImg(node, status)
@@ -151,14 +139,45 @@ export default {
         })
       }
     },
-
+    handle_circle (targetNode, status) { // 旋转
+      if (status === 'running') {
+        if (targetNode.animateFrames.length) {
+          targetNode.rotate = 0
+          targetNode.animateStart = Date.now()
+          this.canvas.animate()
+        } else {
+          const state = Node.cloneState(targetNode)
+          targetNode.rotate = 0
+          targetNode.animateType = 'forwardRotate'
+          state.rotate = 360;
+          targetNode.animateFrames.push({
+            duration: 1000,
+            linear: true,
+            state
+          });
+          targetNode.animateFrames.push({
+            duration: 0,
+            linear: true,
+            state: Node.cloneState(targetNode)
+          });
+          for (const item of targetNode.animateFrames) {
+            targetNode.animateDuration += item.duration;
+          }
+          targetNode.animateStart = Date.now()
+          this.canvas.animate()
+        }
+      } else {
+        targetNode.animateStart = 0
+        targetNode.rotate = 0
+        this.canvas.animate()
+      }
+    },
     handle_changeImg (targetNode, status) { // 改变图片
       let arr = targetNode.image.split('.svg')[0].split('_')
       arr[arr.length - 1] = status
       targetNode.image = arr.join('_') + '.svg'
     },
     handle_changeIcon (targetNode, status) { // 改变icon状态
-      console.log('改变icon', status)
       targetNode.animateStart = 0
       targetNode.animateStart = 0
       targetNode.lineWidth = 0
@@ -181,7 +200,6 @@ export default {
         case 'alarm':
           targetNode.iconColor = '#ff4a4a' // 改为红色
           if (targetNode.animateFrames.length) {
-            targetNode.iconColor = '#ff4a4a'
             targetNode.animateStart = Date.now()
             this.canvas.animate()
           } else {
