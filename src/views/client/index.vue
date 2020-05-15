@@ -27,7 +27,7 @@ export default {
       canvasOptions: {
         lock: 1,
         disableScale: true,
-        activeColor: 'transparent' // 去除选中边框
+        // activeColor: 'transparent' // 去除选中边框
       },
       canvas: {}
     }
@@ -56,7 +56,10 @@ export default {
         case 'node':
           if (data.data.legendType && data.data.legendType === 'plane') {
             this.handlePlaneClick(window.event, data)
-            console.log('点击节点 --> node', data.strokeStyle, this.canvas)
+            if (data.data.baseImg) { // 点击底图
+              this.isShow = false // 清除右键菜单
+            }
+            console.log('点击节点 --> node', data)
           } else {
             console.warn('该节点无点击操作', data)
           }
@@ -176,31 +179,36 @@ export default {
           targetNode.iconColor = '#ffb300'
           break;
         case 'alarm':
+          targetNode.iconColor = '#ff4a4a' // 改为红色
           if (targetNode.animateFrames.length) {
             targetNode.iconColor = '#ff4a4a'
             targetNode.animateStart = Date.now()
             this.canvas.animate()
           } else {
-            targetNode.iconColor = '#ff4a4a'
             targetNode.animateType = 'heart'
-            state.lineWidth = 30;
-            state.strokeStyle = 'rgba(255,74,74,0.6)';
+            state.rect.x -= 10;
+            state.rect.ex += 10;
+            state.rect.y -= 10;
+            state.rect.ey += 10;
+            state.rect.width += 20;
+            state.rect.height += 20;
+            state.fillStyle = 'rgba(255,74,74,0.5)';
             targetNode.animateFrames.push({
-              duration: 800,
+              duration: 400,
               linear: true,
               state
             });
             targetNode.animateFrames.push({
-              duration: 800,
+              duration: 400,
               linear: true,
               state: Node.cloneState(targetNode)
             });
-
             for (const item of targetNode.animateFrames) {
               targetNode.animateDuration += item.duration;
             }
             targetNode.animateStart = Date.now()
             this.canvas.animate()
+            break;
           }
           break;
       }

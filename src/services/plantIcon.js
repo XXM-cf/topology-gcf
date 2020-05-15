@@ -148,8 +148,8 @@ const pipeImg = {
       name: item.name,
       data: {
         rect: {
-          width: 36,
-          height: 36
+          width: 35,
+          height: 35
         },
         strokeStyle: 'transparent',
         icon: item.unicode,

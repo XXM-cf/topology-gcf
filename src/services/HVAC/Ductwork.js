@@ -1,7 +1,7 @@
 
 import baseUrl from '../config'
 
-const currUrl = baseUrl + 'HVAC/Ductwork/'
+const currUrl = baseUrl + 'HVAC/Ductwork2/'
 const arr = [
   {
     name: '动态箭头',

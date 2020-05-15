@@ -1,6 +1,6 @@
 
 import baseUrl from '../config'
-const currUrl = baseUrl + 'HVAC/Sensors/'
+const currUrl = baseUrl + 'HVAC/Sensors2/'
 const arr = [
   {
     name: '风管一氧化碳',
