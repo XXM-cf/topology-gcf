@@ -72,10 +72,6 @@ export default {
     render () {
       this.canvas.render()
     },
-    destory () {
-      this.canvas.destroy()
-    },
-
     resizeCanvas () { // 适配外框
       let canvasRect = this.canvas.getRect() // 画布大小
       console.log('原始画布宽高', canvasRect.width, canvasRect.height)
@@ -365,7 +361,7 @@ export default {
     },
   },
   destroyed () {
-    console.warn('释放canvas资源')
+    console.log('释放canvas资源')
     this.canvas.destroy()
   }
 }

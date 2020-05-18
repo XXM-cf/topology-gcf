@@ -88,8 +88,8 @@ const arr = [
     name: '转轮',
     url: 'reel_normal.svg',
     rect: {
-      width: 300,
-      height: 300
+      width: 80,
+      height: 228
     },
     legendType: 'statusImg'
   },
