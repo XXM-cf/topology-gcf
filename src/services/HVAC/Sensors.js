@@ -54,40 +54,105 @@ const arr = [
     name: '电动蝶阀',
     url: 'electric_butterfly_valve.svg',
     rect: {
-      width: 123,
-      height: 150
+      width: 30,
+      height: 60
     },
   },
-  {
-    name: '光照度',
-    url: 'illuminance.svg',
-    rect: {
-      width: 78,
-      height: 74
-    },
-  },
+
 
   {
     name: '水管压力',
     url: 'pipe_pressure.svg',
     rect: {
-      width: 79,
-      height: 146
+      width: 30,
+      height: 60
     },
   },
   {
     name: '比例调节阀',
     url: 'proportionning_valve.svg',
     rect: {
-      width: 100,
-      height: 175
+      width: 30,
+      height: 60
     },
   },
   {
     name: '流量计',
     url: 'flowmeter.svg',
     rect: {
-      width: 100,
+      width: 60,
+      height: 40
+    },
+  },
+  {
+    name: '光照度',
+    url: 'illuminance.svg',
+    rect: {
+      width: 30,
+      height: 30
+    },
+  },
+  {
+    name: '一氧化碳',
+    url: 'sensor_duct_CO_top.svg',
+    rect: {
+      width: 30,
+      height: 30
+    },
+  },
+  {
+    name: '二氧化碳',
+    url: 'sensor_duct_CO2_top.svg',
+    rect: {
+      width: 30,
+      height: 30
+    },
+  },
+  {
+    name: '温度',
+    url: 'sensor_duct_temp_top.svg',
+    rect: {
+      width: 30,
+      height: 30
+    },
+  },
+  {
+    name: '湿度',
+    url: 'sensor_humidity_top.svg',
+    rect: {
+      width: 30,
+      height: 30
+    },
+  },
+  {
+    name: '左风速',
+    url: 'sensor_pipe_wtrflowmtr_left_top.svg',
+    rect: {
+      width: 30,
+      height: 30
+    },
+  },
+  {
+    name: '右风速',
+    url: 'sensor_pipe_wtrflowmtr_right_top.svg',
+    rect: {
+      width: 30,
+      height: 30
+    },
+  },
+  {
+    name: '温湿度',
+    url: 'sensor_temp-hyg_top.svg',
+    rect: {
+      width: 30,
+      height: 30
+    },
+  },
+  {
+    name: '自定义',
+    url: 'sensor_space_top.svg',
+    rect: {
+      width: 30,
       height: 30
     },
   },
@@ -101,7 +166,7 @@ const pipeImg = {
       name: item.name,
       data: {
         rect: item.rect || {
-          width: 20,
+          width: 30,
           height: 60
         },
         name: 'image',

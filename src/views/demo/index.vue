@@ -13,9 +13,8 @@
 
         el-button(@click="handleUpdate()") 更新
 
-      .full(ref="myCanvas" style="width:200px; height:200px;border:1px solid red;overflow: hidden")
+      .full(ref="myCanvas" style="width:600px; height:300px;border:1px solid red;overflow: hidden;")
         topologyView(ref="topologyView" @nodeClick="handleClick")
-          pre(slot="dialog") 你好 {{ nodeDetail }}
 
 
 </template>
@@ -49,7 +48,8 @@ export default {
       this.$refs.topologyView.handle_update(this.deviceId, this.deviceStatus, this.deviceValue)
       // this.$refs.topologyView.render()
     },
-    handleClick (val) {
+    handleClick (val, point) {
+      console.log(val, point)
       this.nodeDetail = val
     },
     onMenu (key, keyPath) {

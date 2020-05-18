@@ -1,7 +1,5 @@
 <template lang="pug">
   #topology-client(ref="myCanvas" style="width:100%; height:100%")
-    .topology-client-dialog(v-show="isShow" :style="{'top': top, 'left':left}")
-      slot(name="dialog")
 </template>
 
 <script>
@@ -21,9 +19,6 @@ export default {
   },
   data () {
     return {
-      isShow: false,
-      top: '',
-      left: '',
       canvasOptions: {
         lock: 1,
         // disableScale: true,
@@ -48,7 +43,6 @@ export default {
           this.canvas.open(data)
           this.canvas.divLayer.canvas.focus()
           if (this.resize) {
-            this.canvas.scale(data.scale) // 缩放
             this.resizeCanvas()
           }
           this.canvas.render()
@@ -60,22 +54,20 @@ export default {
     onMessage (event, data) {
       switch (event) {
         case 'node':
-          if (data.data.baseImg) { // 点击底图
-            this.isShow = false // 清除右键菜单
-          }
           this.handlePlaneClick(window.event, data)
           console.log('点击节点 --> node', data)
           break;
         case 'space':
-          this.isShow = false // 清除右键菜单
+          this.$emit('spaceClick', data)
           break
       }
     },
     handlePlaneClick (event, data) {
-      this.isShow = true
-      this.top = data.rect.ey + 'px'
-      this.left = data.rect.ex + 'px'
-      this.$emit('nodeClick', data)
+      let point = {
+        x: event.offsetX,
+        y: event.offsetY
+      }
+      this.$emit('nodeClick', data, point)
     },
     render () {
       this.canvas.render()
@@ -104,21 +96,21 @@ export default {
       console.log('宽高比例', widthNum, heightNum)
 
       if (widthNum <= 1 && heightNum <= 1) { // 需放大
-        console.log('范围内，需放大', Math.min(scaleWidthNum, heightNum))
-        this.canvas.scaleTo(Math.min(scaleWidthNum, scaleHeightNum)) // 缩放
+        console.log('范围内，需放大', Math.min(scaleWidthNum, scaleHeightNum))
+        this.canvas.scale(Math.min(scaleWidthNum, scaleHeightNum)) // 缩放
       } else if (heightNum > 1 && widthNum <= 1) { // 高度超出
         console.log('高度超出', scaleHeightNum)
-        this.canvas.scaleTo(scaleHeightNum) // 缩小
+        this.canvas.scale(scaleHeightNum) // 缩小
       } else if (widthNum > 1 && heightNum <= 1) { // 宽度超出
         console.log('宽度超出', (scaleWidthNum))
-        this.canvas.scaleTo(scaleWidthNum) // 缩小
+        this.canvas.scale(scaleWidthNum) // 缩小
       } else { // 宽高都超出
         console.log('全部超出', Math.min(scaleWidthNum, scaleHeightNum))
-        this.canvas.scaleTo(Math.min(scaleWidthNum, scaleHeightNum)) // 缩放
+        this.canvas.scale(Math.min(scaleWidthNum, scaleHeightNum)) // 缩放
       }
 
       let newCanvasRect = this.canvas.getRect() // 画布大小
-      console.log('画布宽高', newCanvasRect.width, newCanvasRect.height)
+      console.log('新画布宽高', newCanvasRect.width, newCanvasRect.height)
       this.canvas.translate(-newCanvasRect.x + Math.abs(parseInt(newCanvasRect.width) - contianerWidth) / 2,
         -newCanvasRect.y + Math.abs(parseInt(newCanvasRect.height) - contianerHeight) / 2) // 平移至外层画布中间
     },
@@ -210,6 +202,7 @@ export default {
       targetNode.animateStart = 0
       targetNode.lineWidth = 0
       targetNode.strokeStyle = 'transparent'
+      targetNode.fillStyle = 'transparent'
       targetNode.animateCycleIndex = 0
       const state = Node.cloneState(targetNode)
       switch (status) { // 告警
@@ -378,14 +371,4 @@ export default {
 }
 </script>
 <style lang="scss">
-.topology-client-dialog {
-  position: absolute;
-  left: 200px;
-  top: 0px;
-  max-height: 400px;
-  max-width: 400px;
-  overflow: auto;
-  z-index: 99999;
-  border-radius: 4px;
-}
 </style>
