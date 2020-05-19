@@ -12,9 +12,10 @@
         el-input(v-model="deviceValue")
 
         el-button(@click="handleUpdate()") 更新
+        el-button(@click="handleRun()") 电梯运行
 
-      .full(ref="myCanvas" style="width:600px; height:300px;border:1px solid red;overflow: hidden;")
-        topologyView(ref="topologyView" @nodeClick="handleClick")
+      .full(ref="myCanvas" style="width:900px; height:800px;border:1px solid red;overflow: hidden;")
+        topologyView(ref="topologyView" :resize="false" @nodeClick="handleClick")
 
 
 </template>
@@ -46,7 +47,9 @@ export default {
     handleUpdate () {
       console.log(this.$refs.topologyView)
       this.$refs.topologyView.handle_update(this.deviceId, this.deviceStatus, this.deviceValue)
-      // this.$refs.topologyView.render()
+    },
+    handleRun () {
+      this.$refs.topologyView.handle_update(this.deviceId, 8)
     },
     handleClick (val, point) {
       console.log(val, point)

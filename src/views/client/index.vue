@@ -150,11 +150,14 @@ export default {
             case 'statusImg': // 多态图片
               this.handle_changeImg(node, status)
               break;
+            case 'elevator':
+              this.handle_elevatorRun(node, status, value)
           }
           this.canvas.updateProps(node)
         })
       }
     },
+
     handle_circle (targetNode, status) { // 旋转
       if (status === 'running') {
         if (targetNode.animateFrames.length) {
@@ -194,7 +197,6 @@ export default {
       targetNode.image = arr.join('_') + '.svg'
     },
     handle_changeIcon (targetNode, status) { // 改变icon状态
-      targetNode.animateStart = 0
       targetNode.animateStart = 0
       targetNode.lineWidth = 0
       targetNode.strokeStyle = 'transparent'
@@ -270,11 +272,7 @@ export default {
           break;
       }
     },
-    handle_elevatorRun (targetNode, targetStep) {
-      let elevatorNode = targetNode
-      if (!elevatorNode) {
-        return
-      }
+    handle_elevatorRun (elevatorNode, targetStep) {
       let pointArr = [] // 所有坐标点
       let runStep = 1
 
@@ -310,35 +308,8 @@ export default {
           }
         )
       }
-      if (!elevatorNode.animateFrames.length) {
-        pointArr.map(item => {
-          this.canvas.addLine(
-            new Line({
-              name: 'line',
-              fromArrow: '',
-              toArrow: '',
-              from: new Point(item.x - 2, item.y),
-              to: new Point(item.x + 2, item.y),
-              strokeStyle: '#333',
-              lineWidth: 1
-            })
-          )
-        })
-        this.canvas.addLine(
-          new Line({
-            name: 'line',
-            fromArrow: '',
-            toArrow: '',
-            from: new Point(data.elevatorStartX, data.elevatorStartY),
-            to: new Point(data.elevatorEndX, data.elevatorEndY),
-            strokeStyle: '#333',
-            lineWidth: 1
-          })
-        )
-        this.canvas.render()
-      }
-
       elevatorNode.animateFrames = []
+      elevatorNode.animateDuration = 0;
       const state = Node.cloneState(elevatorNode);
       let targetPoint = pointArr.find(item => {
         return item.num === targetStep
@@ -352,7 +323,6 @@ export default {
         state: Node.cloneState(state)
       });
       elevatorNode.animateCycle = 1
-      elevatorNode.animateDuration = 0;
       for (const item of elevatorNode.animateFrames) {
         elevatorNode.animateDuration += item.duration;
       }
