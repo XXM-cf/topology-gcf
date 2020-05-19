@@ -150,8 +150,12 @@ export default {
             case 'statusImg': // 多态图片
               this.handle_changeImg(node, status)
               break;
-            case 'elevator':
-              this.handle_elevatorRun(node, status, value)
+            case 'elevator': // 电梯
+              this.handle_elevatorRun(node, value)
+              break
+            case 'waterLevel': // 液位
+              this.handle_changeWaterLevel(node, value)
+              break
           }
           this.canvas.updateProps(node)
         })
@@ -328,6 +332,19 @@ export default {
       }
       elevatorNode.animateStart = Date.now()
       this.canvas.animate()
+    },
+    handle_changeWaterLevel (targetNode, value) { // 液位变化
+      if (Number(value) > targetNode.data.waterLevelNum) {
+        this.$message({
+          message: '参数值超出指定范围',
+          type: 'error'
+        })
+        return
+      }
+      targetNode.rect.height = Number(value) * targetNode.data.step
+      targetNode.rect.y = targetNode.rect.ey - targetNode.rect.height
+      targetNode.text = Number(value) / targetNode.data.waterLevelNum * 100 + '%'
+      this.canvas.updateProps()
     },
   },
   destroyed () {

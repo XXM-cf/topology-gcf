@@ -338,7 +338,20 @@
           el-button( @click="handleAddElvator") 生成轨道
         .item(v-show="props.node.data.elevatorStep")
           .label 测试
-          el-button(@click="handleElevatorRunTest") 测试运行
+          el-button(@click="handleElevatorRunTest") 模拟测试
+
+    .group(v-if="props.node.data.legendType === 'waterTrack'")
+      .title 液位配置
+      .container
+        .item
+          .label 液位总高度
+          el-input-number(v-model="props.node.data.waterLevelNum" @change='onChange')
+        .item(v-show="props.node.data.waterLevelNum")
+          .label 操作
+          el-button( @click="handleAddWaterTrack") 生成轨道
+        .item(v-show="props.node.data.waterLevelNum")
+          .label 测试
+          el-button(@click="handleWaterLevelTest") 模拟测试
 
 </template>
 
@@ -623,7 +636,7 @@ export default {
         this.$emit('change', this.props.node)
       }
     },
-
+    // 定制需求：电梯
     handleAddElvator () { // 添加电梯及轨道
       let parentNode = this.props.node
       if (!parentNode.data.tag) {
@@ -764,7 +777,50 @@ export default {
       })
 
     },
-
+    // 定制需求： 液位
+    handleAddWaterTrack () { // 增加液位轨道
+      let parentNode = this.props.node
+      if (!parentNode.data.tag) {
+        this.$message({
+          message: '该轨道暂未绑点，无法添加',
+          type: 'error'
+        })
+        return
+      }
+      let node = new Node({
+        rect: {
+          width: parentNode.rect.width,
+          height: parentNode.rect.height / 10,
+          x: parentNode.rect.x,
+          y: parentNode.rect.ey - parentNode.rect.height / 10
+        },
+        text: '10%', // 默认填充10%
+        fillStyle: 'rgba(5, 120, 242, 0.6)',
+        strokeStyle: 'transparent',
+        data: {
+          legendType: 'waterLevel',
+          tag: parentNode.data.tag, // 复制轨道绑点至电梯图例
+          waterLevelNum: parentNode.data.waterLevelNum,
+          step: parseInt(parentNode.rect.height / parentNode.data.waterLevelNum)
+        },
+        name: 'rectangle',
+      })
+      parentNode.data.tag = '' // 去除电梯轨道绑点
+      this.canvas.addNode(node)
+      this.canvas.render()
+    },
+    handleWaterLevelTest () { // 模拟测试
+      let waterNodeArr = this.canvas.data.pens.filter(item => {
+        return item.data.legendType === 'waterLevel' // 关联tag
+      })
+      waterNodeArr.map(node => {
+        let randomNum = Math.ceil(Math.random() * node.data.waterLevelNum) // 随机模拟百分比
+        node.rect.height = randomNum * node.data.step
+        node.rect.y = node.rect.ey - node.rect.height
+        node.text = randomNum / node.data.waterLevelNum * 100 + '%'
+      })
+      this.canvas.updateProps()
+    },
 
     onAddPipeLine () {
       this.canvas.addLine(

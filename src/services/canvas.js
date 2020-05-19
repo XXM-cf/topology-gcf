@@ -348,6 +348,22 @@ export const Tools = [
         }
       },
       {
+        name: '液位',
+        icon: 'icon-rect',
+        data: {
+          rect: {
+            width: 156,
+            height: 144
+          },
+          fillStyle: 'rgba(217,225,232, 0.63)',
+          strokeStyle: 'rgba(237, 233, 233, 0.2)',
+          name: 'rectangle',
+          data: {
+            legendType: 'waterTrack'
+          }
+        }
+      },
+      {
         name: '视频/网页',
         icon: 'icon-pc',
         data: {
