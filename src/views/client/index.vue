@@ -202,9 +202,7 @@ export default {
     },
     handle_changeIcon (targetNode, status) { // 改变icon状态
       targetNode.animateStart = 0
-      targetNode.lineWidth = 0
-      targetNode.strokeStyle = 'transparent'
-      targetNode.fillStyle = 'transparent'
+      targetNode.fillStyle = 'rgba(0,0,0,0)'
       targetNode.animateCycleIndex = 0
       const state = Node.cloneState(targetNode)
       switch (status) { // 告警
