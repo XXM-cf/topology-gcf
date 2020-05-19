@@ -23,7 +23,19 @@
 
 
 
-    #topology-canvas.full(@contextmenu='onContextMenu($event)')
+    .full
+      #topology-canvas(@contextmenu='onContextMenu($event)')
+      svg(
+        class="svg-grid"
+        width="100%"
+        height="100%"
+        xmlns="http://www.w3.org/2000/svg"
+        style="z-index: 0"
+        )
+        defs
+          pattern(id="grid" width="10" height="10" patternUnits="userSpaceOnUse")
+            path(d="M 10 0 L 0 0 0 10" fill="none" stroke="#f0f0f0" stroke-width="1")
+        rect(width="100%" height="100%" fill="url(#grid)")
     .props
       CanvasProps(
         :imgList="imgList"
@@ -82,6 +94,7 @@ export default {
         rotateCursor: 'http://113.31.118.32:9000/test/topology/HVAC/rotate.cur',
         disableScale: true,
         hideInput: true,
+        bkImage: 'http://113.31.118.32:9000/test/topology/HVAC/black.jpg'
       },
       props: {
         node: null,
@@ -122,6 +135,7 @@ export default {
       //   ...this.globalCanvasConfig, // 自定义全局属性
       // }
       this.canvas.render()
+      console.log(this.canvas)
     },
     onDrag (event, node) { // 拖拽布局
       event.dataTransfer.setData('Text', JSON.stringify(node.data))
@@ -571,6 +585,19 @@ export default {
     position: relative;
     overflow: auto;
     background: #fff;
+    #topology-canvas {
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+    }
+    svg {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 0;
+    }
   }
 
   .props {
