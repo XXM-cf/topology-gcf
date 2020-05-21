@@ -71,6 +71,7 @@ export default {
     },
     render () {
       this.canvas.render()
+      this.canvas.animate()
     },
     resizeCanvas () { // 适配外框
       let canvasRect = this.canvas.getRect() // 画布大小
@@ -197,10 +198,7 @@ export default {
     },
     handle_changeImg (targetNode, status) { // 改变图片
       if (!status) {
-        this.$message({
-          message: `节点状态错误，当前状态${status}`,
-          type: 'error'
-        })
+        console.error(`节点状态错误，当前状态${status}`)
         return
       } else {
         let arr = targetNode.image.split('.svg')[0].split('_')
@@ -345,10 +343,7 @@ export default {
         elevatorNode.animateStart = Date.now()
         this.canvas.animate()
       } else {
-        this.$message({
-          message: `楼层不在指定范围内，指定楼层：${targetStep}，总楼层：${data.elevatorStep}`,
-          type: 'error'
-        })
+        console.error(`上报楼层不在指定范围内，指定楼层：${targetStep}，该电梯最大楼层：${data.elevatorStep}`)
         return
       }
     },
