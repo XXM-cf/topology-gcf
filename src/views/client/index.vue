@@ -196,7 +196,7 @@ export default {
       }
     },
     handle_changeImg (targetNode, status) { // 改变图片
-      if (status) {
+      if (!status) {
         this.$message({
           message: `节点状态错误，当前状态${status}`,
           type: 'error'
@@ -282,7 +282,8 @@ export default {
           break;
       }
     },
-    handle_elevatorRun (elevatorNode, targetStep) {
+    handle_elevatorRun (elevatorNode, value) {
+      let targetStep = parseInt(value)
       let pointArr = [] // 所有坐标点
       let runStep = 1
       let data = elevatorNode.data
