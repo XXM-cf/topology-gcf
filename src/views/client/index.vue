@@ -137,7 +137,7 @@ export default {
       if (nodes.length) {
         nodes.map(node => {
           switch (node.data.legendType) {
-            case 'plane': // 平面图
+            case 'plane': // 平面图图标
               this.handle_changeIcon(node, status)
               break;
             case 'text': // 文字
@@ -151,7 +151,7 @@ export default {
               this.handle_changeImg(node, status)
               break;
             case 'elevator': // 电梯
-              this.handle_elevatorRun(node, value)
+              this.handle_elevatorRun(node, status, value)
               break
             case 'waterLevel': // 液位
               this.handle_changeWaterLevel(node, value)
@@ -282,7 +282,7 @@ export default {
           break;
       }
     },
-    handle_elevatorRun (elevatorNode, value) {
+    handle_elevatorRun (elevatorNode, status, value) {
       let targetStep = parseInt(value)
       let pointArr = [] // 所有坐标点
       let runStep = 1
@@ -330,11 +330,14 @@ export default {
         state.rect.x = targetPoint.x - state.rect.width / 2 // 设置为图例中点
         state.rect.y = targetPoint.y - state.rect.height
         console.log('动画时间', Math.round(300 * Math.abs(runStep)))
+
+        elevatorNode.animateType = 'elevatorRun';
         elevatorNode.animateFrames.push({
           duration: Math.round(300 * Math.abs(runStep)),
           linear: true,
           state: Node.cloneState(state)
         });
+
         elevatorNode.animateCycle = 1
         for (const item of elevatorNode.animateFrames) {
           elevatorNode.animateDuration += item.duration;
