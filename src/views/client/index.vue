@@ -196,9 +196,17 @@ export default {
       }
     },
     handle_changeImg (targetNode, status) { // 改变图片
-      let arr = targetNode.image.split('.svg')[0].split('_')
-      arr[arr.length - 1] = status
-      targetNode.image = arr.join('_') + '.svg'
+      if (status) {
+        this.$message({
+          message: `节点状态错误，当前状态${status}`,
+          type: 'error'
+        })
+        return
+      } else {
+        let arr = targetNode.image.split('.svg')[0].split('_')
+        arr[arr.length - 1] = status
+        targetNode.image = arr.join('_') + '.svg'
+      }
     },
     handle_changeIcon (targetNode, status) { // 改变icon状态
       targetNode.animateStart = 0
@@ -277,7 +285,6 @@ export default {
     handle_elevatorRun (elevatorNode, targetStep) {
       let pointArr = [] // 所有坐标点
       let runStep = 1
-
       let data = elevatorNode.data
       console.log('目标楼层：', targetStep)
       let step = Math.round(Math.abs(data.elevatorStartY - data.elevatorEndY) / data.elevatorStep)
@@ -312,24 +319,34 @@ export default {
       }
       elevatorNode.animateFrames = []
       elevatorNode.animateDuration = 0;
+      elevatorNode.animateStart = 0;
+
       const state = Node.cloneState(elevatorNode);
       let targetPoint = pointArr.find(item => {
         return item.num === targetStep
       })
-      state.rect.x = targetPoint.x - state.rect.width / 2 // 设置为图例中点
-      state.rect.y = targetPoint.y - state.rect.height
-      console.log('动画时间', Math.round(300 * Math.abs(runStep)))
-      elevatorNode.animateFrames.push({
-        duration: Math.round(300 * Math.abs(runStep)),
-        linear: true,
-        state: Node.cloneState(state)
-      });
-      elevatorNode.animateCycle = 1
-      for (const item of elevatorNode.animateFrames) {
-        elevatorNode.animateDuration += item.duration;
+      if (targetPoint) {
+        state.rect.x = targetPoint.x - state.rect.width / 2 // 设置为图例中点
+        state.rect.y = targetPoint.y - state.rect.height
+        console.log('动画时间', Math.round(300 * Math.abs(runStep)))
+        elevatorNode.animateFrames.push({
+          duration: Math.round(300 * Math.abs(runStep)),
+          linear: true,
+          state: Node.cloneState(state)
+        });
+        elevatorNode.animateCycle = 1
+        for (const item of elevatorNode.animateFrames) {
+          elevatorNode.animateDuration += item.duration;
+        }
+        elevatorNode.animateStart = Date.now()
+        this.canvas.animate()
+      } else {
+        this.$message({
+          message: `楼层不在指定范围内，指定楼层：${targetStep}，总楼层：${data.elevatorStep}`,
+          type: 'error'
+        })
+        return
       }
-      elevatorNode.animateStart = Date.now()
-      this.canvas.animate()
     },
     handle_changeWaterLevel (targetNode, value) { // 液位变化
       if (Number(value) > targetNode.data.waterLevelNum) {
