@@ -1,6 +1,6 @@
 {
   "name": "topology-gcf",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "author": "xxm-cf",
   "description": "智慧建筑web组态前端可视化解决方案",
   "main": "lib/topology-gcf.umd.min.js",

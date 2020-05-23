@@ -151,7 +151,7 @@ export default {
               this.handle_changeWaterLevel(node, value)
               break
           }
-          this.canvas.updateProps(node)
+          // this.canvas.updateProps(node)
         })
       }
     },
