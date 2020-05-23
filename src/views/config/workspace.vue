@@ -94,7 +94,6 @@ export default {
         rotateCursor: 'http://113.31.118.32:9000/test/topology/HVAC/rotate.cur',
         disableScale: true,
         hideInput: true,
-        bkImage: 'http://113.31.118.32:9000/test/topology/HVAC/black.jpg'
       },
       props: {
         node: null,
@@ -130,12 +129,7 @@ export default {
     init () {
       this.canvasOptions.on = this.onMessage
       this.canvas = new Topology('topology-canvas', this.canvasOptions)
-      // this.canvas.data = { // 开启会导致canvas初始化失败，暂时不用
-      //   ...this.canvas.data,
-      //   ...this.globalCanvasConfig, // 自定义全局属性
-      // }
       this.canvas.render()
-      console.log(this.canvas)
     },
     onDrag (event, node) { // 拖拽布局
       event.dataTransfer.setData('Text', JSON.stringify(node.data))

@@ -1,5 +1,5 @@
 <template lang="pug">
-  #topology-client(ref="myCanvas" style="width:100%; height:100%")
+  #topology-client(ref="myCanvas" style="width:100%; height:100%;overflow:hidden")
 </template>
 
 <script>
@@ -21,7 +21,7 @@ export default {
     return {
       canvasOptions: {
         lock: 1,
-        // disableScale: true,
+        disableScale: true,
         activeColor: 'transparent' // 去除选中边框
       },
       canvas: {}
@@ -54,20 +54,13 @@ export default {
     onMessage (event, data) {
       switch (event) {
         case 'node':
-          this.handlePlaneClick(window.event, data)
-          console.log('点击节点 --> node', data)
+          this.$emit('nodeClick', data)
+          console.log('当前点击节点 -->', data)
           break;
         case 'space':
           this.$emit('spaceClick', data)
           break
       }
-    },
-    handlePlaneClick (event, data) {
-      let point = {
-        x: event.offsetX,
-        y: event.offsetY
-      }
-      this.$emit('nodeClick', data, point)
     },
     render () {
       this.canvas.render()
@@ -94,13 +87,13 @@ export default {
 
       if (widthNum <= 1 && heightNum <= 1) { // 需放大
         console.log('范围内，需放大', Math.min(scaleWidthNum, scaleHeightNum))
-        this.canvas.scale(Math.min(scaleWidthNum, scaleHeightNum)) // 缩放
+        this.canvas.scaleTo(Math.min(scaleWidthNum, scaleHeightNum)) // 缩放
       } else if (heightNum > 1 && widthNum <= 1) { // 高度超出
         console.log('高度超出', scaleHeightNum)
-        this.canvas.scale(scaleHeightNum) // 缩小
+        this.canvas.scaleTo(scaleHeightNum) // 缩小
       } else if (widthNum > 1 && heightNum <= 1) { // 宽度超出
         console.log('宽度超出', (scaleWidthNum))
-        this.canvas.scale(scaleWidthNum) // 缩小
+        this.canvas.scaleTo(scaleWidthNum) // 缩小
       } else { // 宽高都超出
         console.log('全部超出', Math.min(scaleWidthNum, scaleHeightNum))
         this.canvas.scale(Math.min(scaleWidthNum, scaleHeightNum)) // 缩放
@@ -162,7 +155,6 @@ export default {
         })
       }
     },
-
     handle_circle (targetNode, status) { // 旋转
       if (status === 'running') {
         if (targetNode.animateFrames.length) {
@@ -362,10 +354,7 @@ export default {
     },
   },
   destroyed () {
-    console.log('释放canvas资源')
     this.canvas.destroy()
   }
 }
 </script>
-<style lang="scss">
-</style>
