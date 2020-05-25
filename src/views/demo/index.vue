@@ -13,8 +13,11 @@
 
         el-button(@click="handleUpdate()") 更新
         el-button(@click="handleRun()") 电梯运行
+        el-button(@click="handleOver()") 检查溢出
+        el-button(@click="handleMove()") 左移
+        el-button(@click="handleMove2()") 右移动
 
-      .full(ref="myCanvas" style="width:900px; height:800px;border:1px solid red;overflow: hidden;")
+      .full(ref="myCanvas" style="width:500px; height:800px;border:1px solid red;overflow: hidden;")
         topologyView(ref="topologyView" :resize="false" @nodeClick="handleClick")
 
 
@@ -54,6 +57,17 @@ export default {
     handleClick (val, point) {
       console.log(val, point)
       this.nodeDetail = val
+    },
+    handleOver () {
+      this.$refs.topologyView.overflow()
+      let a = this.$refs.topologyView.overflow()
+      console.log(a)
+    },
+    handleMove () {
+      this.$refs.topologyView.translate(-500, 0)
+    },
+    handleMove2 () {
+      this.$refs.topologyView.translate(500, 0)
     },
     onMenu (key, keyPath) {
       if (!key || key.indexOf('/') === 0) {

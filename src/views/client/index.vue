@@ -62,13 +62,16 @@ export default {
           break
       }
     },
+    translate (x, y) {
+      this.canvas.translate(x, y)
+    },
     render () {
       this.canvas.render()
       this.canvas.animate()
     },
     resizeCanvas () { // 适配外框
       let canvasRect = this.canvas.getRect() // 画布大小
-      console.log('原始画布宽高', canvasRect.width, canvasRect.height)
+      // console.log('原始画布宽高', canvasRect.width, canvasRect.height)
       // 限制最大画布为1920 * 1080
       let canvasWidth = parseInt(canvasRect.width)
       let canvasHeight = parseInt(canvasRect.height)
@@ -76,31 +79,26 @@ export default {
       let contianerWidth = this.$refs.myCanvas.clientWidth
       let contianerHeight = this.$refs.myCanvas.clientHeight
 
-      console.log('外层容器宽高', contianerWidth, contianerHeight)
+      // console.log('外层容器宽高', contianerWidth, contianerHeight)
 
       let widthNum = parseFloat((canvasWidth / contianerWidth).toFixed(2))
       let heightNum = parseFloat((canvasHeight / contianerHeight).toFixed(2))
 
       let scaleWidthNum = parseFloat((contianerWidth / canvasWidth).toFixed(2))
       let scaleHeightNum = parseFloat((contianerHeight / canvasHeight).toFixed(2))
-      console.log('宽高比例', widthNum, heightNum)
+      // console.log('宽高比例', widthNum, heightNum)
 
       if (widthNum <= 1 && heightNum <= 1) { // 需放大
-        console.log('范围内，需放大', Math.min(scaleWidthNum, scaleHeightNum))
         this.canvas.scaleTo(Math.min(scaleWidthNum, scaleHeightNum)) // 缩放
       } else if (heightNum > 1 && widthNum <= 1) { // 高度超出
-        console.log('高度超出', scaleHeightNum)
         this.canvas.scaleTo(scaleHeightNum) // 缩小
       } else if (widthNum > 1 && heightNum <= 1) { // 宽度超出
-        console.log('宽度超出', (scaleWidthNum))
         this.canvas.scaleTo(scaleWidthNum) // 缩小
       } else { // 宽高都超出
-        console.log('全部超出', Math.min(scaleWidthNum, scaleHeightNum))
         this.canvas.scale(Math.min(scaleWidthNum, scaleHeightNum)) // 缩放
       }
 
       let newCanvasRect = this.canvas.getRect() // 画布大小
-      console.log('新画布宽高', newCanvasRect.width, newCanvasRect.height)
       this.canvas.translate(-newCanvasRect.x + Math.abs(parseInt(newCanvasRect.width) - contianerWidth) / 2,
         -newCanvasRect.y + Math.abs(parseInt(newCanvasRect.height) - contianerHeight) / 2) // 平移至外层画布中间
     },
@@ -112,7 +110,7 @@ export default {
         }
       })
       if (targetNodeArr.length) {
-        console.log('当前执行节点', targetNodeArr)
+        // console.log('当前执行节点', targetNodeArr)
         return targetNodeArr
       } else {
         console.warn(`没有找到tag为${tag}的目标节点`)
@@ -277,11 +275,11 @@ export default {
       let pointArr = [] // 所有坐标点
       let runStep = 1
       let data = elevatorNode.data
-      console.log('目标楼层：', targetStep)
+      // console.log('目标楼层：', targetStep)
       let step = Math.round(Math.abs(data.elevatorStartY - data.elevatorEndY) / data.elevatorStep)
       let currY = elevatorNode.rect.ey
       let currStep = Math.round(data.elevatorStep - (currY - data.elevatorEndY) / step + 1)
-      console.log('当前楼层：', currStep)
+      // console.log('当前楼层：', currStep)
       runStep = currStep - targetStep
       console.log('运行方向', runStep < 0 ? `上行${-runStep}层` : `下行${runStep}层`)
       let temp = Math.abs(data.elevatorStartY - data.elevatorEndY) / Math.abs(data.elevatorStartX - data.elevatorEndX)
@@ -319,7 +317,7 @@ export default {
       if (targetPoint) {
         state.rect.x = targetPoint.x - state.rect.width / 2 // 设置为图例中点
         state.rect.y = targetPoint.y - state.rect.height
-        console.log('动画时间', Math.round(300 * Math.abs(runStep)))
+        // console.log('动画时间', Math.round(300 * Math.abs(runStep)))
 
         elevatorNode.animateType = 'elevatorRun';
         elevatorNode.animateFrames.push({
