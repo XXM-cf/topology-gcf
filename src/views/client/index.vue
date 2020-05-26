@@ -21,7 +21,8 @@ export default {
     return {
       canvasOptions: {
         lock: 1,
-        disableScale: true,
+        disableScale: false,
+        translateKey: 'None',
         activeColor: 'transparent' // 去除选中边框
       },
       canvas: {}
@@ -67,7 +68,7 @@ export default {
     },
     render () {
       this.canvas.render()
-      this.canvas.animate()
+      // this.canvas.animate()
     },
     resizeCanvas () { // 适配外框
       let canvasRect = this.canvas.getRect() // 画布大小
@@ -125,6 +126,7 @@ export default {
     // 正常： normal: #333
 
     handle_update (tag, status, value) { // 更新数据: 文案，图标，多态图片、多档图片
+      this.canvas.options.disableScale = false
       let nodes = this.getNode(tag)
       if (nodes.length) {
         nodes.map(node => {
@@ -149,12 +151,12 @@ export default {
               this.handle_changeWaterLevel(node, value)
               break
           }
-          // this.canvas.updateProps(node)
         })
       }
     },
     handle_circle (targetNode, status) { // 旋转
       if (status === 'running') {
+        this.canvas.options.disableScale = true
         if (targetNode.animateFrames.length) {
           targetNode.rotate = 0
           targetNode.animateStart = Date.now()
@@ -215,6 +217,7 @@ export default {
           targetNode.iconColor = '#ffb300'
           break;
         case 'alarm':
+          this.canvas.options.disableScale = true
           targetNode.iconColor = '#ff4a4a' // 改为红色
           if (targetNode.animateFrames.length) {
             targetNode.animateStart = Date.now()
@@ -271,6 +274,7 @@ export default {
       }
     },
     handle_elevatorRun (elevatorNode, status, value) {
+      this.canvas.options.disableScale = true
       let targetStep = parseInt(value)
       let pointArr = [] // 所有坐标点
       let runStep = 1

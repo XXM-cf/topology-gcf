@@ -91,9 +91,9 @@ export default {
       tools: Tools,
       canvas: {},
       canvasOptions: {
+        cacheLen: 10, // 缓存十步操作
         rotateCursor: 'http://113.31.118.32:9000/test/topology/HVAC/rotate.cur',
         disableScale: true,
-        hideInput: true,
       },
       props: {
         node: null,
@@ -194,7 +194,10 @@ export default {
       switch (event) {
         case 'dblclick':
           if (this.props.line) {
+            this.canvas.options.hideInput = true
             this.handleAddaidLine(window.event)
+          } else {
+            this.canvas.options.hideInput = false
           }
           break;
         case 'node':

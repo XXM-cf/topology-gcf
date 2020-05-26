@@ -17,8 +17,8 @@
         el-button(@click="handleMove()") 左移
         el-button(@click="handleMove2()") 右移动
 
-      .full(ref="myCanvas" style="width:500px; height:800px;border:1px solid red;overflow: hidden;")
-        topologyView(ref="topologyView" :resize="false" @nodeClick="handleClick")
+      .full(ref="myCanvas" style="width:800px; height:800px;border:1px solid red;overflow: hidden;")
+        topologyView(ref="topologyView" :resize="true" @nodeClick="handleClick")
 
 
 </template>
@@ -50,6 +50,7 @@ export default {
     handleUpdate () {
       console.log(this.$refs.topologyView)
       this.$refs.topologyView.handle_update(this.deviceId, this.deviceStatus, this.deviceValue)
+      this.$refs.topologyView.render()
     },
     handleRun () {
       this.$refs.topologyView.handle_update(this.deviceId, 8)
