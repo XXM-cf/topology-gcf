@@ -3,10 +3,10 @@
 </template>
 
 <script>
-import { Topology } from 'topology-core'
-import { Node } from 'topology-core/models/node'
-import { Line } from 'topology-core/models/line'
-import { Point } from 'topology-core/models/point'
+import { Topology } from '@topology/core'
+import { Node } from '@topology/core'
+import { Line } from '@topology/core'
+import { Point } from '@topology/core'
 import '@/assets/css/base.scss'
 
 export default {
@@ -68,7 +68,6 @@ export default {
     },
     render () {
       this.canvas.render()
-      // this.canvas.animate()
     },
     resizeCanvas () { // 适配外框
       let canvasRect = this.canvas.getRect() // 画布大小
@@ -126,7 +125,6 @@ export default {
     // 正常： normal: #333
 
     handle_update (tag, status, value) { // 更新数据: 文案，图标，多态图片、多档图片
-      this.canvas.options.disableScale = false
       let nodes = this.getNode(tag)
       if (nodes.length) {
         nodes.map(node => {
@@ -156,7 +154,6 @@ export default {
     },
     handle_circle (targetNode, status) { // 旋转
       if (status === 'running') {
-        this.canvas.options.disableScale = true
         if (targetNode.animateFrames.length) {
           targetNode.rotate = 0
           targetNode.animateStart = Date.now()
@@ -217,7 +214,6 @@ export default {
           targetNode.iconColor = '#ffb300'
           break;
         case 'alarm':
-          this.canvas.options.disableScale = true
           targetNode.iconColor = '#ff4a4a' // 改为红色
           if (targetNode.animateFrames.length) {
             targetNode.animateStart = Date.now()
@@ -274,55 +270,26 @@ export default {
       }
     },
     handle_elevatorRun (elevatorNode, status, value) {
-      this.canvas.options.disableScale = true
       let targetStep = parseInt(value)
-      let pointArr = [] // 所有坐标点
-      let runStep = 1
       let data = elevatorNode.data
-      // console.log('目标楼层：', targetStep)
+      let runStep = 1
       let step = Math.round(Math.abs(data.elevatorStartY - data.elevatorEndY) / data.elevatorStep)
       let currY = elevatorNode.rect.ey
       let currStep = Math.round(data.elevatorStep - (currY - data.elevatorEndY) / step + 1)
-      // console.log('当前楼层：', currStep)
       runStep = currStep - targetStep
-      console.log('运行方向', runStep < 0 ? `上行${-runStep}层` : `下行${runStep}层`)
-      let temp = Math.abs(data.elevatorStartY - data.elevatorEndY) / Math.abs(data.elevatorStartX - data.elevatorEndX)
-      let xPoint = 0
-      let yPoint = 0
-      for (let i = 1; i <= data.elevatorStep; i++) {
-        if (data.elevatorEndX !== data.elevatorStartX) {
-          if (data.elevatorEndX < data.elevatorStartX) { // 第二象限
-            yPoint = data.elevatorEndY + step * i
-            xPoint = data.elevatorEndX + step * i / temp
-          } else { // 第一象限
-            yPoint = data.elevatorEndY + step * i
-            xPoint = data.elevatorStartX + step * (data.elevatorStep - i) / temp
-          }
-        } else {
-          xPoint = data.elevatorStartX
-          yPoint = step * i + data.elevatorEndY
-        }
-        pointArr.push(
-          {
-            num: (data.elevatorStep - i + 1),
-            x: xPoint,
-            y: yPoint
-          }
-        )
-      }
+      console.log(data.tag, '运行方向', runStep < 0 ? `上行${-runStep}层` : `下行${runStep}层`)
+
       elevatorNode.animateFrames = []
       elevatorNode.animateDuration = 0;
       elevatorNode.animateStart = 0;
 
       const state = Node.cloneState(elevatorNode);
-      let targetPoint = pointArr.find(item => {
+      let targetPoint = data.pointArr.find(item => {
         return item.num === targetStep
       })
       if (targetPoint) {
         state.rect.x = targetPoint.x - state.rect.width / 2 // 设置为图例中点
         state.rect.y = targetPoint.y - state.rect.height
-        // console.log('动画时间', Math.round(300 * Math.abs(runStep)))
-
         elevatorNode.animateType = 'elevatorRun';
         elevatorNode.animateFrames.push({
           duration: Math.round(300 * Math.abs(runStep)),
@@ -343,10 +310,7 @@ export default {
     },
     handle_changeWaterLevel (targetNode, value) { // 液位变化
       if (Number(value) > targetNode.data.waterLevelNum) {
-        this.$message({
-          message: '参数值超出指定范围',
-          type: 'error'
-        })
+        console.error('液位参数值超出指定范围')
         return
       }
       targetNode.rect.height = Number(value) * targetNode.data.step

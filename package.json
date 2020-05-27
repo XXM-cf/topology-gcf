@@ -1,6 +1,6 @@
 {
   "name": "topology-gcf",
-  "version": "0.6.5",
+  "version": "0.7.1",
   "author": "xxm-cf",
   "description": "智慧建筑web组态前端可视化解决方案",
   "main": "lib/topology-gcf.umd.min.js",
@@ -22,9 +22,9 @@
     "sass-loader": "^8.0.2",
     "scss": "^0.2.4",
     "scss-loader": "0.0.1",
-    "topology-core": "^0.2.17",
-    "topology-flow-diagram": "0.0.3",
-    "topology-layout": "0.0.4",
+    "@topology/core": "^0.2.3",
+    "@topology/flow-diagram": "^0.2.0",
+    "@topology/layout": "^0.2.0",
     "vue": "^2.6.11",
     "vue-router": "^3.1.6"
   },

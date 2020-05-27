@@ -12,7 +12,7 @@
       div(v-if="props.node && props.node.name === 'combine'")
         a(@click='onUncombine()') 取消组合/包含
       div
-        a(:class='{disabled:!props.node && !props.nodes}', @click='onLock()') {{ props.locked ? '解锁' : '锁定' }}
+        a(@click='onLock()') {{ props.locked ? '解锁' : '锁定' }}
       .line
       div
         a(:class='{disabled:!props.node && !props.nodes && !props.line}', @click='onDel()') 删除

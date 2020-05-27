@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import { Topology } from 'topology-core'
-import { Node } from 'topology-core/models/node'
+import { Topology } from '@topology/core'
+import { Node } from '@topology/core'
 
 import topologyView from '../../../packages/topology-view/index.js'
 const canvasData = require('./demo.json')

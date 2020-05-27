@@ -37,6 +37,7 @@
             path(d="M 10 0 L 0 0 0 10" fill="none" stroke="#f0f0f0" stroke-width="1")
         rect(width="100%" height="100%" fill="url(#grid)")
     .props
+
       CanvasProps(
         :imgList="imgList"
         :deviceList="deviceList"
@@ -51,11 +52,11 @@
 </template>
 
 <script>
-import { Topology } from 'topology-core'
-import { Node } from 'topology-core/models/node'
-import { Line } from 'topology-core/models/line'
-import { Point } from 'topology-core/models/point'
-import { Direction } from 'topology-core/models/direction'
+import { Topology } from '@topology/core'
+import { Node } from '@topology/core'
+import { Line } from '@topology/core'
+import { Point } from '@topology/core'
+import { Direction } from '@topology/core'
 import * as FileSaver from 'file-saver'
 import { Store } from 'le5le-store'
 
@@ -94,6 +95,7 @@ export default {
         cacheLen: 10, // 缓存十步操作
         rotateCursor: 'http://113.31.118.32:9000/test/topology/HVAC/rotate.cur',
         disableScale: true,
+        canvasSize: 'custom', // 画布大小：standard：标准，不允许缩放，custom:自定义代销
       },
       props: {
         node: null,
@@ -116,9 +118,7 @@ export default {
       }
     }
   },
-  created () {
-    canvasRegister() // 注册canvas
-  },
+
   mounted () {
     this.init()
     this.eventSubscribe = Store.subscribe('canvasEvent', value => { // 订阅事件
@@ -135,14 +135,11 @@ export default {
       event.dataTransfer.setData('Text', JSON.stringify(node.data))
     },
     onSetBaseImg (val) { // 设置底图
-      // this.canvas.clearBkImg() // 设置背景图
-      // this.canvas.data.bkImage = val
-      // this.canvas.render()
       const node = new Node({
         name: 'image',
         rect: {
-          width: 1000,
-          height: 800,
+          width: this.canvas.options.canvasSize === 'standard' ? 1500 : 1000,
+          height: this.canvas.options.canvasSize === 'standard' ? 640 : 500,
           x: 0,
           y: 0
         },
@@ -298,6 +295,7 @@ export default {
       }
     },
     getData () {
+      this.canvas.data.canvasSize = this.canvas.options.canvasSize
       return this.canvas.data
     },
     setData (data) {
@@ -388,6 +386,7 @@ export default {
     },
 
     handle_save (data) { // 保存到本地
+      this.canvas.data.canvasSize = this.canvas.options.canvasSize
       FileSaver.saveAs(
         new Blob([JSON.stringify(this.canvas.data)], {
           type: 'text/plain;charset=utf-8'

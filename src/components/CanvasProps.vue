@@ -12,13 +12,19 @@
   .group
     .title 基础配置
     .container
+      .item
+        .label 禁用滚轮缩放
+        el-switch(v-model="canvasOptions.disableScale" @change='onChangeOptions')
+      .item.full-item
+        .label 画布大小
+        el-radio-group(v-model="canvasOptions.canvasSize" @change='onChangeOptions')
+          el-radio-button(label="custom") 自定义
+          el-radio-button(label="standard") 标准大小
+
       .item.full-item
         .label 选择底图
         el-select(v-model='baseImg', placeholder='选择底图', @change='handleBaseImg')
           el-option(v-for='item in imgList', :key='item.value', :label='item.label', :value='item.value')
-      .item
-        .label 禁用滚轮缩放
-        el-switch(v-model="canvasOptions.disableScale" @change='onChangeOptions')
 
   div(v-if="!props.node && !props.line && !props.multi")
     .bottom
@@ -356,10 +362,10 @@
 </template>
 
 <script >
-import { Node } from 'topology-core/models/node'
-import { Line } from 'topology-core/models/line'
-import { Point } from 'topology-core/models/point'
-import { alignNodes, layout, spaceBetween } from 'topology-layout'
+import { Node } from '@topology/core'
+import { Line } from '@topology/core'
+import { Point } from '@topology/core'
+import { alignNodes, layout, spaceBetween } from '@topology/layout'
 
 export default {
   props: {
@@ -396,7 +402,8 @@ export default {
         spaceHeight: 30
       },
       canvasOptions: {
-        disableScale: this.options.disableScale
+        disableScale: this.options.disableScale,
+        canvasSize: this.options.canvasSize
       },
 
       // 属性枚举值
@@ -672,13 +679,76 @@ export default {
           elevatorStep: parentNode.data.elevatorStep,
           tag: parentNode.data.tag // 复制轨道绑点至电梯图例
         },
+        hideAnchor: true,
+        hideSizeCP: true,
+        hideRotateCP: true,
         image: 'http://113.31.118.32:9000/test/topology/HVAC/Elevator/elevator_running.svg',
         name: 'image',
       })
       parentNode.data.tag = '' // 去除电梯轨道绑点
+      this.handleAddElevatorTick(node)
       this.canvas.addNode(node)
       this.canvas.render()
     },
+    handleAddElevatorTick (elevatorNode) { // 增加电梯刻度
+      let data = elevatorNode.data
+      let step = Math.round(Math.abs(data.elevatorStartY - data.elevatorEndY) / data.elevatorStep)
+      let temp = Math.abs(data.elevatorStartY - data.elevatorEndY) / Math.abs(data.elevatorStartX - data.elevatorEndX)
+      let xPoint = 0
+      let yPoint = 0
+      let pointArr = []
+      for (let i = 1; i <= data.elevatorStep; i++) {
+        if (data.elevatorEndX !== data.elevatorStartX) {
+          if (data.elevatorEndX < data.elevatorStartX) { // 第二象限
+            yPoint = data.elevatorEndY + step * i
+            xPoint = data.elevatorEndX + step * i / temp
+          } else { // 第一象限
+            yPoint = data.elevatorEndY + step * i
+            xPoint = data.elevatorStartX + step * (data.elevatorStep - i) / temp
+          }
+        } else {
+          xPoint = data.elevatorStartX
+          yPoint = step * i + data.elevatorEndY
+        }
+        pointArr.push(
+          {
+            num: (data.elevatorStep - i + 1),
+            x: xPoint,
+            y: yPoint
+          }
+        )
+      }
+      elevatorNode.data.pointArr = pointArr
+      if (!elevatorNode.animateFrames.length) {
+        pointArr.map(item => {
+          this.canvas.addLine(
+            new Line({
+              name: 'line',
+              fromArrow: '',
+              toArrow: '',
+              from: new Point(item.x - 2, item.y),
+              to: new Point(item.x + 2, item.y),
+              strokeStyle: '#999',
+              lineWidth: 1,
+              locked: true
+            })
+          )
+        })
+
+        let line = new Line({
+          name: 'line',
+          fromArrow: '',
+          toArrow: '',
+          from: new Point(data.elevatorStartX, data.elevatorStartY),
+          to: new Point(data.elevatorEndX, data.elevatorEndY),
+          strokeStyle: '#999',
+          lineWidth: 1,
+          locked: true
+        })
+        this.canvas.addLine(line)
+      }
+    },
+
     handleElevatorRunTest () {
       let randomNum = Math.ceil(Math.random() * 5) // 随机模拟1-5层
       this.handleElevatorRun(randomNum)
@@ -691,69 +761,13 @@ export default {
         return
       }
       elevatorNodeArr.map(elevatorNode => {
-        let pointArr = [] // 所有坐标点
+        let pointArr = elevatorNode.data.pointArr
         let runStep = 1
-
         let data = elevatorNode.data
-        console.log('目标楼层：', targetStep)
         let step = Math.round(Math.abs(data.elevatorStartY - data.elevatorEndY) / data.elevatorStep)
         let currY = elevatorNode.rect.ey
         let currStep = Math.round(data.elevatorStep - (currY - data.elevatorEndY) / step + 1)
-        console.log('当前楼层：', currStep)
         runStep = currStep - targetStep
-        console.log('运行方向', runStep < 0 ? `上行${-runStep}层` : `下行${runStep}层`)
-        let temp = Math.abs(data.elevatorStartY - data.elevatorEndY) / Math.abs(data.elevatorStartX - data.elevatorEndX)
-        let xPoint = 0
-        let yPoint = 0
-        for (let i = 1; i <= data.elevatorStep; i++) {
-          if (data.elevatorEndX !== data.elevatorStartX) {
-            if (data.elevatorEndX < data.elevatorStartX) { // 第二象限
-              yPoint = data.elevatorEndY + step * i
-              xPoint = data.elevatorEndX + step * i / temp
-            } else { // 第一象限
-              yPoint = data.elevatorEndY + step * i
-              xPoint = data.elevatorStartX + step * (data.elevatorStep - i) / temp
-            }
-          } else {
-            xPoint = data.elevatorStartX
-            yPoint = step * i + data.elevatorEndY
-          }
-          pointArr.push(
-            {
-              num: (data.elevatorStep - i + 1),
-              x: xPoint,
-              y: yPoint
-            }
-          )
-        }
-        if (!elevatorNode.animateFrames.length) {
-          pointArr.map(item => {
-            this.canvas.addLine(
-              new Line({
-                name: 'line',
-                fromArrow: '',
-                toArrow: '',
-                from: new Point(item.x - 2, item.y),
-                to: new Point(item.x + 2, item.y),
-                strokeStyle: '#999',
-                lineWidth: 1
-              })
-            )
-          })
-          this.canvas.addLine(
-            new Line({
-              name: 'line',
-              fromArrow: '',
-              toArrow: '',
-              from: new Point(data.elevatorStartX, data.elevatorStartY),
-              to: new Point(data.elevatorEndX, data.elevatorEndY),
-              strokeStyle: '#999',
-              lineWidth: 1
-            })
-          )
-          this.canvas.render()
-        }
-
         elevatorNode.animateFrames = []
         const state = Node.cloneState(elevatorNode);
         let targetPoint = pointArr.find(item => {
@@ -761,7 +775,6 @@ export default {
         })
         state.rect.x = targetPoint.x - state.rect.width / 2 // 设置为图例中点
         state.rect.y = targetPoint.y - state.rect.height
-        console.log('动画时间', Math.round(300 * Math.abs(runStep)))
         elevatorNode.animateFrames.push({
           duration: Math.round(300 * Math.abs(runStep)),
           linear: true,
@@ -775,7 +788,6 @@ export default {
         elevatorNode.animateStart = Date.now()
         this.canvas.animate()
       })
-
     },
     // 定制需求： 液位
     handleAddWaterTrack () { // 增加液位轨道
@@ -819,10 +831,10 @@ export default {
         node.rect.y = node.rect.ey - node.rect.height
         node.text = randomNum / node.data.waterLevelNum * 100 + '%'
       })
-      this.canvas.updateProps()
+      this.canvas.render()
     },
 
-    onAddPipeLine () {
+    onAddPipeLine () { // 绘制水管
       this.canvas.addLine(
         new Line({
           name: 'line',
