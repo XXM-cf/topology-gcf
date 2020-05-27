@@ -682,7 +682,7 @@ export default {
         hideAnchor: true,
         hideSizeCP: true,
         hideRotateCP: true,
-        image: 'http://113.31.118.32:9000/test/topology/HVAC/Elevator/elevator_running.svg',
+        image: 'http://113.31.118.32:9000/test/topology/HVAC/Elevator/elevator_normal.svg',
         name: 'image',
       })
       parentNode.data.tag = '' // 去除电梯轨道绑点

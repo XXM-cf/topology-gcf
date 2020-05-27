@@ -146,6 +146,7 @@ export default {
         data: {
           baseImg: true
         },
+        locked: 2,
         hideAnchor: true,
         image: val
       })
