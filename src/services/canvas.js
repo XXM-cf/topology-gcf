@@ -5,9 +5,9 @@ import plantIcon from './plantIcon'
 import plantIcon2 from './plantIcon2'
 import electricity from './electricity'
 import Ductwork from './HVAC/Ductwork'
-
 import Water from './HVAC/Water'
 import Sensors from './HVAC/Sensors'
+
 export const Tools = [
   plantIcon,
   plantIcon2,

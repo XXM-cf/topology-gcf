@@ -20,7 +20,7 @@ export default {
   data () {
     return {
       canvasOptions: {
-        lock: 1,
+        locked: 1,
         disableScale: false,
         translateKey: 'None',
         activeColor: 'transparent' // 去除选中边框
@@ -42,7 +42,6 @@ export default {
           data.locked = 1 // 锁定画布
           console.log('json数据读取完毕', data)
           this.canvas.open(data)
-          this.canvas.divLayer.canvas.focus()
           if (this.resize) {
             this.resizeCanvas()
           }

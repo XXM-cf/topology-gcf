@@ -44,7 +44,9 @@
               span {{ lineStyle.label }}
             el-menu-item(v-for='(item, index) in lineStyleOptions', :key='item.value', @click="onState('lineStyle', item.value)")
               span {{ item.label }}
+
       .canvas-tools
+        span(@click="onMenu('clearCanvas')") 清空画布
         span(@click="onMenu('saveComponent')") 导出组件
         span(@click="onMenu('importComponent')") 导入组件
 

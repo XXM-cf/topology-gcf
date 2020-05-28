@@ -146,7 +146,7 @@ export default {
         data: {
           baseImg: true
         },
-        locked: 2,
+        locked: 1,
         hideAnchor: true,
         image: val
       })
@@ -415,7 +415,6 @@ export default {
             const text = e.target.result + ''
             try {
               const node = JSON.parse(text)
-              console.log('数据读取完毕', node)
               if (
                 node && Array.isArray(node)
               ) {
@@ -435,6 +434,9 @@ export default {
       }
       input.click()
 
+    },
+    handle_clearCanvas () { // 清空画布
+      this.canvas.open({})
     },
     handle_savePng (data) {
       this.canvas.saveAsImage('le5le.topology.png')

@@ -1,6 +1,6 @@
 {
   "name": "topology-gcf",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "author": "xxm-cf",
   "description": "智慧建筑web组态前端可视化解决方案",
   "main": "lib/topology-gcf.umd.min.js",
@@ -11,7 +11,14 @@
     "lint": "vue-cli-service lint",
     "lib": "vue-cli-service build --target lib --name topology-gcf --dest lib packages/index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/XXM-cf/topology-gcf"
+  },
   "dependencies": {
+    "@topology/core": "^0.2.7",
+    "@topology/flow-diagram": "^0.2.0",
+    "@topology/layout": "^0.2.0",
     "core-js": "^3.6.4",
     "element-ui": "^2.13.0",
     "file-saver": "^2.0.2",
@@ -22,9 +29,6 @@
     "sass-loader": "^8.0.2",
     "scss": "^0.2.4",
     "scss-loader": "0.0.1",
-    "@topology/core": "^0.2.3",
-    "@topology/flow-diagram": "^0.2.0",
-    "@topology/layout": "^0.2.0",
     "vue": "^2.6.11",
     "vue-router": "^3.1.6"
   },
