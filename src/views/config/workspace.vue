@@ -95,7 +95,7 @@ export default {
         cacheLen: 10, // 缓存十步操作
         rotateCursor: 'http://113.31.118.32:9000/test/topology/HVAC/rotate.cur',
         disableScale: true,
-        canvasSize: 'custom', // 画布大小：standard：标准，不允许缩放，custom:自定义代销
+        canvasSize: 'standard', // 画布大小：standard：标准，不允许缩放，custom:自定义代销
       },
       props: {
         node: null,

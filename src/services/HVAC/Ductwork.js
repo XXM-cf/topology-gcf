@@ -197,6 +197,7 @@ const pipeImg = {
         },
         name: 'image',
         image: currUrl + item.url,
+        hideAnchor: true,
         data: {
           legendType: item.legendType || 'normalImg'
         }

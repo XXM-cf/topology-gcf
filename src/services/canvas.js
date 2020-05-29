@@ -19,6 +19,21 @@ export const Tools = [
     group: '基本形状',
     children: [
       {
+        name: '文字',
+        icon: 'icon-text',
+        data: {
+          text: '示例文字',
+          rect: {
+            width: 60,
+            height: 30
+          },
+          data: {
+            legendType: 'text'
+          },
+          name: 'text'
+        }
+      },
+      {
         name: '矩形',
         icon: 'icon-rect',
         data: {
@@ -214,21 +229,6 @@ export const Tools = [
           paddingTop: 10,
           paddingBottom: 10,
           name: 'file'
-        }
-      },
-      {
-        name: '文字',
-        icon: 'icon-text',
-        data: {
-          text: '示例文字',
-          rect: {
-            width: 60,
-            height: 30
-          },
-          data: {
-            legendType: 'text'
-          },
-          name: 'text'
         }
       },
       {
