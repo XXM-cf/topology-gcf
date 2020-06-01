@@ -1,5 +1,5 @@
 <template lang="pug">
-  #topology-client(ref="myCanvas" style="width:100%; height:100%;overflow:hidden")
+  #topology-client(ref="myCanvas" :style="getStyle")
 </template>
 
 <script>
@@ -15,6 +15,18 @@ export default {
     resize: {
       type: Boolean,
       default: true
+    },
+    width: {
+      type: String,
+      default: '100%'
+    },
+    height: {
+      type: String,
+      default: '100%'
+    },
+    overflow: {
+      type: String,
+      default: 'auto'
     }
   },
   data () {
@@ -26,6 +38,15 @@ export default {
         activeColor: 'transparent' // 去除选中边框
       },
       canvas: {}
+    }
+  },
+  computed: {
+    getStyle () {
+      return {
+        width: this.width,
+        height: this.height,
+        overflow: this.overflow
+      }
     }
   },
   mounted () {
@@ -70,15 +91,14 @@ export default {
     },
     resizeCanvas () { // 适配外框
       let canvasRect = this.canvas.getRect() // 画布大小
-      // console.log('原始画布宽高', canvasRect.width, canvasRect.height)
-      // 限制最大画布为1920 * 1080
+      console.log('原始画布宽高', canvasRect.width, canvasRect.height)
       let canvasWidth = parseInt(canvasRect.width)
       let canvasHeight = parseInt(canvasRect.height)
 
       let contianerWidth = this.$refs.myCanvas.clientWidth
       let contianerHeight = this.$refs.myCanvas.clientHeight
 
-      // console.log('外层容器宽高', contianerWidth, contianerHeight)
+      console.log('外层容器宽高', contianerWidth, contianerHeight)
 
       let widthNum = parseFloat((canvasWidth / contianerWidth).toFixed(2))
       let heightNum = parseFloat((canvasHeight / contianerHeight).toFixed(2))
@@ -94,12 +114,13 @@ export default {
       } else if (widthNum > 1 && heightNum <= 1) { // 宽度超出
         this.canvas.scaleTo(scaleWidthNum) // 缩小
       } else { // 宽高都超出
-        this.canvas.scale(Math.min(scaleWidthNum, scaleHeightNum)) // 缩放
+        this.canvas.scaleTo(Math.min(scaleWidthNum, scaleHeightNum)) // 缩放
       }
 
       let newCanvasRect = this.canvas.getRect() // 画布大小
       this.canvas.translate(-newCanvasRect.x + Math.abs(parseInt(newCanvasRect.width) - contianerWidth) / 2,
         -newCanvasRect.y + Math.abs(parseInt(newCanvasRect.height) - contianerHeight) / 2) // 平移至外层画布中间
+      this.canvas.resize()
     },
 
     getNode (tag) { // 寻找目标节点，用来操作动画，样式切换等
@@ -308,13 +329,13 @@ export default {
       }
     },
     handle_changeWaterLevel (targetNode, value) { // 液位变化
-      if (Number(value) > targetNode.data.waterLevelNum) {
-        console.error('液位参数值超出指定范围')
+      if (!Number(value) || Number(value) > targetNode.data.waterLevelNum) {
+        console.error('液位参数值非法或超出指定范围')
         return
       }
       targetNode.rect.height = Number(value) * targetNode.data.step
       targetNode.rect.y = targetNode.rect.ey - targetNode.rect.height
-      targetNode.text = Number(value) / targetNode.data.waterLevelNum * 100 + '%'
+      targetNode.text = parseInt(Number(value) / targetNode.data.waterLevelNum * 100) + '%'
       this.canvas.updateProps()
     },
   },

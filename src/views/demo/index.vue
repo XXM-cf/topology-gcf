@@ -17,7 +17,7 @@
         el-button(@click="handleMove()") 左移
         el-button(@click="handleMove2()") 右移动
 
-      .full(ref="myCanvas" style="width:800px; height:800px;border:1px solid red;overflow: hidden;")
+      .full(ref="myCanvas" style="width:1500px; height:600px;border:1px solid red;overflow: hidden;")
         topologyView(ref="topologyView" :resize="true" @nodeClick="handleClick")
 
 
@@ -39,12 +39,13 @@ export default {
       deviceId: 'device001', // 默认设备
       deviceStatus: 'normal', // 默认设备
       deviceValue: '99', // 默认设备
-
       nodeDetail: {},
     }
   },
   mounted () {
-    this.$refs.topologyView.open(this.jsonContent)
+    this.$nextTick(() => {
+      this.$refs.topologyView.open(this.jsonContent)
+    })
   },
   methods: {
     handleUpdate () {
@@ -55,9 +56,8 @@ export default {
     handleRun () {
       this.$refs.topologyView.handle_update(this.deviceId, 8)
     },
-    handleClick (val, point) {
-      console.log(val, point)
-      this.nodeDetail = val
+    handleClick (val) {
+      console.log('点击当前节点', val)
     },
     handleOver () {
       this.$refs.topologyView.overflow()
