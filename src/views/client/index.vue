@@ -23,10 +23,6 @@ export default {
     height: {
       type: String,
       default: '100%'
-    },
-    overflow: {
-      type: String,
-      default: 'auto'
     }
   },
   data () {
@@ -45,7 +41,7 @@ export default {
       return {
         width: this.width,
         height: this.height,
-        overflow: this.overflow
+        overflow: 'hidden'
       }
     }
   },
@@ -66,6 +62,7 @@ export default {
           if (this.resize) {
             this.resizeCanvas()
           }
+          this.canvas.resize()
           this.canvas.render()
         } else {
           console.log('暂无可用配置')
@@ -80,6 +77,9 @@ export default {
           break;
         case 'space':
           this.$emit('spaceClick', data)
+          break
+        case 'dbclick':
+          console.log('画布双击')
           break
       }
     },
@@ -120,7 +120,6 @@ export default {
       let newCanvasRect = this.canvas.getRect() // 画布大小
       this.canvas.translate(-newCanvasRect.x + Math.abs(parseInt(newCanvasRect.width) - contianerWidth) / 2,
         -newCanvasRect.y + Math.abs(parseInt(newCanvasRect.height) - contianerHeight) / 2) // 平移至外层画布中间
-      this.canvas.resize()
     },
 
     getNode (tag) { // 寻找目标节点，用来操作动画，样式切换等
@@ -330,7 +329,7 @@ export default {
     },
     handle_changeWaterLevel (targetNode, value) { // 液位变化
       if (!Number(value) || Number(value) > targetNode.data.waterLevelNum) {
-        console.error('液位参数值非法或超出指定范围')
+        console.warn('液位参数值非法或超出指定范围')
         return
       }
       targetNode.rect.height = Number(value) * targetNode.data.step
