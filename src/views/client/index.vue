@@ -59,7 +59,10 @@ export default {
           data.locked = 1 // 锁定画布
           console.log('json数据读取完毕', data)
           this.canvas.open(data)
-          if (this.resize) {
+          let noResize = data.pens.find(item => {
+            return item.data.legendType === 'waterTrack' || item.data.legendType === 'elevator'
+          }) // 如果画布中存在电梯或者液位，不允许缩放
+          if (this.resize && noResize) {
             this.resizeCanvas()
           }
           this.canvas.resize()
@@ -137,11 +140,12 @@ export default {
       }
     },
     // 设备图例对应的五种状态：
-    // 告警： alarm : #ff4a4a
-    // 故障： fault: #ffb300
+    // 告警： alarm : #ff4a4a， 告警动画颜色：rgba(255,74,74,0.5)
+    // 故障： fault: #ffb300, rgba(255,179,0,0.5)
     // 离线： offline: #9655ff
-    // 运行： running: #00dc94
+    // 运行： running: #00dc94，rgba(0,220,148,0.5)
     // 正常： normal: #333
+
 
     handle_update (tag, status, value) { // 更新数据: 文案，图标，多态图片、多档图片
       let nodes = this.getNode(tag)
@@ -166,6 +170,9 @@ export default {
               break
             case 'waterLevel': // 液位
               this.handle_changeWaterLevel(node, value)
+              break
+            case 'defenseArea': // 防区
+              this.handle_changeDefenseArea(node, status)
               break
           }
         })
@@ -288,39 +295,39 @@ export default {
           break;
       }
     },
-    handle_elevatorRun (elevatorNode, status, value) {
+    handle_elevatorRun (targetNode, status, value) {
       let targetStep = parseInt(value)
-      let data = elevatorNode.data
+      let data = targetNode.data
       let runStep = 1
       let step = Math.round(Math.abs(data.elevatorStartY - data.elevatorEndY) / data.elevatorStep)
-      let currY = elevatorNode.rect.ey
+      let currY = targetNode.rect.ey
       let currStep = Math.round(data.elevatorStep - (currY - data.elevatorEndY) / step + 1)
       runStep = currStep - targetStep
       console.log(data.tag, '运行方向', runStep < 0 ? `上行${-runStep}层` : `下行${runStep}层`)
 
-      elevatorNode.animateFrames = []
-      elevatorNode.animateDuration = 0;
-      elevatorNode.animateStart = 0;
+      targetNode.animateFrames = []
+      targetNode.animateDuration = 0;
+      targetNode.animateStart = 0;
 
-      const state = Node.cloneState(elevatorNode);
+      const state = Node.cloneState(targetNode);
       let targetPoint = data.pointArr.find(item => {
         return item.num === targetStep
       })
       if (targetPoint) {
         state.rect.x = targetPoint.x - state.rect.width / 2 // 设置为图例中点
         state.rect.y = targetPoint.y - state.rect.height
-        elevatorNode.animateType = 'elevatorRun';
-        elevatorNode.animateFrames.push({
+        targetNode.animateType = 'elevatorRun';
+        targetNode.animateFrames.push({
           duration: Math.round(300 * Math.abs(runStep)),
           linear: true,
           state: Node.cloneState(state)
         });
 
-        elevatorNode.animateCycle = 1
-        for (const item of elevatorNode.animateFrames) {
-          elevatorNode.animateDuration += item.duration;
+        targetNode.animateCycle = 1
+        for (const item of targetNode.animateFrames) {
+          targetNode.animateDuration += item.duration;
         }
-        elevatorNode.animateStart = Date.now()
+        targetNode.animateStart = Date.now()
         this.canvas.animate()
       } else {
         console.error(`上报楼层不在指定范围内，指定楼层：${targetStep}，该电梯最大楼层：${data.elevatorStep}`)
@@ -336,6 +343,55 @@ export default {
       targetNode.rect.y = targetNode.rect.ey - targetNode.rect.height
       targetNode.text = parseInt(Number(value) / targetNode.data.waterLevelNum * 100) + '%'
       this.canvas.updateProps()
+    },
+    handle_changeDefenseArea (targetNode, status) {
+      targetNode.animateStart = 0
+      targetNode.animateCycleIndex = 0
+      let state = null
+      console.log('sddsdsdsd')
+      switch (status) { // 告警
+        case 'normal':
+          targetNode.fillStyle = 'rgba(255,179,0,0.4)'
+          targetNode.strokeStyle = 'rgba(241, 104, 6, 1)'
+          break;
+        case 'running':
+          targetNode.fillStyle = 'rgba(0,220,148,0.4)'
+          targetNode.strokeStyle = 'rgba(6, 241, 33, 1)'
+          break;
+        case 'alarm':
+          targetNode.strokeStyle = '#ff4a4a'
+          targetNode.fillStyle = 'rgba(255,74,74,0.5)';
+          state = Node.cloneState(targetNode)
+          if (targetNode.animateFrames.length) {
+            targetNode.animateStart = Date.now()
+            this.canvas.animate()
+          } else {
+            targetNode.animateType = 'heart'
+            state.rect.x -= 10;
+            state.rect.ex += 10;
+            state.rect.y -= 10;
+            state.rect.ey += 10;
+            state.rect.width += 20;
+            state.rect.height += 20;
+            state.fillStyle = 'rgba(255,74,74,0.4)';
+            targetNode.animateFrames.push({
+              duration: 400,
+              linear: true,
+              state
+            });
+            targetNode.animateFrames.push({
+              duration: 400,
+              linear: true,
+              state: Node.cloneState(targetNode)
+            });
+            for (const item of targetNode.animateFrames) {
+              targetNode.animateDuration += item.duration;
+            }
+            targetNode.animateStart = Date.now()
+            this.canvas.animate()
+          }
+          break;
+      }
     },
   },
   destroyed () {

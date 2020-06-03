@@ -20,9 +20,6 @@
                 i(v-else-if='btn.data.iconClass', :class='`iconfont ${btn.data.iconClass}`')
                 i(v-else='', :class='`iconfont ${btn.icon}`' style="font-size:26px")
                 .name {{ btn.name }}
-
-
-
     .full
       #topology-canvas(@contextmenu='onContextMenu($event)')
       svg(
@@ -95,7 +92,7 @@ export default {
         cacheLen: 10, // 缓存十步操作
         rotateCursor: 'http://113.31.118.32:9000/test/topology/HVAC/rotate.cur',
         disableScale: true,
-        canvasSize: 'standard', // 画布大小：standard：标准，不允许缩放，custom:自定义代销
+        canvasSize: 'custom', // 画布大小：standard：标准，不允许缩放，custom:自定义代销
       },
       props: {
         node: null,
@@ -300,6 +297,7 @@ export default {
       return this.canvas.data
     },
     setData (data) {
+      this.canvas.options.canvasSize = data.canvasSize
       this.canvas.open(data)
     },
     getLocked (data) {

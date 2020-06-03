@@ -7,6 +7,7 @@ import electricity from './electricity'
 import Ductwork from './HVAC/Ductwork'
 import Water from './HVAC/Water'
 import Sensors from './HVAC/Sensors'
+import Cunstom from './custom'
 
 export const Tools = [
   plantIcon,
@@ -15,6 +16,7 @@ export const Tools = [
   Ductwork,
   Water,
   Sensors,
+  Cunstom,
   {
     group: '基本形状',
     children: [
@@ -229,39 +231,6 @@ export const Tools = [
           paddingTop: 10,
           paddingBottom: 10,
           name: 'file'
-        }
-      },
-      {
-        name: '电梯轨道',
-        icon: 'icon-rect',
-        data: {
-          rect: {
-            width: 25,
-            height: 400
-          },
-          fillStyle: 'rgba(217,225,232, 0.63)',
-          strokeStyle: 'rgba(237, 233, 233, 0.2)',
-          name: 'rectangle',
-          data: {
-            elevatorStep: 0,
-            legendType: 'elevatorTrack'
-          }
-        }
-      },
-      {
-        name: '液位',
-        icon: 'icon-rect',
-        data: {
-          rect: {
-            width: 156,
-            height: 144
-          },
-          fillStyle: 'rgba(217,225,232, 0.63)',
-          strokeStyle: 'rgba(237, 233, 233, 0.2)',
-          name: 'rectangle',
-          data: {
-            legendType: 'waterTrack'
-          }
         }
       },
       {
